@@ -102,5 +102,8 @@ flutter:
       - family: inter
         fonts:
           - asset: assets/Fonts/Inter-Regular.ttf
+      - family: gilroy
+        fonts:
+          - asset: assets/Fonts/Gilroy-Bold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

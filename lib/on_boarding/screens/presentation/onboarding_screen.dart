@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_null_comparison
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,8 @@ import 'package:lottie/lottie.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../core/core_components/general_button/general_button.dart';
+import '../../../core/core_components/custom_button/custom_button.dart';
+import '../../../core/core_components/custom_do_animtion/custom_fade_animation.dart';
 import '../../../core/services/services_locator.dart';
 import '../component/custom_text_on Boarding/text.dart';
 import '../controller/on_boarding_bloc.dart';
@@ -60,7 +60,8 @@ class OnBoardingScreen extends StatelessWidget {
                       onPageChanged: (value) => state.turn = value,
                       itemBuilder: (context, index) {
                         final bloc = BlocProvider.of<OnBoardingBloc>(context);
-                        return Container(
+                        return fadeElasticIn(
+                            child: Container(
                           width: media.width,
                           height: media.height,
                           alignment: Alignment.center,
@@ -100,16 +101,18 @@ class OnBoardingScreen extends StatelessWidget {
                                       firstChild: IconButton(
                                           onPressed: () {
                                             bloc.add(SwitchPageViewEvent(
-                                              context: context ,
-                                                state.turn));
+                                                context: context, state.turn));
                                           },
                                           icon: Icon(
                                             Icons.navigate_next_sharp,
                                             size: 40.sp,
                                           )),
-                                      secondChild: GeneralButton(
-                                        onPressed: () => bloc.add(NavigatorToLoginScreen(context: context)),
-                                        child: CustomText("Start"),
+                                      secondChild: CustomButton(
+                                        onPressed: () => bloc.add(
+                                            NavigatorToLoginScreen(
+                                                context: context)),
+                                        text: "Start",
+                                        elevation: 50.sp,
                                       ),
                                       crossFadeState:
                                           state.transferWidget == true
@@ -121,7 +124,7 @@ class OnBoardingScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        );
+                        ));
                       },
                     ),
                   ),

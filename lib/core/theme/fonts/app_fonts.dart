@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_clean_architecture/core/theme/sizes_theme/app_sizes.dart';
 
 import '../theme_data/dark_theme/color_dark_app.dart';
 import '../theme_data/light_theme/color_light_app.dart';
 
 TextTheme fontTextLight = TextTheme(
+
+  titleMedium: TextStyle(
+      color: AppColorLight.colorButtonText,
+      overflow: TextOverflow.fade,
+      fontSize: AppSizes.textDefaultSize,
+      fontFamily: "gilroy") ,
 
     displaySmall: TextStyle(
         color: AppColorLight.textColor,
@@ -44,6 +49,19 @@ TextTheme fontTextDark = TextTheme(
         letterSpacing: AppSizes.textSpaceLetter,
         fontFamily: "inter"),
 
+    titleMedium: TextStyle(
+        color: AppColorLight.colorButtonText,
+        overflow: TextOverflow.fade,
+        fontSize: AppSizes.textDefaultSize,
+        fontFamily: "gilroy") ,
+
+
+    displayLarge: TextStyle(
+        color: AppColorLight.textColor,
+        overflow: TextOverflow.fade,
+        fontSize: AppSizes.textDefaultSize,
+        letterSpacing: AppSizes.onBoardingLargeSpace,
+        fontFamily: "inter"),
 
 
     displayMedium: TextStyle(

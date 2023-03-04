@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 
-class GeneralButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   void Function()? onPressed;
+
+  dynamic text ;
 
   dynamic child;
 
@@ -19,11 +21,12 @@ class GeneralButton extends StatelessWidget {
 
   dynamic height;
 
-  GeneralButton({
+  CustomButton({
     Key? key,
     required this.onPressed,
-    required this.child,
+      this.child,
     this.elevation,
+    this.text,
     this.color,
     this.padding,
     this.height,
@@ -38,7 +41,7 @@ class GeneralButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: child,
+        child: child ?? Text(text),
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: padding??media.width*.07),
             primary: color ,
