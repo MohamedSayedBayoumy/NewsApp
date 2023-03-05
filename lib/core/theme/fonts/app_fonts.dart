@@ -6,6 +6,7 @@ import '../theme_data/light_theme/color_light_app.dart';
 
 TextTheme fontTextLight = TextTheme(
 
+
   titleMedium: TextStyle(
       color: AppColorLight.colorButtonText,
       overflow: TextOverflow.fade,
