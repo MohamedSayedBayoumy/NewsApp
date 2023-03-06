@@ -46,7 +46,7 @@ class OnBoardingBloc extends Bloc<OnBoardingEvent, OnBoardingState> {
             child: FadeInDown(
                 duration: const Duration(milliseconds: 1400),
                 delay: const Duration(milliseconds: 200),
-                child:LoginScreen(authUseCase: sl(),)),
+                child:const LoginScreen()),
             duration: const Duration(milliseconds: 1500),
             type: PageTransitionType.bottomToTop),
         (route) => false);

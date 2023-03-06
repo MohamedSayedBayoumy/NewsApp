@@ -30,7 +30,7 @@ class MaterialAppWithScreenUtil extends StatelessWidget {
           home: child,
         );
       },
-      child: LoginScreen(authUseCase: sl()),
+      child: const LoginScreen(),
     );
   }
 }

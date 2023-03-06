@@ -19,7 +19,7 @@ class AuthRepository extends AuthBaseRepository{
     try{
       return Right(result);
     } on ServerError catch(failure) {
-      return Left(FailureStatue(message: failure.failureModel.message ,status: failure.failureModel.status ));
+      return Left(FailureStatue(message: failure.failureModel.message ,status: failure.failureModel.status));
     }
   }
 }

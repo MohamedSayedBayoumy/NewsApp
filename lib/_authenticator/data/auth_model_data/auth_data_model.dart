@@ -17,25 +17,3 @@ class AuthModelData extends AuthModel {
   );
 }
 
-// class AuthDataUserModel extends DataModel {
-//   AuthDataUserModel(
-//       {required super.id,
-//       required super.name,
-//       required super.email,
-//       required super.phone,
-//       required super.image,
-//       required super.points,
-//       required super.credit,
-//       required super.token});
-//
-//   factory AuthDataUserModel.fromJson(Map<String, dynamic> json) =>
-//       AuthDataUserModel(
-//           email: json["email"],
-//           id: json["id"],
-//           name: json["name"],
-//           image: json["image"],
-//           phone: json["phone"],
-//           credit: json["credit"],
-//           points: json["points"],
-//           token: json["token"]);
-// }
