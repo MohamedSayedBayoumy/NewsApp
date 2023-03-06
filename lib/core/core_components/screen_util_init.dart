@@ -8,6 +8,7 @@ import 'package:news_app_clean_architecture/core/theme/theme_data/light_theme/co
 import '../../_authenticator/presentation/auth_screens/login_screen.dart';
 import '../../home_screen_categories.dart';
 import '../../on_boarding/screens/presentation/onboarding_screen.dart';
+import '../services/services_locator.dart';
 import '../theme/theme_data/light_theme/themes_light_app.dart';
 
 class MaterialAppWithScreenUtil extends StatelessWidget {
@@ -29,7 +30,7 @@ class MaterialAppWithScreenUtil extends StatelessWidget {
           home: child,
         );
       },
-      child: const LoginScreen(),
+      child: LoginScreen(authUseCase: sl()),
     );
   }
 }

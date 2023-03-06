@@ -23,7 +23,8 @@ class CustomTextField extends StatelessWidget {
   void Function()? onTapIcon;
   bool? enabled;
   TextInputType? textInputType;
-  dynamic curveBorder;
+  dynamic enabledCurveBorder;
+  TextInputAction? textInputAction ;
 
   void Function()? onPressedSuffixIcon;
 
@@ -31,10 +32,11 @@ class CustomTextField extends StatelessWidget {
       {Key? key,
         required this.controller,
         this.prefixIcon,
+        this.textInputAction,
         this.suffixIcon,
         this.onPressedSuffixIcon,
         this.textInputType,
-        this.curveBorder,
+        this.enabledCurveBorder,
         this.labelColor,
         this.onChange,
         this.onTapIcon,
@@ -58,11 +60,11 @@ class CustomTextField extends StatelessWidget {
       width: width,
       child: Theme(
         data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Colors.grey)),
+            colorScheme: const ColorScheme.light(primary: Colors.white)),
         child:TextFormField(
+          // style: const TextStyle(color: Colors.white , fontFamily: "inter"),
+          textInputAction:  textInputAction,
             keyboardType: textInputType,
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.right,
             onChanged: onChange,
             onTap: onTapIcon,
             enabled: enabled,
@@ -80,16 +82,17 @@ class CustomTextField extends StatelessWidget {
                   onPressed: onPressedSuffixIcon,
                   icon: Icon(
                     suffixIcon,
-                    color: Colors.black,
+                    color: Colors.white,
                   )),
               filled: fill,
               fillColor: fillColor ?? Colors.white,
               labelText: labelText,
-              labelStyle: TextStyle(color: labelColor ?? Colors.indigo),
+              labelStyle: TextStyle(color: labelColor ?? Colors.white),
               hintText: hinText,
-              prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
+              hintStyle: TextStyle(color: labelColor ?? Colors.white24),
+              prefixIcon: prefixIcon == null ? null : Icon(prefixIcon ,color: Colors.white),
               enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(curveBorder ?? 30),
+                  borderRadius: BorderRadius.circular(enabledCurveBorder ?? 10),
                   borderSide:
                   BorderSide(color: borderColor ?? Colors.grey.shade200)),
               border: OutlineInputBorder(

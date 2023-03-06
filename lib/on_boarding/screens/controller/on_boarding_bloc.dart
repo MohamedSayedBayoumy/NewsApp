@@ -11,6 +11,7 @@ import 'package:news_app_clean_architecture/on_boarding/screens/presentation/onb
 import 'package:page_transition/page_transition.dart';
 
 import '../../../_authenticator/presentation/auth_screens/login_screen.dart';
+import '../../../core/services/services_locator.dart';
 import '../../../home_screen_categories.dart';
 import '../../domain/entitie/entite_model.dart';
 
@@ -45,7 +46,7 @@ class OnBoardingBloc extends Bloc<OnBoardingEvent, OnBoardingState> {
             child: FadeInDown(
                 duration: const Duration(milliseconds: 1400),
                 delay: const Duration(milliseconds: 200),
-                child: const LoginScreen()),
+                child:LoginScreen(authUseCase: sl(),)),
             duration: const Duration(milliseconds: 1500),
             type: PageTransitionType.bottomToTop),
         (route) => false);
