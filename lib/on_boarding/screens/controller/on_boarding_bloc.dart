@@ -7,12 +7,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:news_app_clean_architecture/on_boarding/screens/presentation/onboarding_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../_authenticator/presentation/auth_screens/login_screen.dart';
-import '../../../core/services/services_locator.dart';
-import '../../../home_screen_categories.dart';
 import '../../domain/entitie/entite_model.dart';
 
 part 'on_boarding_event.dart';

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 
@@ -46,7 +45,7 @@ class CustomButton extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: padding??media.width*.07),
             primary: color ,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.sp))),
+                borderRadius: BorderRadius.circular(8 ))),
       ),
     );
   }

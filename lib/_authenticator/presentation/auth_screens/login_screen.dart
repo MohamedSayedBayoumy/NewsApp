@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app_clean_architecture/_authenticator/data/auth_model_data/auth_data_model.dart';
-import 'package:news_app_clean_architecture/_authenticator/data/auth_remote_data_source/auth_remote_data.dart';
-import 'package:news_app_clean_architecture/_authenticator/data/auth_repository_data/auth_data_repository.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_repository/auth_base_repository.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_use_case/auth_use_case.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_entites/auth_entits.dart';
+
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_event.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_button/custom_button.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_textfiled/text_filed.dart';
-import 'package:news_app_clean_architecture/core/network/error/error.dart';
 
 import '../../../core/core_components/custom_app_bar/app_bar.dart';
 import '../../../core/core_components/custom_text/text.dart';
@@ -39,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                   height: media.height * .9,
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(40.sp)),
+                        BorderRadius.only(bottomLeft: Radius.circular(40)),
                     gradient: LinearGradient(
                         begin: AlignmentDirectional.topStart,
                         end: AlignmentDirectional.bottomEnd,

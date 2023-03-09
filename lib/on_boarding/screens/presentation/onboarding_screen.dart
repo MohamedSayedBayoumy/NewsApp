@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -12,6 +11,8 @@ import '../../../core/core_components/custom_do_animtion/custom_fade_animation.d
 import '../../../core/services/services_locator.dart';
 import '../component/custom_text_on Boarding/text.dart';
 import '../controller/on_boarding_bloc.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -31,30 +32,31 @@ class OnBoardingScreen extends StatelessWidget {
                   horizontal: media.width * .05, vertical: media.width * .1),
               child: Column(
                 children: [
+                  Text(AppLocalizations.of(context)!.hello) ,
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: media.width * .02),
                     padding: EdgeInsets.symmetric(
                         horizontal: media.width * .03,
                         vertical: media.height * .009),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15.sp),
-                          topRight: Radius.circular(15.sp)),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15)),
                       color: Colors.grey.shade200,
                     ),
                     child: SmoothPageIndicator(
                       controller: state.controller,
                       count: state.modelOnBoarding.length,
                       effect: ScrollingDotsEffect(
-                          spacing: 8.0.sp,
-                          dotWidth: 20.0.w,
+                          spacing: 8.0,
+                          dotWidth: 20.0,
                           dotColor: Colors.indigo.shade100,
                           activeDotColor: Colors.indigo),
                     ),
                   ),
                   Expanded(
                     child: PageView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
+                      // physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.modelOnBoarding.length,
                       controller: state.controller,
                       onPageChanged: (value) => state.turn = value,
@@ -103,16 +105,16 @@ class OnBoardingScreen extends StatelessWidget {
                                             bloc.add(SwitchPageViewEvent(
                                                 context: context, state.turn));
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.navigate_next_sharp,
-                                            size: 40.sp,
+                                            size: 40,
                                           )),
                                       secondChild: CustomButton(
                                         onPressed: () => bloc.add(
                                             NavigatorToLoginScreen(
                                                 context: context)),
                                         text: "Start",
-                                        elevation: 50.sp,
+                                        elevation: 50.0,
                                       ),
                                       crossFadeState:
                                           state.transferWidget == true

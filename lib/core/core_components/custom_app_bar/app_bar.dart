@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   dynamic title;
@@ -51,7 +51,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           style: TextStyle(
               fontFamily: 'gilroy',
               fontWeight: FontWeight.bold,
-              fontSize: 25.sp,
+              fontSize: 25,
               color: Colors.white),
         ),
     );
