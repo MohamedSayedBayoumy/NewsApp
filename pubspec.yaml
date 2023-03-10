@@ -59,6 +59,7 @@ dependencies:
   url_launcher: ^6.1.8
   smooth_page_indicator: ^1.0.1
   device_preview: ^1.1.0
+  auto_size_text: ^3.0.0
 
 
 
@@ -94,6 +95,11 @@ flutter:
     - assets/animation_image/on_borading/onBorading1.json
     - assets/images/on_boarding/basketball.png
     - assets/images/on_boarding/cloudy.png
+    - assets/images/start_up/phone.jpg
+    - assets/images/start_up/laptop.jpg
+    - assets/icons/homepage.png
+    - assets/icons/user.png
+    - assets/icons/cloud.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -116,6 +122,9 @@ flutter:
       - family: gilroy
         fonts:
           - asset: assets/Fonts/Gilroy-Bold.ttf
+      - family: titanOne
+        fonts:
+          - asset: assets/Fonts/TitanOne-Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 

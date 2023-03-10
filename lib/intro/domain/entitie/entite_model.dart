@@ -20,3 +20,13 @@ class OnBoardingModel extends Equatable {
   @override
   List<Object> get props => [image, title!, subTitle!];
 }
+
+class BottomNavigationModel {
+  String? image;
+
+  bool? index;
+
+
+
+  BottomNavigationModel({required this.image, required this.index});
+}

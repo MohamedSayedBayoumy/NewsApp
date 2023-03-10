@@ -2,31 +2,27 @@
 
 import 'package:flutter/material.dart';
 
-
-
 class CustomButton extends StatelessWidget {
   void Function()? onPressed;
 
-  dynamic text ;
+  dynamic text;
 
   dynamic child;
 
   dynamic elevation;
 
-  dynamic color;
 
   dynamic width;
-  dynamic  padding;
+  dynamic padding;
 
   dynamic height;
 
   CustomButton({
     Key? key,
     required this.onPressed,
-      this.child,
+    this.child,
     this.elevation,
     this.text,
-    this.color,
     this.padding,
     this.height,
     this.width,
@@ -34,18 +30,22 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context).size ;
+    final media = MediaQuery.of(context).size;
     return SizedBox(
       width: width,
       height: height,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: child ?? Text(text , style: Theme.of(context).textTheme.titleMedium,),
+        child: child ??
+            Text(
+              text,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: padding??media.width*.07),
-            primary: color ,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8 ))),
+            padding:
+                EdgeInsets.symmetric(horizontal: padding ?? media.width * .07),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       ),
     );
   }

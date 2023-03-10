@@ -10,7 +10,7 @@ import '../../../core/core_components/custom_button/custom_button.dart';
 import '../../../core/core_components/custom_do_animtion/custom_fade_animation.dart';
 import '../../../core/services/services_locator.dart';
 import '../component/custom_text_on Boarding/text.dart';
-import '../controller/on_boarding_bloc.dart';
+import '../controller/intro_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,9 +22,9 @@ class OnBoardingScreen extends StatelessWidget {
     final media = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) {
-        return sl<OnBoardingBloc>();
+        return sl<IntroScreensBloc>();
       },
-      child: BlocBuilder<OnBoardingBloc, OnBoardingState>(
+      child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
           return Scaffold(
             body: Padding(
@@ -32,7 +32,6 @@ class OnBoardingScreen extends StatelessWidget {
                   horizontal: media.width * .05, vertical: media.width * .1),
               child: Column(
                 children: [
-                  Text(AppLocalizations.of(context)!.hello) ,
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: media.width * .02),
                     padding: EdgeInsets.symmetric(
@@ -61,7 +60,7 @@ class OnBoardingScreen extends StatelessWidget {
                       controller: state.controller,
                       onPageChanged: (value) => state.turn = value,
                       itemBuilder: (context, index) {
-                        final bloc = BlocProvider.of<OnBoardingBloc>(context);
+                        final bloc = BlocProvider.of<IntroScreensBloc>(context);
                         return fadeElasticIn(
                             child: Container(
                           width: media.width,

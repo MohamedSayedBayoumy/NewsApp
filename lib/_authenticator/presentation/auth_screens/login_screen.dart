@@ -108,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                             password: bloc.state.passwordController .text));
                       },
                       text: "login",
-                      color: Colors.pink,
+                      // color: Colors.pink,
                     )),
                 Positioned(
                     top: media.height * .66,

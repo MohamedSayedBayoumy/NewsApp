@@ -1,3 +1,7 @@
  {
- "hello" : "Hello"
+ "startUp1" : "Join us to be one of the first to receive world news" ,
+ "startUp2" : "With this application you will be able to Know what happened around you" ,
+ "startUp3" : "Let's Start" ,
+ "startUp4" : "Already have account ? " ,
+ "startUp5" : "Sign in"
  }
