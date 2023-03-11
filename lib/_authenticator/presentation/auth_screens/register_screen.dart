@@ -12,9 +12,10 @@ import '../../../core/services/services_locator.dart';
 import '../auth_controller/auth_event.dart';
 
 class RegisterScreen extends StatelessWidget {
-    RegisterScreen({Key? key}) : super(key: key);
+  RegisterScreen({Key? key}) : super(key: key);
 
-  final GoogleSignIn x = GoogleSignIn() ;
+  final GoogleSignIn x = GoogleSignIn();
+
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
@@ -54,94 +55,108 @@ class RegisterScreen extends StatelessWidget {
                             "Sign up to continue",
                             isBold: false,
                           ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            prefixIcon: Icons.perm_identity_sharp,
+                            textInputAction: TextInputAction.next,
+                            labelText: "username",
+                            hinText: "mohamed .. ",
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            valid: (p0) => state.errorEmail(
+                                state.emailController,
+                                val: p0.toString(),
+                                ErrorSpace: "username"),
+                            width: media.width * .9,
+                            controller: bloc.state.emailController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            prefixIcon: Icons.phone_enabled_outlined,
+                            textInputAction: TextInputAction.next,
+                            labelText: "phone",
+                            hinText: "0110000",
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            valid: (p0) => state.errorEmail(
+                                state.emailController,
+                                val: p0.toString(),
+                                ErrorSpace: "phone"),
+                            width: media.width * .9,
+                            controller: bloc.state.emailController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            prefixIcon: Icons.email,
+                            textInputAction: TextInputAction.next,
+                            labelText: "email",
+                            hinText: "example@gmail.com",
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            valid: (p0) => state.errorEmail(
+                                state.emailController,
+                                val: p0.toString(),
+                                ErrorSpace: "email"),
+                            width: media.width * .9,
+                            controller: bloc.state.emailController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            obscureText: state.showPassword,
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            prefixIcon: Icons.lock,
+                            suffixIcon: Icons.visibility_outlined,
+                            onPressedSuffixIcon: () {
+                              bloc.add(ChangeIconEvent());
+                            },
+                            textInputAction: TextInputAction.done,
+                            labelText: "password",
+                            hinText: "password",
+                            valid: (p0) => state.errorPassword(
+                                state.passwordController,
+                                val: p0.toString(),
+                                ErrorSpace: "password"),
+                            width: media.width * .9,
+                            controller: bloc.state.passwordController,
+                            borderColor: Colors.grey,
+                            maxLength: 1,
+                            minLength: 1,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomButton(
+                                height: media.height * .05,
+                                width: media.width * .5,
+                                onPressed: () async {
+                                  bloc.add(LoginEvent(
+                                      email: bloc.state.emailController.text,
+                                      password:
+                                          bloc.state.passwordController.text));
+                                },
+                                text: "login",
+                                // color: Colors.pink,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icons.perm_identity_sharp,
-                    textInputAction: TextInputAction.next,
-                    labelText: "username",
-                    hinText: "mohamed .. ",
-                    fill: true,
-                    fillColor: Theme.of(context).primaryColor,
-                    valid: (p0) => state.errorEmail(state.emailController,
-                        val: p0.toString(), ErrorSpace: "username"),
-                    width: media.width * .9,
-                    controller: bloc.state.emailController,
-                    borderColor: Colors.grey,
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icons.phone_enabled_outlined,
-                    textInputAction: TextInputAction.next,
-                    labelText: "phone",
-                    hinText: "0110000",
-                    fill: true,
-                    fillColor: Theme.of(context).primaryColor,
-                    valid: (p0) => state.errorEmail(state.emailController,
-                        val: p0.toString(), ErrorSpace: "phone"),
-                    width: media.width * .9,
-                    controller: bloc.state.emailController,
-                    borderColor: Colors.grey,
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  CustomTextField(
-                    prefixIcon: Icons.email,
-                    textInputAction: TextInputAction.next,
-                    labelText: "email",
-                    hinText: "example@gmail.com",
-                    fill: true,
-                    fillColor: Theme.of(context).primaryColor,
-                    valid: (p0) => state.errorEmail(state.emailController,
-                        val: p0.toString(), ErrorSpace: "email"),
-                    width: media.width * .9,
-                    controller: bloc.state.emailController,
-                    borderColor: Colors.grey,
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  CustomTextField(
-                    obscureText: state.showPassword,
-                    fill: true,
-                    fillColor: Theme.of(context).primaryColor,
-                    prefixIcon: Icons.lock,
-                    suffixIcon: Icons.visibility_outlined,
-                    onPressedSuffixIcon: () {
-                      bloc.add(ChangeIconEvent());
-                    },
-                    textInputAction: TextInputAction.done,
-                    labelText: "password",
-                    hinText: "password",
-                    valid: (p0) => state.errorPassword(state.passwordController,
-                        val: p0.toString(), ErrorSpace: "password"),
-                    width: media.width * .9,
-                    controller: bloc.state.passwordController,
-                    borderColor: Colors.grey,
-                    maxLength: 1,
-                    minLength: 1,
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  CustomButton(
-                    height: media.height * .05,
-                    width: media.width * .5,
-                    onPressed: () async {
-                      bloc.add(LoginEvent(
-                          email: bloc.state.emailController.text,
-                          password: bloc.state.passwordController.text));
-                    },
-                    text: "login",
-                    // color: Colors.pink,
                   ),
                   SizedBox(
                     height: media.height * .05,
@@ -179,33 +194,35 @@ class RegisterScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: media.height*.03),
+                          margin: EdgeInsets.only(top: media.height * .03),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.white),
                             color: Colors.white.withOpacity(.3),
-                            borderRadius: BorderRadius.circular(8) ,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: IconButton(
                               onPressed: () {
                                 x.signIn().then((value) async {
-                                  String  x = value!.email ;
-                                  String? y = value.displayName ;
-                                  String? n = value.photoUrl ;
-                                  String? o = value.id ;
-                                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                    email:  x ,
-                                    password: state.passwordController.toString(),
+                                  String x = value!.email;
+                                  String? y = value.displayName;
+                                  String? n = value.photoUrl;
+                                  String? o = value.id;
+                                  /// TODO : here we will registration " => createUserWithEmailAndPassword "
+                                  await FirebaseAuth.instance
+                                      .createUserWithEmailAndPassword(
+                                    email: x,
+                                    password:
+                                        state.passwordController.toString(),
                                   );
-                                  print(o) ;
-                                  print(n) ;
-                                  print(y) ;
-                                  print(x) ;
-                                } );
+                                  print(o);
+                                  print(n);
+                                  print(y);
+                                  print(x);
+                                });
                               },
                               icon: Image.asset(
                                 "assets/icons/google.png",
                                 fit: BoxFit.fill,
-
                               )))
                     ],
                   )
