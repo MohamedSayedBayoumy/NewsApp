@@ -5,7 +5,7 @@ import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_use_
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_bloc.dart';
 
 import '../../_authenticator/data/auth_repository_data/auth_data_repository.dart';
-import '../../intro/screens/controller/intro_bloc.dart';
+import '../../_intro_screens/screens/controller/intro_bloc.dart';
 
 final sl = GetIt.asNewInstance();
 

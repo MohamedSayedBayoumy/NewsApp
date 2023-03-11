@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                   height: media.height * .9,
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(40)),
+                        const BorderRadius.only(bottomLeft: Radius.circular(40)),
                     gradient: LinearGradient(
                         begin: AlignmentDirectional.topStart,
                         end: AlignmentDirectional.bottomEnd,
@@ -63,6 +63,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        /// TODO : AutoFill
                         CustomTextField(
                           prefixIcon: Icons.email,
                           textInputAction: TextInputAction.next,

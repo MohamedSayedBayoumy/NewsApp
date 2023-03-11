@@ -13,14 +13,14 @@ class SwitchPageViewEvent extends IntroScreensEvent {
   SwitchPageViewEvent(this.turn, {required this.context});
 }
 
-class NavigatorToLoginScreen extends IntroScreensEvent {
-  BuildContext context;
-
-  NavigatorToLoginScreen({required this.context});
-}
 
 class ActiveIconEvent extends IntroScreensEvent {
   int? index ;
 
   ActiveIconEvent({required this.index});
+}
+class ChangeLocalizationEvent extends IntroScreensEvent {
+  dynamic context ;
+
+  ChangeLocalizationEvent({required this.context});
 }

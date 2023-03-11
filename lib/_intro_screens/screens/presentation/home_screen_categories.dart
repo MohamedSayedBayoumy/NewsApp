@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_do_animtion/custom_fade_animation.dart';
 import 'package:news_app_clean_architecture/test1.dart';
 import 'package:news_app_clean_architecture/text3.dart';
 
-import '../../../core/services/services_locator.dart';
 import '../../../test2.dart';
 import '../controller/intro_bloc.dart';
 
@@ -16,9 +16,7 @@ class HomeScreenCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
-    return BlocProvider<IntroScreensBloc>(
-      create: (context) => sl<IntroScreensBloc>(),
-      child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
+    return BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
           final bloc = BlocProvider.of<IntroScreensBloc>(context);
           return Scaffold(
@@ -100,7 +98,7 @@ class HomeScreenCategories extends StatelessWidget {
             )),
           );
         },
-      ),
-    );
+      ) ;
+
   }
 }

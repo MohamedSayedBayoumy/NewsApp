@@ -3,5 +3,11 @@
  "startUp2" : "With this application you will be able to Know what happened around you" ,
  "startUp3" : "Let's Start" ,
  "startUp4" : "Already have account ? " ,
- "startUp5" : "Sign in"
+ "startUp5" : "Sign in" ,
+  "onBoarding1" : "Now you can check news with out our posts like update image profile , cover profile , status etc , Now only news" ,
+  "onBoardingTitle1" : "News World" ,
+ "onBoarding2" : "Basketball news and all team you can follow it by us" ,
+ "onBoardingTitle2" : "Sport News" ,
+ "onBoarding3" : "You can now follow the weather news and find out the weather at the current time in a country by searching by name other country" ,
+ "onBoardingTitle3" : "Weather News"
  }

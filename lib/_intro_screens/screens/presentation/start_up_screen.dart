@@ -53,7 +53,6 @@ class StartUpScreen extends StatelessWidget {
             child: SizedBox(
               width: media.width * .9,
               height: media.height * .5,
-
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -81,8 +80,7 @@ class StartUpScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             PageTransition(
-                                child: fadeElasticIn(
-                                    child: const OnBoardingScreen()),
+                                child: fadeElasticIn(child: OnBoardingScreen()),
                                 duration: const Duration(milliseconds: 1500),
                                 type: PageTransitionType.bottomToTop),
                             (route) => false);
@@ -90,8 +88,8 @@ class StartUpScreen extends StatelessWidget {
                       text: AppLocalizations.of(context)!.startUp3,
                       width: media.width,
                       height: media.height * .06),
-                   Expanded(
-                     child: Row(
+                  Expanded(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
@@ -100,22 +98,21 @@ class StartUpScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                PageTransition(
-                                    child: fadeElasticIn(
-                                        child: const LoginScreen()),
-                                    duration: const Duration(milliseconds: 1500),
-                                    type: PageTransitionType.bottomToTop),
-                                    (route) => false);
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: const LoginScreen(),
+                                  duration: const Duration(milliseconds: 1200),
+                                  type: PageTransitionType.rightToLeft),
+                            );
                           },
                           child: CustomTextButton(
                             AppLocalizations.of(context)!.startUp5,
                           ),
                         ),
                       ],
+                    ),
                   ),
-                   ),
                 ],
               ),
             ),

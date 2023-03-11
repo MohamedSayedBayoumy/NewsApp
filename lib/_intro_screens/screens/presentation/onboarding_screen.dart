@@ -1,17 +1,21 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../_authenticator/presentation/auth_screens/register_screen.dart';
 import '../../../core/core_components/custom_button/custom_button.dart';
 import '../../../core/core_components/custom_do_animtion/custom_fade_animation.dart';
 import '../../../core/services/services_locator.dart';
+import '../../domain/entitie/entite_model.dart';
 import '../component/custom_text_on Boarding/text.dart';
 import '../controller/intro_bloc.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -20,11 +24,22 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) {
-        return sl<IntroScreensBloc>();
-      },
-      child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
+    List<OnBoardingModel> modelOnBoarding = [
+      OnBoardingModel(
+        title: AppLocalizations.of(context)!.onBoardingTitle1,
+        image: "assets/animation_image/on_boarding/onBoarding1.json",
+        subTitle: AppLocalizations.of(context)!.onBoarding1,
+      ),
+      OnBoardingModel(
+          title: AppLocalizations.of(context)!.onBoardingTitle2,
+          image1: "assets/images/on_boarding/basketball.png",
+          subTitle: AppLocalizations.of(context)!.onBoarding2),
+      OnBoardingModel(
+          title: AppLocalizations.of(context)!.onBoardingTitle3,
+          image1: "assets/images/on_boarding/cloudy.png",
+          subTitle: AppLocalizations.of(context)!.onBoarding3),
+    ];
+    return    BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
           return Scaffold(
             body: Padding(
@@ -32,6 +47,8 @@ class OnBoardingScreen extends StatelessWidget {
                   horizontal: media.width * .05, vertical: media.width * .1),
               child: Column(
                 children: [
+
+
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: media.width * .02),
                     padding: EdgeInsets.symmetric(
@@ -45,18 +62,18 @@ class OnBoardingScreen extends StatelessWidget {
                     ),
                     child: SmoothPageIndicator(
                       controller: state.controller,
-                      count: state.modelOnBoarding.length,
-                      effect: ScrollingDotsEffect(
+                      count: modelOnBoarding.length,
+                      effect: const ScrollingDotsEffect(
                           spacing: 8.0,
                           dotWidth: 20.0,
-                          dotColor: Colors.indigo.shade100,
-                          activeDotColor: Colors.indigo),
+                          dotColor: Colors.black54,
+                          activeDotColor: Colors.yellow),
                     ),
                   ),
                   Expanded(
                     child: PageView.builder(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.modelOnBoarding.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: modelOnBoarding.length,
                       controller: state.controller,
                       onPageChanged: (value) => state.turn = value,
                       itemBuilder: (context, index) {
@@ -77,23 +94,24 @@ class OnBoardingScreen extends StatelessWidget {
                             children: [
                               SizedBox(
                                   height: media.height * .5,
-                                  child: state.modelOnBoarding[index].image1 ==
-                                          null
+                                  child: modelOnBoarding[index].image1 == null
                                       ? Lottie.asset(
-                                          state.modelOnBoarding[index].image
+                                          modelOnBoarding[index]
+                                              .image
                                               .toString(),
                                         )
                                       : Image.asset(
-                                          state.modelOnBoarding[index].image1
+                                          modelOnBoarding[index]
+                                              .image1
                                               .toString(),
                                           width: media.width * .4,
                                         )),
                               CustomTextOnBoarding(
-                                  state.modelOnBoarding[index].title),
+                                  modelOnBoarding[index].title),
                               SizedBox(
                                 height: media.height * .03,
                               ),
-                              CustomText(state.modelOnBoarding[index].subTitle),
+                              CustomText(modelOnBoarding[index].subTitle),
                               const Spacer(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -109,9 +127,24 @@ class OnBoardingScreen extends StatelessWidget {
                                             size: 40,
                                           )),
                                       secondChild: CustomButton(
-                                        onPressed: () => bloc.add(
-                                            NavigatorToLoginScreen(
-                                                context: context)),
+                                        onPressed: () =>
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                PageTransition(
+                                                    child: FadeInDown(
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    1400),
+                                                        delay: const Duration(
+                                                            milliseconds: 200),
+                                                        child:
+                                                            const RegisterScreen()),
+                                                    duration: const Duration(
+                                                        milliseconds: 1500),
+                                                    type: PageTransitionType
+                                                        .bottomToTop),
+                                                (route) => false),
                                         text: "Start",
                                         elevation: 50.0,
                                       ),
@@ -134,7 +167,7 @@ class OnBoardingScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
+
   }
 }

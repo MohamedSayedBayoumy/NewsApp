@@ -3,10 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 late final SharedPreferences sharedPreferences;
 
-
-
-
 Future init() async {
   sharedPreferences = await SharedPreferences.getInstance();
-  print("hi") ;
+  if (sharedPreferences.getString('Localization') == null ) {
+    sharedPreferences.setString("Localization", "en");
+    sharedPreferences.setBool('isArabic', false);
+    print(sharedPreferences.getString('Localization'));
+  }else{}
 }

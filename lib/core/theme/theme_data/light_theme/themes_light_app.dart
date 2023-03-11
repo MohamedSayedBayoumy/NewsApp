@@ -1,40 +1,50 @@
 import 'package:flutter/material.dart';
 
+import '../../../global/globals.dart';
 import '../../sizes_theme/app_sizes.dart';
 import 'color_light_app.dart';
 
 ThemeData appLightThem = ThemeData(
   backgroundColor: AppColorLight.backGroundColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(textStyle: TextStyle(color: Colors.deepPurple),primary: AppColorLight.buttonColor)),
+      style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(color: Colors.deepPurple),
+          primary: AppColorLight.buttonColor)),
   textTheme: TextTheme(
-
-      titleMedium: TextStyle(
-          color: AppColorLight.colorButtonText,
-          overflow: TextOverflow.fade,
-          fontSize: AppSizes.textDefaultSize,
-          fontFamily: "gilroy"),
       titleLarge: TextStyle(
           color: AppColorLight.textColor,
           overflow: TextOverflow.fade,
           fontSize: AppSizes.textLargeSize,
-          fontFamily: "titanOne"),
+          fontFamily: sharedPreferences.getString("Localization") == "en"
+              ? "titanOne"
+              : "arabic"),
       displaySmall: TextStyle(
           color: AppColorLight.textColor,
           overflow: TextOverflow.fade,
           fontSize: AppSizes.textDefaultSize,
           letterSpacing: AppSizes.textSpaceLetter,
-          fontFamily: "inter"),
+          fontFamily: sharedPreferences.getString("Localization") == "en"
+              ? "inter"
+              : "arabicLess"),
+      titleMedium: TextStyle(
+          color: AppColorLight.colorButtonText,
+          overflow: TextOverflow.fade,
+          fontSize: AppSizes.textDefaultSize,
+          fontFamily: "gilroy"),
       displayLarge: TextStyle(
           color: AppColorLight.textColor,
           overflow: TextOverflow.fade,
           fontSize: AppSizes.textDefaultSize,
           letterSpacing: AppSizes.onBoardingLargeSpace,
-          fontFamily: "inter"),
+          fontFamily: sharedPreferences.getString("Localization") == "en"
+              ? "inter"
+              : "arabicLess"),
       displayMedium: TextStyle(
           color: AppColorLight.textColor,
           overflow: TextOverflow.fade,
           fontSize: AppSizes.textDefaultSize,
           letterSpacing: AppSizes.textSpaceLetter,
-          fontFamily: "poppins")),
+          fontFamily: sharedPreferences.getString("Localization") == "en"
+              ? "poppins"
+              : "arabic")),
 );

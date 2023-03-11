@@ -3,7 +3,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app_clean_architecture/core/theme/sizes_theme/app_sizes.dart';
-import 'package:news_app_clean_architecture/core/theme/theme_data/dark_theme/color_dark_app.dart';
 import 'package:news_app_clean_architecture/core/theme/theme_data/light_theme/color_light_app.dart';
 
 class CustomText extends StatelessWidget {

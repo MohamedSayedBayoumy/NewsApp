@@ -4,22 +4,20 @@ import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/onboarding_screen.dart';
+import 'package:news_app_clean_architecture/core/global/globals.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../../../_authenticator/presentation/auth_screens/login_screen.dart';
-import '../../domain/entitie/entite_model.dart';
+import '../../../_authenticator/presentation/auth_screens/register_screen.dart';
+import 'intro_state.dart';
 
 part 'intro_event.dart';
-
-part 'intro_state.dart';
 
 class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
   IntroScreensBloc() : super(IntroScreensState()) {
     on<SwitchPageViewEvent>(_switchPageViewEvent);
-    on<NavigatorToLoginScreen>(_NavigatorToLoginScreen);
     on<ActiveIconEvent>(_activeIconEvent);
+    on<ChangeLocalizationEvent>(_changeLocalizationEvent);
   }
 
   Future<FutureOr<void>> _switchPageViewEvent(
@@ -37,19 +35,19 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     }
   }
 
-  FutureOr<void> _NavigatorToLoginScreen(
-      NavigatorToLoginScreen event, Emitter<IntroScreensState> emit) {
-    Navigator.pushAndRemoveUntil(
-        event.context,
-        PageTransition(
-            child: FadeInDown(
-                duration: const Duration(milliseconds: 1400),
-                delay: const Duration(milliseconds: 200),
-                child: const LoginScreen()),
-            duration: const Duration(milliseconds: 1500),
-            type: PageTransitionType.bottomToTop),
-        (route) => false);
-  }
+  // FutureOr<void> _NavigatorToLoginScreen(
+  //     NavigatorToLoginScreen event, Emitter<IntroScreensState> emit) {
+  //   Navigator.pushAndRemoveUntil(
+  //       event.context,
+  //       PageTransition(
+  //           child: FadeInDown(
+  //               duration: const Duration(milliseconds: 1400),
+  //               delay: const Duration(milliseconds: 200),
+  //               child: const RegisterScreen()),
+  //           duration: const Duration(milliseconds: 1500),
+  //           type: PageTransitionType.bottomToTop),
+  //       (route) => false);
+  // }
 
   FutureOr<void> _activeIconEvent(
       ActiveIconEvent event, Emitter<IntroScreensState> emit) {
@@ -71,5 +69,17 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
         emit(state.copyWith(turnHomeScreen: state.turnHomeScreen));
       }
     }
+  }
+
+   Future<FutureOr<void>>  _changeLocalizationEvent(
+      ChangeLocalizationEvent event, Emitter<IntroScreensState> emit)   async {
+
+
+      await sharedPreferences.setBool("isArabic", true) ;
+      await sharedPreferences.setString("Localization", "ar") ;
+      print(sharedPreferences.getBool("isArabic"));
+      print(sharedPreferences.getString("Localization"));
+      emit(IntroScreensState()) ;
+
   }
 }
