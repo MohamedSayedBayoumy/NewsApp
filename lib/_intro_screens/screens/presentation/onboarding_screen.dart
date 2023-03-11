@@ -139,7 +139,7 @@ class OnBoardingScreen extends StatelessWidget {
                                                         delay: const Duration(
                                                             milliseconds: 200),
                                                         child:
-                                                            const RegisterScreen()),
+                                                              RegisterScreen()),
                                                     duration: const Duration(
                                                         milliseconds: 1500),
                                                     type: PageTransitionType

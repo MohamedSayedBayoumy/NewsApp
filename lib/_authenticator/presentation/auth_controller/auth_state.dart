@@ -13,6 +13,8 @@ class AuthState extends Equatable {
 
   TextEditingController passwordController = TextEditingController();
 
+  dynamic showPassword = true;
+
   final AuthModel? authModel;
 
   String? errorMessage;
@@ -30,7 +32,6 @@ class AuthState extends Equatable {
     return null;
   }
 
-
   errorPassword(TextEditingController controller,
       {required String? val, required String ErrorSpace}) {
     if (val!.isEmpty) {
@@ -44,26 +45,33 @@ class AuthState extends Equatable {
     return null;
   }
 
-  AuthState(
-      {
-        this.authModel ,
-        this.errorMessage ,
-        required this.emailController,
-      required this.passwordController,
-      });
+  AuthState({
+    this.authModel,
+    this.showPassword = true,
+    this.errorMessage,
+    required this.emailController,
+    required this.passwordController,
+  });
 
   AuthState copyWith(
-          {  AuthModel ? authModel,
+          {AuthModel? authModel,
           String? errorMessage,
+          bool? showPassword,
           TextEditingController? emailController,
           TextEditingController? passwordController}) =>
       AuthState(
+          showPassword: showPassword ?? this.showPassword,
           authModel: authModel ?? this.authModel,
           errorMessage: errorMessage ?? this.errorMessage,
           emailController: emailController ?? this.emailController,
           passwordController: passwordController ?? this.passwordController);
 
   @override
-  List<Object?> get props =>
-      [authModel, passwordController, emailController, errorMessage];
+  List<Object?> get props => [
+        authModel,
+        passwordController,
+        emailController,
+        errorMessage,
+        showPassword
+      ];
 }

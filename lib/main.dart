@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/
 import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/onboarding_screen.dart';
 
 import '_authenticator/presentation/auth_screens/login_screen.dart';
+import '_authenticator/presentation/auth_screens/register_screen.dart';
 import '_intro_screens/screens/presentation/start_up_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
@@ -18,6 +20,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   ServicesLocator.service();
   await init();
   runApp(const MyApp());
@@ -40,12 +43,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("homeScreen0");
+
     return BlocProvider(
       create: (context) => sl<IntroScreensBloc>(),
       child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
-          print("homeScreen");
+          print(state.transferWidget);
           return MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -68,7 +71,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: const LoginScreen(),
+            home:     RegisterScreen(),
           );
         },
       ),

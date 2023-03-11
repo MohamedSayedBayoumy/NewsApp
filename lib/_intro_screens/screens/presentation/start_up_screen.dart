@@ -101,7 +101,7 @@ class StartUpScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               PageTransition(
-                                  child: const LoginScreen(),
+                                  child:   LoginScreen(),
                                   duration: const Duration(milliseconds: 1200),
                                   type: PageTransitionType.rightToLeft),
                             );

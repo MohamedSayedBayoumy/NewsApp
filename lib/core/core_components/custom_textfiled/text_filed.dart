@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   String? labelText;
   String? hinText;
   bool? fill;
+  bool? obscureText;
   Color? fillColor;
   Color? borderColor;
   Color? labelColor;
@@ -32,6 +33,7 @@ class CustomTextField extends StatelessWidget {
   CustomTextField(
       {Key? key,
       required this.controller,
+      this.obscureText,
       this.prefixIcon,
       this.textInputAction,
       this.suffixIcon,
@@ -62,9 +64,11 @@ class CustomTextField extends StatelessWidget {
         width: width,
         child: Theme(
             data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.light(primary: Colors.white)),
+                colorScheme: const ColorScheme.light(primary: Colors.white)),
             child: TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
+              obscureText:
+                  obscureText == null || obscureText == false ? false : true,
               textInputAction: textInputAction,
               keyboardType: textInputType,
               onChanged: onChange,
@@ -83,9 +87,12 @@ class CustomTextField extends StatelessWidget {
                     : IconButton(
                         onPressed: onPressedSuffixIcon,
                         icon: Icon(
-                          suffixIcon,
-                          color: AppColorLight.buttonColor,
-                        )),
+                            obscureText == true
+                                ? suffixIcon
+                                : Icons.visibility_off_outlined,
+                            color: obscureText == true
+                                ? AppColorLight.buttonColor
+                                : Colors.grey.shade500)),
                 filled: fill,
                 fillColor: fillColor ?? Colors.white,
                 labelText: labelText,

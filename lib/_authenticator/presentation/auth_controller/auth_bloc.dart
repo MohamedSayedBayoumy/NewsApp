@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emailController: TextEditingController(),
             passwordController: TextEditingController())) {
     on<LoginEvent>(_loginEvent);
+    on<ChangeIconEvent>(_ChangeIconEvent);
   }
 
   final AuthUseCase authUseCase;
@@ -26,15 +27,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (state.formKeyLogin.currentState!.validate()) {
       final result = await authUseCase(AuthParameters(
           state.emailController.text, state.passwordController.text));
-      result.fold((l){
-        state.copyWith(errorMessage: l.message) ;
-        print(l.status) ;
+      result.fold((l) {
+        state.copyWith(errorMessage: l.message);
+        print(l.status);
       }, (r) async {
         state.copyWith(authModel: r);
-        print(r.status) ;
-        // sharedPreferences.setString("token", r.data!["token"]);
-        // print(r.data!["name"]);
+        print(r.status);
+        sharedPreferences.setString("token", r.data!["token"]);
       });
     } else {}
+  }
+
+  FutureOr<void> _ChangeIconEvent(
+      ChangeIconEvent event, Emitter<AuthState> emit) {
+    print("first : ${state.showPassword}");
+    if (state.showPassword == true) {
+
+      emit(state.copyWith(
+          emailController: state.emailController,
+          passwordController: state.passwordController,
+          showPassword: false));
+    } else {
+
+      emit(state.copyWith(
+          emailController: state.emailController,
+          passwordController: state.passwordController,
+          showPassword: true));
+    }
   }
 }

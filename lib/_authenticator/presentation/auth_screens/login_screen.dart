@@ -37,66 +37,6 @@ class LoginScreen extends StatelessWidget {
                           fit: BoxFit.cover)),
                 ),
                 Positioned(
-                    top: media.height * .5,
-                    right: media.width * .039,
-                    child: Form(
-                      key: state.formKeyLogin,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          /// TODO : AutoFill
-                          CustomTextField(
-                            prefixIcon: Icons.email,
-                            textInputAction: TextInputAction.next,
-                            labelText: "email",
-                            hinText: "example@gmail.com",
-                            fill: true,
-                            fillColor: Theme.of(context).primaryColor,
-                            valid: (p0) => state.errorEmail(state.emailController,
-                                val: p0.toString(), ErrorSpace: "email"),
-                            width: media.width * .9,
-                            controller: bloc.state.emailController,
-                            borderColor: Colors.grey,
-                          ),
-                          SizedBox(
-                            height: media.height * .03,
-                          ),
-                          CustomTextField(
-                            fill: true,
-                            fillColor: Theme.of(context).primaryColor,
-                            prefixIcon: Icons.lock,
-                            suffixIcon: Icons.visibility_outlined,
-                            onPressedSuffixIcon: () {
-                              /// TODO : ---------
-                            },
-                            textInputAction: TextInputAction.done,
-                            labelText: "password",
-                            hinText: "password",
-                            valid: (p0) => state.errorPassword(
-                                state.passwordController,
-                                val: p0.toString(),
-                                ErrorSpace: "password"),
-                            width: media.width * .9,
-                            controller: bloc.state.passwordController,
-                            borderColor: Colors.grey,
-                          ),
-                          SizedBox(height: media.height*.03,) ,
-                          CustomButton(
-                            height: media.height * .05,
-                            width: media.width * .5,
-                            onPressed: () async {
-                              bloc.add(LoginEvent(
-                                  email: bloc.state.emailController.text,
-                                  password: bloc.state.passwordController.text));
-                            },
-                            text: "login",
-                            // color: Colors.pink,
-                          )
-                        ],
-                      ),
-                    )),
-
-                Positioned(
                     child: SafeArea(
                         child: SizedBox(
                   width: media.width,
@@ -109,10 +49,110 @@ class LoginScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Theme.of(context).primaryColor),
-                          child: CustomText(" > News")),
+                          child: CustomText(" >  News")),
                     ],
                   ),
                 ))),
+                Positioned(
+                    top: media.height * .19,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Welcome Back ,",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "poppins",
+                              fontSize: 40),
+                        ),
+                        CustomText(
+                          "Sign in to continue",
+                          isBold: false,
+                        )
+                      ],
+                    )),
+                Positioned(
+                    top: media.height * .5,
+                    right: media.width * .039,
+                    child: Form(
+                      key: state.formKeyLogin,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          /// TODO : AutoFill
+                          CustomTextField(
+                            prefixIcon: Icons.email,
+                            textInputAction: TextInputAction.next,
+                            labelText: "email",
+                            hinText: "example@gmail.com",
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            valid: (p0) => state.errorEmail(
+                                state.emailController,
+                                val: p0.toString(),
+                                ErrorSpace: "email"),
+                            width: media.width * .9,
+                            controller: bloc.state.emailController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            obscureText: state.showPassword,
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            prefixIcon: Icons.lock,
+                            suffixIcon: Icons.visibility_outlined,
+                            onPressedSuffixIcon: () {
+                              bloc.add(ChangeIconEvent());
+                            },
+                            textInputAction: TextInputAction.done,
+                            labelText: "password",
+                            hinText: "password",
+                            valid: (p0) => state.errorPassword(
+                                state.passwordController,
+                                val: p0.toString(),
+                                ErrorSpace: "password"),
+                            width: media.width * .9,
+                            controller: bloc.state.passwordController,
+                            borderColor: Colors.grey,
+                            maxLength: 1,
+                            minLength: 1,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    /// TODO : Update Password
+                                  },
+                                  child: CustomText("Forget password ?"))
+                            ],
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomButton(
+                                height: media.height * .05,
+                                width: media.width * .5,
+                                onPressed: () async {
+                                  bloc.add(LoginEvent(
+                                      email: bloc.state.emailController.text,
+                                      password:
+                                          bloc.state.passwordController.text));
+                                },
+                                text: "login",
+                                // color: Colors.pink,
+                              ),
+                            ],
+                          ) ,
+                        ],
+                      ),
+                    )),
               ],
             ),
           );
