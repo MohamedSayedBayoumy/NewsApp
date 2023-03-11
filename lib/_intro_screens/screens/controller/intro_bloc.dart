@@ -2,13 +2,9 @@
 
 import 'dart:async';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/onboarding_screen.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
-import 'package:page_transition/page_transition.dart';
-import '../../../_authenticator/presentation/auth_screens/register_screen.dart';
 import 'intro_state.dart';
 
 part 'intro_event.dart';
@@ -18,6 +14,7 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     on<SwitchPageViewEvent>(_switchPageViewEvent);
     on<ActiveIconEvent>(_activeIconEvent);
     on<ChangeLocalizationEvent>(_changeLocalizationEvent);
+    on<ChangeThemeModeEvent>(_changeThemeModeEvent);
   }
 
   Future<FutureOr<void>> _switchPageViewEvent(
@@ -71,15 +68,25 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     }
   }
 
-   Future<FutureOr<void>>  _changeLocalizationEvent(
-      ChangeLocalizationEvent event, Emitter<IntroScreensState> emit)   async {
+  Future<FutureOr<void>> _changeLocalizationEvent(
+      ChangeLocalizationEvent event, Emitter<IntroScreensState> emit) async {
+    if (sharedPreferences.getBool("isArabic") == false) {
+      await sharedPreferences.setBool("isArabic", true);
+      await sharedPreferences.setString("Localization", "ar");
+    } else {
+      await sharedPreferences.setBool("isArabic", false);
+      await sharedPreferences.setString("Localization", "en");
+    }
+    emit(IntroScreensState());
+  }
 
-
-      await sharedPreferences.setBool("isArabic", true) ;
-      await sharedPreferences.setString("Localization", "ar") ;
-      print(sharedPreferences.getBool("isArabic"));
-      print(sharedPreferences.getString("Localization"));
-      emit(IntroScreensState()) ;
-
+  Future<FutureOr<void>> _changeThemeModeEvent(
+      ChangeThemeModeEvent event, Emitter<IntroScreensState> emit) async {
+    if (sharedPreferences.getBool("isThemeModeDark") == true) {
+      await sharedPreferences.setBool("isThemeModeDark", false);
+    } else {
+      await sharedPreferences.setBool("isThemeModeDark", true);
+    }
+    emit(IntroScreensState());
   }
 }

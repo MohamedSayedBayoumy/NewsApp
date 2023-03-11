@@ -14,11 +14,21 @@ class Test3 extends StatelessWidget {
     final bloc = BlocProvider.of<IntroScreensBloc>(context);
     return Scaffold(
       body: Center(
-        child: TextButton(
-            onPressed: () {
-              bloc.add(ChangeLocalizationEvent(context: context));
-            },
-            child: const Text("change language")),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+                onPressed: () {
+                  bloc.add(ChangeLocalizationEvent(context: context));
+                },
+                child: const Text("change language")),
+            TextButton(
+                onPressed: () {
+                  bloc.add(ChangeThemeModeEvent());
+                },
+                child: const Text("change Theme")),
+          ],
+        ),
       ),
     );
   }

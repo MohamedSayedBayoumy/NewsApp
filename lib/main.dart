@@ -16,9 +16,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized() ;
-  ServicesLocator.service() ;
-  await init() ;
+  WidgetsFlutterBinding.ensureInitialized();
+  ServicesLocator.service();
+  await init();
   runApp(const MyApp());
 }
 
@@ -39,12 +39,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("homeScreen0") ;
+    print("homeScreen0");
     return BlocProvider(
       create: (context) => sl<IntroScreensBloc>(),
       child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
-          print("homeScreen") ;
+          print("homeScreen");
           return MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -63,7 +63,9 @@ class MyApp extends StatelessWidget {
             builder: DevicePreview.appBuilder,
             theme: appLightThem,
             darkTheme: appDarkThem,
-            themeMode: ThemeMode.light,
+            themeMode: sharedPreferences.getBool('isThemeModeDark') == true
+                ? ThemeMode.dark
+                : ThemeMode.light,
             debugShowCheckedModeBanner: false,
             home: const HomeScreenCategories(),
           );

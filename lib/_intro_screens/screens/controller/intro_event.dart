@@ -24,3 +24,5 @@ class ChangeLocalizationEvent extends IntroScreensEvent {
 
   ChangeLocalizationEvent({required this.context});
 }
+
+class ChangeThemeModeEvent extends IntroScreensEvent {}

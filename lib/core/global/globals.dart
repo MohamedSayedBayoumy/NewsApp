@@ -5,9 +5,12 @@ late final SharedPreferences sharedPreferences;
 
 Future init() async {
   sharedPreferences = await SharedPreferences.getInstance();
-  if (sharedPreferences.getString('Localization') == null ) {
+  if (sharedPreferences.getString('Localization') == null) {
     sharedPreferences.setString("Localization", "en");
     sharedPreferences.setBool('isArabic', false);
     print(sharedPreferences.getString('Localization'));
-  }else{}
+  } else {}
+  if (sharedPreferences.getBool('isThemeModeDark') == null) {
+    sharedPreferences.setBool("isThemeModeDark", true);
+  } else {}
 }
