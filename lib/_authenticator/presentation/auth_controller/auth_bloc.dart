@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/global/globals.dart';
 import '../../domain/auth_base_use_case/auth_use_case.dart';
 import '../../domain/auth_entites/auth_entits.dart';
 import 'auth_event.dart';
@@ -22,11 +23,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<FutureOr<void>> _loginEvent(
       LoginEvent event, Emitter<AuthState> emit) async {
-    final result = await authUseCase(AuthParameters(
-        state.emailController.text, state.passwordController.text));
-    result.fold((l) => state.copyWith(errorMessage: l.message), (r) {
-      state.copyWith(authModel: r);
-      state.authModel!.data!["token"] ;
-    });
+    if (state.formKeyLogin.currentState!.validate()) {
+      final result = await authUseCase(AuthParameters(
+          state.emailController.text, state.passwordController.text));
+      result.fold((l){
+        state.copyWith(errorMessage: l.message) ;
+        print(l.status) ;
+      }, (r) async {
+        state.copyWith(authModel: r);
+        print(r.status) ;
+        // sharedPreferences.setString("token", r.data!["token"]);
+        // print(r.data!["name"]);
+      });
+    } else {}
   }
 }

@@ -5,10 +5,11 @@ import '../../sizes_theme/app_sizes.dart';
 import 'color_light_app.dart';
 
 ThemeData appLightThem = ThemeData(
+  primaryColor: Colors.white,
   backgroundColor: AppColorLight.backGroundColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(color: Colors.deepPurple),
+          textStyle: const TextStyle(color: Colors.deepPurple),
           primary: AppColorLight.buttonColor)),
   textTheme: TextTheme(
       titleLarge: TextStyle(

@@ -8,7 +8,6 @@ class ServerError implements Exception {
   ServerError({required this.failureModel});
 }
 
-
 class FailureModel extends Equatable {
   String? status;
 
@@ -16,10 +15,9 @@ class FailureModel extends Equatable {
 
   FailureModel({required this.status, required this.message});
 
-  factory FailureModel.fromJson(Map<String , dynamic> json) => FailureModel(status: json["status"] ,message: json["message"]) ;
-
+  factory FailureModel.fromJson(Map<String, dynamic> json) =>
+      FailureModel(status: json["status"], message: json["message"]);
 
   @override
   List<Object> get props => [status!, message!];
 }
-

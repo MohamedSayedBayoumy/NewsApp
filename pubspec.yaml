@@ -60,6 +60,7 @@ dependencies:
   smooth_page_indicator: ^1.0.1
   device_preview: ^1.1.0
   auto_size_text: ^3.0.0
+  email_validator: ^2.0.1
 
 
 
@@ -96,10 +97,11 @@ flutter:
     - assets/images/on_boarding/basketball.png
     - assets/images/on_boarding/cloudy.png
     - assets/images/start_up/phone.jpg
-    - assets/images/start_up/laptop.jpg
     - assets/icons/homepage.png
     - assets/icons/user.png
     - assets/icons/cloud.png
+    - assets/images/backGround_login.jpg
+    - assets/images/back.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -12,8 +12,7 @@ class AuthModelData extends AuthModel {
   factory AuthModelData.fromJson(Map<String, dynamic> json) => AuthModelData(
       status: json["status"],
       message: json["message"],
-      data:  json["data"]
-
+      data:  json["data"] ?? {}
   );
 }
 

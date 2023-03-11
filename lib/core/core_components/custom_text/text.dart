@@ -9,6 +9,7 @@ class CustomText extends StatelessWidget {
   String? text;
 
   dynamic isBold;
+  dynamic defalut;
 
   CustomText(this.text, {this.isBold = true, Key? key}) : super(key: key);
 

@@ -6,6 +6,7 @@ import 'package:news_app_clean_architecture/_intro_screens/screens/controller/in
 import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/home_screen_categories.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/onboarding_screen.dart';
 
+import '_authenticator/presentation/auth_screens/login_screen.dart';
 import '_intro_screens/screens/presentation/start_up_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: const HomeScreenCategories(),
+            home: const LoginScreen(),
           );
         },
       ),

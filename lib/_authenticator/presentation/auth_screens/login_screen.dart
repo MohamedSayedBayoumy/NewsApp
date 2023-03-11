@@ -16,7 +16,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final media = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => sl<AuthBloc>(),
@@ -29,108 +28,91 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Container(
                   width: media.width,
-                  height: media.height * .9,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.only(bottomLeft: Radius.circular(40)),
-                    gradient: LinearGradient(
-                        begin: AlignmentDirectional.topStart,
-                        end: AlignmentDirectional.bottomEnd,
-                        colors: [
-                          Colors.indigo.shade600,
-                          Colors.indigo.shade500,
-                          Colors.indigo.shade800,
-                          Colors.indigo.shade900,
-                        ]),
-                  ),
-                ),
-                CustomAppBar(
-                  title: "Login",
-                  centerTitle: true,
-                  elevation: 0.0,
-                  widgets: [
-                    TextButton(
-                        onPressed: () {},
-                        child: CustomText(
-                          "Skip",
-                          isBold: false,
-                        ))
-                  ],
+                  height: media.height,
+                  decoration: const BoxDecoration(
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(40)),
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/back.jpg"),
+                          fit: BoxFit.cover)),
                 ),
                 Positioned(
-                    top: media.height * .4,
+                    top: media.height * .5,
                     right: media.width * .039,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        /// TODO : AutoFill
-                        CustomTextField(
-                          prefixIcon: Icons.email,
-                          textInputAction: TextInputAction.next,
-                          labelText: "email",
-                          hinText: "example@gmail.com",
-                          valid: (p0) {
-                            /// TODO : --------
-                          },
-                          width: media.width * .9,
-                          controller: bloc.state.emailController ,
-                          borderColor: Colors.grey,
-                        ),
-                        SizedBox(
-                          height: media.height * .03,
-                        ),
-                        CustomTextField(
-                          prefixIcon: Icons.lock,
-                          suffixIcon: Icons.visibility_outlined,
-                          onPressedSuffixIcon: () {
-                            /// TODO : ---------
-                          },
-                          textInputAction: TextInputAction.done,
-                          labelText: "password",
-                          hinText: "password",
-                          valid: (p0) {
-                            /// TODO : --------
-                          },
-                          width: media.width * .9,
-                          controller: bloc.state.passwordController  ,
-                          borderColor: Colors.grey,
-                        ),
-                      ],
+                    child: Form(
+                      key: state.formKeyLogin,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          /// TODO : AutoFill
+                          CustomTextField(
+                            prefixIcon: Icons.email,
+                            textInputAction: TextInputAction.next,
+                            labelText: "email",
+                            hinText: "example@gmail.com",
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            valid: (p0) => state.errorEmail(state.emailController,
+                                val: p0.toString(), ErrorSpace: "email"),
+                            width: media.width * .9,
+                            controller: bloc.state.emailController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: media.height * .03,
+                          ),
+                          CustomTextField(
+                            fill: true,
+                            fillColor: Theme.of(context).primaryColor,
+                            prefixIcon: Icons.lock,
+                            suffixIcon: Icons.visibility_outlined,
+                            onPressedSuffixIcon: () {
+                              /// TODO : ---------
+                            },
+                            textInputAction: TextInputAction.done,
+                            labelText: "password",
+                            hinText: "password",
+                            valid: (p0) => state.errorPassword(
+                                state.passwordController,
+                                val: p0.toString(),
+                                ErrorSpace: "password"),
+                            width: media.width * .9,
+                            controller: bloc.state.passwordController,
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(height: media.height*.03,) ,
+                          CustomButton(
+                            height: media.height * .05,
+                            width: media.width * .5,
+                            onPressed: () async {
+                              bloc.add(LoginEvent(
+                                  email: bloc.state.emailController.text,
+                                  password: bloc.state.passwordController.text));
+                            },
+                            text: "login",
+                            // color: Colors.pink,
+                          )
+                        ],
+                      ),
                     )),
+
                 Positioned(
-                    top: media.height * .6,
-                    right: media.width * .25,
-                    child: CustomButton(
-                      height: media.height * .05,
-                      width: media.width * .5,
-                      onPressed: () async {
-                        bloc.add(LoginEvent(
-                            email: bloc.state.emailController .text,
-                            password: bloc.state.passwordController .text));
-                      },
-                      text: "login",
-                      // color: Colors.pink,
-                    )),
-                Positioned(
-                    top: media.height * .66,
-                    right: media.width * .29,
-                    child: Row(
-                      children: [
-                        CustomText(
-                          "Sing Up? ",
-                          isBold: false,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(
-                                  color: Colors.pink,
-                                  fontFamily: "poppins",
-                                  fontSize: 19),
-                            )),
-                      ],
-                    )),
+                    child: SafeArea(
+                        child: SizedBox(
+                  width: media.width,
+                  height: media.height * .08,
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: media.width * .05),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context).primaryColor),
+                          child: CustomText(" > News")),
+                    ],
+                  ),
+                ))),
               ],
             ),
           );
