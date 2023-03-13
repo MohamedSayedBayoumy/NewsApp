@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
-
-import 'main.dart';
-
-late double n;
-late double y;
-
-late dynamic b;
+import 'package:news_app_clean_architecture/core/global/globals.dart';
 
 class HomeScreenCategories extends StatefulWidget {
   const HomeScreenCategories({Key? key}) : super(key: key);
@@ -21,27 +13,6 @@ class HomeScreenCategories extends StatefulWidget {
 class _HomeScreenCategoriesState extends State<HomeScreenCategories>
     with TickerProviderStateMixin {
   late TabController _tabController = TabController(length: 3, vsync: this);
-
-  dynamic x;
-
-  dynamic y;
-
-  Future<void> hi() async {
-    var location = new Location();
-    Location a = new Location();
-    dynamic b = await a.getLocation();
-    x = b.latitude;
-    y = b.longitude;
-    print("hi : $x");
-    print("hi2 : $y");
-    try {
-      location.requestPermission(); //to lunch location permission popup
-    } on PlatformException catch (e) {
-      if (e.code == 'PERMISSION_DENIED') {
-        print('Permission denied');
-      }
-    }
-  }
 
   @override
   void initState() {
@@ -64,12 +35,9 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
             Text('Content of Tab Three', style: TextStyle(color: Colors.white)))
   ];
 
-  List<Marker> data = [];
-
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
-    LatLng x = LatLng(0.0, 0.0);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.all(media.width * .03),
@@ -90,33 +58,37 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: media.width * .02),
-                              // child: SizedBox(
-                              //     width: media.width,
-                              //     height: media.height,
-                              //     child: GoogleMap(
-                              //       onMapCreated:
-                              //           (GoogleMapController controller) async {
-                              //         Location a = new Location();
-                              //         b = await a.getLocation();
-                              //         controller.animateCamera(
-                              //           CameraUpdate.newCameraPosition(
-                              //             CameraPosition(
-                              //                 target: LatLng(
-                              //                     b.latitude, b.longitude),
-                              //                 zoom: 15),
-                              //           ),
-                              //         );
-                              //         setState(() {
-                              //           data.add(Marker(
-                              //               markerId: MarkerId(""),
-                              //               position: LatLng(
-                              //                   b.latitude, b.longitude)));
-                              //         });
-                              //       },
-                              //       initialCameraPosition:
-                              //           CameraPosition(target: x),
-                              //       markers: data.toSet(),
-                              //     )),
+                              child: GoogleMap(
+                                onMapCreated: (x) {},
+                                initialCameraPosition: CameraPosition(
+                                  target: LatLng(
+                                      sharedPreferences
+                                          .getDouble("latitude")!
+                                          .toDouble(),
+                                      sharedPreferences
+                                          .getDouble("longitude")!
+                                          .toDouble()),
+                                  zoom: 17.0,
+                                ),
+                                markers: {
+                                  Marker(
+                                    markerId: const MarkerId(("")),
+                                    position: LatLng(
+                                        sharedPreferences
+                                            .getDouble("latitude")!
+                                            .toDouble(),
+                                        sharedPreferences
+                                            .getDouble("longitude")!
+                                            .toDouble()),
+                                    infoWindow: const InfoWindow(
+                                      title: "Hi",
+                                      /// TODO : Fetch user name
+                                      snippet: "Mohamed",
+                                    ),
+                                  )
+                                },
+                              ),
+
                             ),
                             Positioned(
                               top: media.height * .025,
@@ -157,9 +129,7 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                   CustomText("News"),
                   const Spacer(),
                   TextButton(
-                      onPressed: () {
-                        hi();
-                      },
+                      onPressed: () {},
                       child: CustomText(
                         "View All",
                         isBold: false,

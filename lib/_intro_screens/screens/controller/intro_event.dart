@@ -26,3 +26,6 @@ class ChangeLocalizationEvent extends IntroScreensEvent {
 }
 
 class ChangeThemeModeEvent extends IntroScreensEvent {}
+
+
+class GetLocationEvent extends IntroScreensEvent {}

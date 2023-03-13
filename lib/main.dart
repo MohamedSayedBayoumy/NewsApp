@@ -2,10 +2,10 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
 import 'package:news_app_clean_architecture/page_view_screen.dart';
+import 'package:news_app_clean_architecture/text3.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
 import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
@@ -14,8 +14,7 @@ import 'core/theme/theme_data/light_theme/themes_light_app.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-
+import 'home_screen_categories.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,6 @@ Future<void> main() async {
   ServicesLocator.service();
   await init();
   runApp(const MyApp());
-
 }
 
 // Future<void> main() async {
@@ -47,7 +45,6 @@ class MyApp extends StatelessWidget {
       create: (context) => sl<IntroScreensBloc>(),
       child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
         builder: (context, state) {
-          print(state.transferWidget);
           return MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -70,7 +67,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: PageViewScreen(),
+            home:  const PageViewScreen(),
           );
         },
       ),

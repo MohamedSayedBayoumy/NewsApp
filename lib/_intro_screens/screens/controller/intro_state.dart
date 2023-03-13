@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entitie/entite_model.dart';
 
-
-
-
 class IntroScreensState extends Equatable {
   PageController controller = PageController();
 
@@ -15,10 +12,11 @@ class IntroScreensState extends Equatable {
   dynamic turnHomeScreen = 0;
   bool transferWidget = true;
 
+  dynamic longitude;
+
+  dynamic latitude;
 
   PageController controllerHomeScreen = PageController();
-
-
 
   IntroScreensState({this.turnHomeScreen});
 

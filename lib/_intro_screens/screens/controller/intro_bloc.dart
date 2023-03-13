@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 import 'intro_state.dart';
 
@@ -15,6 +16,7 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     on<ActiveIconEvent>(_activeIconEvent);
     on<ChangeLocalizationEvent>(_changeLocalizationEvent);
     on<ChangeThemeModeEvent>(_changeThemeModeEvent);
+    on<GetLocationEvent>(_Get);
   }
 
   Future<FutureOr<void>> _switchPageViewEvent(
@@ -88,5 +90,16 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
       await sharedPreferences.setBool("isThemeModeDark", true);
     }
     emit(IntroScreensState());
+  }
+
+  Future<FutureOr<void>> _Get(
+      GetLocationEvent event, Emitter<IntroScreensState> emit) async {
+    Location a = Location();
+    dynamic b = await a.getLocation();
+    state.longitude = b.longitude;
+    state.latitude = b.latitude;
+    await sharedPreferences.setDouble("longitude", b.longitude);
+    await sharedPreferences.setDouble("latitude", b.latitude);
+    print("${state.latitude} / ${state.longitude}");
   }
 }
