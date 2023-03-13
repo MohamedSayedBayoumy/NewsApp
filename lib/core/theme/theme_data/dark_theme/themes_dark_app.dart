@@ -7,6 +7,7 @@ import 'color_dark_app.dart';
 
 ThemeData appDarkThem = ThemeData(
   primaryColor: Colors.black87,
+
   scaffoldBackgroundColor: AppColorDark.backGroundColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: AppColorLight.buttonColor)),

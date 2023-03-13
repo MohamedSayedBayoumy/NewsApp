@@ -17,10 +17,13 @@ class CustomButton extends StatelessWidget {
 
   dynamic height;
 
+  Color? primary ;
+
   CustomButton({
     Key? key,
     required this.onPressed,
     this.child,
+    this.primary,
     this.elevation,
     this.text,
     this.padding,
@@ -42,6 +45,7 @@ class CustomButton extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
         style: ElevatedButton.styleFrom(
+          primary: primary,
             padding:
                 EdgeInsets.symmetric(horizontal: padding ?? media.width * .07),
             shape:

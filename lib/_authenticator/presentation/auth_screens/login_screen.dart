@@ -60,6 +60,106 @@ class LoginScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               /// TODO : AutoFill
+                              SizedBox(height: media.height*.05,) ,
+                              CustomButton(
+                                  onPressed: () {
+                                    x.signIn().then((value) async {
+                                      String x = value!.email;
+                                      String? y = value.displayName;
+                                      String? n = value.photoUrl;
+                                      String? o = value.id;
+
+                                      /// TODO : here we will check not register " => signInWithEmailAndPassword "
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                        email: x,
+                                        password:
+                                        state.passwordController.toString(),
+                                      );
+                                      print(o);
+                                      print(n);
+                                      print(y);
+                                      print(x);
+                                    });
+                                  },
+                                  elevation: 15.0,
+                                  width: media.width,
+                                  height: media.height * .07,
+                                  primary: Colors.white,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child: Image.asset(
+                                              "assets/icons/google.png")),
+                                      Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: const Text(
+                                              "sign in with Google",
+                                              style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 15.0,
+                                                  fontFamily: "poppins"),
+                                            ),
+                                          )),
+                                    ],
+                                  )),
+                              SizedBox(height: media.height*.05,) ,
+                              CustomButton(
+                                  onPressed: () {},
+                                  elevation: 15.0,
+                                  width: media.width,
+                                  height: media.height * .07,
+                                  primary: const Color.fromRGBO(30, 75, 150, 1),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child: Image.asset(
+                                              "assets/icons/facebook.png")),
+                                      Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: const Text(
+                                              "sign in with Facebook",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15.0,
+                                                  fontFamily: "poppins"),
+                                            ),
+                                          )),
+                                    ],
+                                  )),
+                              SizedBox(height: media.height*.05,) ,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                      child: Container(
+                                        width: media.width * .03,
+                                        color: Colors.black87,
+                                        height: media.height * .001,
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: media.width * .05),
+                                    child: CustomText(
+                                      "or",
+                                      isBold: false,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                        width: media.width * .03,
+                                        color: Colors.white,
+                                        height: media.height * .001,
+                                      )),
+                                ],
+                              ),
+                              SizedBox(height: media.height*.05,) ,
                               CustomTextField(
                                 prefixIcon: Icons.email,
                                 textInputAction: TextInputAction.next,
@@ -135,74 +235,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         )),
                   ),
-                  SizedBox(
-                    height: media.height * .05,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: media.width * .09),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                            child: Container(
-                          width: media.width * .03,
-                          color: Colors.white,
-                          height: media.height * .001,
-                        )),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: media.width * .05),
-                          child: CustomText(
-                            "or",
-                            isBold: false,
-                          ),
-                        ),
-                        Expanded(
-                            child: Container(
-                          width: media.width * .03,
-                          color: Colors.white,
-                          height: media.height * .001,
-                        )),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(top: media.height * .03),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            color: Colors.white.withOpacity(.3),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: IconButton(
-                              onPressed: () {
-                                x.signIn().then((value) async {
-                                  String x = value!.email;
-                                  String? y = value.displayName;
-                                  String? n = value.photoUrl;
-                                  String? o = value.id;
-                                  /// TODO : here we will check not register " => signInWithEmailAndPassword "
-                                  await FirebaseAuth.instance
-                                      .signInWithEmailAndPassword(
-                                    email: x,
-                                    password:
-                                        state.passwordController.toString(),
-                                  );
-                                  print(o);
-                                  print(n);
-                                  print(y);
-                                  print(x);
-                                });
-                              },
-                              icon: Image.asset(
-                                "assets/icons/google.png",
-                                fit: BoxFit.fill,
-                              )))
-                    ],
-                  )
+
                 ],
               ),
             ),

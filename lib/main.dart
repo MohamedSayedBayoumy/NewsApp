@@ -2,14 +2,10 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/home_screen_categories.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/onboarding_screen.dart';
-
-import '_authenticator/presentation/auth_screens/login_screen.dart';
-import '_authenticator/presentation/auth_screens/register_screen.dart';
-import '_intro_screens/screens/presentation/start_up_screen.dart';
+import 'package:news_app_clean_architecture/page_view_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
 import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
@@ -18,12 +14,16 @@ import 'core/theme/theme_data/light_theme/themes_light_app.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+
+
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   ServicesLocator.service();
   await init();
   runApp(const MyApp());
+
 }
 
 // Future<void> main() async {
@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => sl<IntroScreensBloc>(),
       child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home:     RegisterScreen(),
+            home: PageViewScreen(),
           );
         },
       ),
