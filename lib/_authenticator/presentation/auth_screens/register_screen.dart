@@ -19,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
 
   Map<String, dynamic>? _userData;
   AccessToken? _accessToken;
-  bool _checking = true;
+
 
   Future<void> _login() async {
     final LoginResult result = await FacebookAuth.instance
