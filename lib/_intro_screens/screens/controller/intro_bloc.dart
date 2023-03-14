@@ -16,7 +16,7 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     on<ActiveIconEvent>(_activeIconEvent);
     on<ChangeLocalizationEvent>(_changeLocalizationEvent);
     on<ChangeThemeModeEvent>(_changeThemeModeEvent);
-    on<GetLocationEvent>(_Get);
+    // on<GetLocationEvent>(_Get);
   }
 
   Future<FutureOr<void>> _switchPageViewEvent(
@@ -92,14 +92,14 @@ class IntroScreensBloc extends Bloc<IntroScreensEvent, IntroScreensState> {
     emit(IntroScreensState());
   }
 
-  Future<FutureOr<void>> _Get(
-      GetLocationEvent event, Emitter<IntroScreensState> emit) async {
-    Location a = Location();
-    dynamic b = await a.getLocation();
-    state.longitude = b.longitude;
-    state.latitude = b.latitude;
-    await sharedPreferences.setDouble("longitude", b.longitude);
-    await sharedPreferences.setDouble("latitude", b.latitude);
-    print("${state.latitude} / ${state.longitude}");
-  }
+  // Future<FutureOr<void>> _Get(
+  //     GetLocationEvent event, Emitter<IntroScreensState> emit) async {
+  //   Location a = Location();
+  //   dynamic b = await a.getLocation();
+  //   state.longitude = b.longitude;
+  //   state.latitude = b.latitude;
+  //   await sharedPreferences.setDouble("longitude", b.longitude);
+  //   await sharedPreferences.setDouble("latitude", b.latitude);
+  //   print("${state.latitude} / ${state.longitude}");
+  // }
 }

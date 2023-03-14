@@ -2,10 +2,12 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/register_screen.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
 import 'package:news_app_clean_architecture/page_view_screen.dart';
 import 'package:news_app_clean_architecture/text3.dart';
+import '_authenticator/presentation/auth_screens/login_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
 import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home:   const PageViewScreen(),
+            home:   RegisterScreen(),
           );
         },
       ),

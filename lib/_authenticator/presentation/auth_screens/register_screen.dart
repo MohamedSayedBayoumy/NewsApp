@@ -17,18 +17,23 @@ class RegisterScreen extends StatelessWidget {
 
   final GoogleSignIn x = GoogleSignIn();
 
-  Future<void> signInWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login(
-      loginBehavior: LoginBehavior.webOnly,
-      permissions: [
-        'public_profile',
-        'email',
-        'pages_show_list',
-        'pages_messaging',
-        'pages_manage_metadata'
-      ],
-    );
-    print("hi : ${result.message}");
+  Map<String, dynamic>? _userData;
+  AccessToken? _accessToken;
+  bool _checking = true;
+
+  Future<void> _login() async {
+    final LoginResult result = await FacebookAuth.instance
+        .login(loginBehavior: LoginBehavior.webOnly);
+
+    if (result.status == LoginStatus.success) {
+      _accessToken = result.accessToken;
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+      print("data : ${_userData}");
+    } else {
+      print("status : ${result.status}");
+      print(result.message);
+    }
   }
 
   @override
@@ -242,8 +247,8 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       SizedBox(width: media.width * .17),
                       GestureDetector(
-                        onTap: () {
-                          signInWithFacebook() ;
+                        onTap: () async {
+                          await _login();
                         },
                         child: Container(
                           width: media.width * .15,

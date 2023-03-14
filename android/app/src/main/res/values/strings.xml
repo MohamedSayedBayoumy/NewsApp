@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NewsApp</string>
+    <string name="facebook_app_id">482067707344686</string>
+    <string name="fb_login_protocol_scheme">fb482067707344686</string>
+    <string name="facebook_client_token">327f86c7fed164e03823d08d9f3a6f17</string>
+
+
+</resources>

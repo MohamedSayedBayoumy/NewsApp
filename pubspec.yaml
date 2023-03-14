@@ -62,7 +62,7 @@ dependencies:
   google_sign_in: ^6.0.2
   firebase_auth: ^4.1.2
   firebase_core: ^2.3.0
-  flutter_facebook_auth:
+  flutter_facebook_auth: ^5.0.7
   email_validator: ^2.0.1
   google_maps_flutter: ^2.2.0
   location: ^4.4.0

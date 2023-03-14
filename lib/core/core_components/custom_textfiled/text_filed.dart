@@ -98,7 +98,7 @@ class CustomTextField extends StatelessWidget {
                 labelText: labelText,
                 labelStyle: Theme.of(context).textTheme.displayMedium,
                 hintText: hinText,
-                hintStyle: Theme.of(context).textTheme.displayMedium,
+                hintStyle: TextStyle(fontSize: 15 , fontFamily: "inter" ,color: Colors.white38),
                 prefixIcon: prefixIcon == null
                     ? null
                     : Icon(prefixIcon, color: AppColorLight.buttonColor),
