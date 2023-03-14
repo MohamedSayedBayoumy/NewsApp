@@ -7,7 +7,7 @@ class NewsArticleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return   ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         itemCount: 5,
         itemBuilder: (context, index) => Padding(

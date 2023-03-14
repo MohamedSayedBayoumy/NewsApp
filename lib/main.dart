@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home:   RegisterScreen(),
+            home:  const PageViewScreen(),
           );
         },
       ),

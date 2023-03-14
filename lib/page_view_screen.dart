@@ -26,7 +26,7 @@ class PageViewScreen extends StatelessWidget {
               state.turnHomeScreen = value;
             },
             controller: state.controllerHomeScreen,
-            children: const [
+            children:   [
               HomeScreenCategories(),
               Test2(),
               Test3(),
