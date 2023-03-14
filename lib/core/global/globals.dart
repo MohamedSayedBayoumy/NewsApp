@@ -19,9 +19,8 @@ Future init() async {
 
   Location a = Location();
   dynamic b = await a.getLocation();
-  dynamic longitude = b.longitude;
-  dynamic latitude = b.latitude;
   await sharedPreferences.setDouble("longitude", b.longitude);
   await sharedPreferences.setDouble("latitude", b.latitude);
-  print("latitude : $latitude / longitude : $longitude");
+  print(
+      "latitude : ${sharedPreferences.getDouble('latitude')} / longitude : ${sharedPreferences.getDouble('longitude')}");
 }

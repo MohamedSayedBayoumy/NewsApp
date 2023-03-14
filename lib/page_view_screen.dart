@@ -2,11 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
+ import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_do_animtion/custom_fade_animation.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
-import 'package:news_app_clean_architecture/home_screen_categories.dart';
+ import 'package:news_app_clean_architecture/home_screen_categories.dart';
 import 'package:news_app_clean_architecture/text3.dart';
 
 import 'test2.dart';
@@ -22,26 +20,6 @@ class PageViewScreen extends StatelessWidget {
       builder: (context, state) {
         final bloc = BlocProvider.of<IntroScreensBloc>(context);
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            centerTitle: false,
-            title:
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, children: [
-              CustomText(
-                  DateFormat.MMMMEEEEd().format(DateTime.now()).toString(),
-                  isBold: false),
-              CustomText("Welcome Mohamed ,"),
-            ]),
-            actions: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const CircleAvatar(
-                    backgroundImage:
-                        AssetImage("assets/images/image_profile.jpg"),
-                  ))
-            ],
-          ),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (value) {
@@ -54,10 +32,9 @@ class PageViewScreen extends StatelessWidget {
               Test3(),
             ],
           ),
-          bottomNavigationBar: SafeArea(
-              child: Padding(
+          bottomNavigationBar:  Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: media.width * .14, vertical: media.height * .04),
+                horizontal: media.width * .14, vertical: media.height * .01),
             child: Container(
               width: media.width,
               height: media.height * .08,
@@ -116,7 +93,7 @@ class PageViewScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )),
+          ) ,
         );
       },
     );

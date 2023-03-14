@@ -113,6 +113,7 @@ flutter:
     - assets/icons/google.png
     - assets/icons/facebook.png
     - assets/images/image_profile.jpg
+    - assets/map.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -132,6 +133,9 @@ flutter:
       - family: inter
         fonts:
           - asset: assets/Fonts/Inter-Regular.ttf
+      - family: interBold
+        fonts:
+          - asset: assets/Fonts/Inter-SemiBold.ttf
       - family: gilroy
         fonts:
           - asset: assets/Fonts/Gilroy-Bold.ttf

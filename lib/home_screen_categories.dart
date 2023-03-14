@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
+
+import '_articles_news/presentation/news_screens/news_article_screen.dart';
 
 class HomeScreenCategories extends StatefulWidget {
   const HomeScreenCategories({Key? key}) : super(key: key);
@@ -14,40 +17,62 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
     with TickerProviderStateMixin {
   late TabController _tabController = TabController(length: 3, vsync: this);
 
+  String themeMap = "";
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.animateTo(0, curve: Curves.bounceOut);
+    DefaultAssetBundle.of(context).loadString("assets/map.json").then((value) {
+      themeMap = value;
+    });
   }
 
   static const List<Widget> _views = [
-    Center(
-        child: Text(
-      'Content of Tab One',
-      style: TextStyle(color: Colors.white),
-    )),
-    Center(
-        child:
-            Text('Content of Tab Two', style: TextStyle(color: Colors.white))),
-    Center(
-        child:
-            Text('Content of Tab Three', style: TextStyle(color: Colors.white)))
+    NewsArticleScreen() ,
+    NewsArticleScreen() ,
+    NewsArticleScreen() ,
   ];
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return Scaffold(
-        body: Padding(
-            padding: EdgeInsets.all(media.width * .03),
-            child: ListView(physics: const BouncingScrollPhysics(), children: [
+        appBar: AppBar(
+          toolbarHeight: media.height * .08,
+          backgroundColor: Colors.transparent,
+          centerTitle: false,
+          title:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CustomText(DateFormat.MMMMEEEEd().format(DateTime.now()).toString(),
+                isBold: false),
+            CustomText("Welcome Mohamed ,"),
+          ]),
+          actions: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText("EG"),
+              ],
+            ),
+            IconButton(
+                onPressed: () {},
+                icon: const CircleAvatar(
+                  backgroundImage:
+                      AssetImage("assets/images/image_profile.jpg"),
+                )),
+          ],
+        ),
+        body:   ListView(physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
               Container(
                 width: media.width,
                 height: media.height * .3,
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(.1),
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(18),
                 ),
                 child: Row(
                   children: [
@@ -57,18 +82,30 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: media.width * .02),
+                                  horizontal: media.width * .02,
+                                  vertical: media.height * .005),
                               child: GoogleMap(
-                                onMapCreated: (x) {},
-                                initialCameraPosition: CameraPosition(
-                                  target: LatLng(
-                                      sharedPreferences
-                                          .getDouble("latitude")!
-                                          .toDouble(),
-                                      sharedPreferences
-                                          .getDouble("longitude")!
-                                          .toDouble()),
-                                  zoom: 17.0,
+                                zoomControlsEnabled: false,
+                                onMapCreated:
+                                    (GoogleMapController controller) async {
+                                  await controller.animateCamera(
+                                      CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                              target: LatLng(
+                                                  sharedPreferences
+                                                      .getDouble("latitude")!
+                                                      .toDouble(),
+                                                  sharedPreferences
+                                                      .getDouble("longitude")!
+                                                      .toDouble()),
+                                              bearing: 45,
+                                              tilt: 45,
+                                              zoom: 16)));
+                                  controller.setMapStyle(themeMap);
+                                },
+                                initialCameraPosition: const CameraPosition(
+                                  target: LatLng(0.0, 0.0),
+                                  zoom: 8.0,
                                 ),
                                 markers: {
                                   Marker(
@@ -82,13 +119,13 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                                             .toDouble()),
                                     infoWindow: const InfoWindow(
                                       title: "Hi",
+
                                       /// TODO : Fetch user name
                                       snippet: "Mohamed",
                                     ),
                                   )
                                 },
                               ),
-
                             ),
                             Positioned(
                               top: media.height * .025,
@@ -115,11 +152,49 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                             ),
                           ],
                         )),
-                    const Expanded(
+                    Expanded(
                         flex: 1,
-                        child: Text(
-                          "here fetch data from Api Current Location",
-                          style: TextStyle(color: Colors.white),
+                        child: SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Expanded(child: SizedBox()) ,
+                              Text("clear sky",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: media.width * .05,
+                                      fontFamily: "poppins")),
+                              Text("weather",
+                                  style: TextStyle(
+                                      color: Colors.white38,
+                                      fontSize: media.width * .04,
+                                      fontFamily: "inter")),
+                              SizedBox(
+                                height: media.height * .02,
+                              ),
+                              Text("3.09",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: media.width * .05,
+                                      fontFamily: "poppins")),
+                              Text("wind speed",
+                                  style: TextStyle(
+                                      color: Colors.white38,
+                                      fontSize: media.width * .04,
+                                      fontFamily: "inter")),
+                              Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CustomText(DateFormat.jms()
+                                        .format(DateTime.now())),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         )),
                   ],
                 ),
@@ -129,7 +204,9 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                   CustomText("News"),
                   const Spacer(),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        /// TODO : --------
+                      },
                       child: CustomText(
                         "View All",
                         isBold: false,
@@ -166,8 +243,8 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                     ),
                   )),
               Container(
-                color: Colors.transparent,
-                height: media.height * .06,
+                color: Colors.red,
+                height: media.height ,
                 width: media.width,
                 child: TabBarView(
                   physics: const BouncingScrollPhysics(),
@@ -175,6 +252,6 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                   children: _views,
                 ),
               ),
-            ])));
+            ])) ;
   }
 }

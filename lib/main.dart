@@ -23,7 +23,7 @@ Future<void> main() async {
   await init();
   runApp(const MyApp());
 }
-
+//
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   ServicesLocator.service();
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home:  const PageViewScreen(),
+            home:   const PageViewScreen(),
           );
         },
       ),
