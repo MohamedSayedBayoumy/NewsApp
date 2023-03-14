@@ -63,23 +63,19 @@ class LoginScreen extends StatelessWidget {
                               SizedBox(height: media.height*.05,) ,
                               CustomButton(
                                   onPressed: () {
+                                    final GoogleSignIn x = GoogleSignIn();
+
                                     x.signIn().then((value) async {
-                                      String x = value!.email;
+                                      String d = value!.email;
                                       String? y = value.displayName;
                                       String? n = value.photoUrl;
                                       String? o = value.id;
-
                                       /// TODO : here we will check not register " => signInWithEmailAndPassword "
-                                      await FirebaseAuth.instance
-                                          .signInWithEmailAndPassword(
-                                        email: x,
-                                        password:
-                                        state.passwordController.toString(),
-                                      );
+
                                       print(o);
                                       print(n);
                                       print(y);
-                                      print(x);
+                                      print(d);
                                     });
                                   },
                                   elevation: 15.0,
@@ -108,7 +104,9 @@ class LoginScreen extends StatelessWidget {
                                   )),
                               SizedBox(height: media.height*.05,) ,
                               CustomButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    bloc.add(LoginByFaceBookEvent());
+                                  },
                                   elevation: 15.0,
                                   width: media.width,
                                   height: media.height * .07,
@@ -220,7 +218,7 @@ class LoginScreen extends StatelessWidget {
                                     height: media.height * .05,
                                     width: media.width * .5,
                                     onPressed: () async {
-                                      bloc.add(LoginEvent(
+                                      bloc.add(LoginByEmailAndPasswordEvent(
                                           email:
                                               bloc.state.emailController.text,
                                           password: bloc

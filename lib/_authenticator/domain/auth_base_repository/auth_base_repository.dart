@@ -5,5 +5,8 @@ import '../../../core/base_use_case/use_case_call_method.dart';
 import '../../../core/network/error/error.dart';
 
 abstract class AuthBaseRepository {
-  Future<Either<Failure, AuthModel>> getData(AuthParameters authParameters);
+  Future<Either<ContractFailure, AuthModel>> login(
+      AuthParameters authParameters);
+
+
 }

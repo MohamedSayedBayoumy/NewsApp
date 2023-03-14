@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/auth_base_use_case/auth_use_case.dart';
+import '../../domain/auth_base_use_case/login_auth_use_case.dart';
 import '../../domain/auth_entites/auth_entits.dart';
 
 class AuthState extends Equatable {

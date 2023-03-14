@@ -117,6 +117,7 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                                     ),
                                     markers: {
                                       Marker(
+                                        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
                                         markerId: const MarkerId(("")),
                                         position: LatLng(
                                             sharedPreferences
@@ -169,7 +170,7 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Expanded(child: SizedBox()),
+                                  
                                   Text("clear sky",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -193,17 +194,7 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
                                           color: Colors.white38,
                                           fontSize: media.width * .04,
                                           fontFamily: "inter")),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      children: [
-                                        CustomText(DateFormat.jms()
-                                            .format(DateTime.now())),
-                                      ],
-                                    ),
-                                  ),
+
                                 ],
                               ),
                             )),

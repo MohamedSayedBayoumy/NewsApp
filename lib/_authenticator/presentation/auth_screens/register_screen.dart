@@ -13,28 +13,7 @@ import '../../../core/services/services_locator.dart';
 import '../auth_controller/auth_event.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
-
-  final GoogleSignIn x = GoogleSignIn();
-
-  Map<String, dynamic>? _userData;
-  AccessToken? _accessToken;
-
-
-  Future<void> _login() async {
-    final LoginResult result = await FacebookAuth.instance
-        .login(loginBehavior: LoginBehavior.webOnly);
-
-    if (result.status == LoginStatus.success) {
-      _accessToken = result.accessToken;
-      final userData = await FacebookAuth.instance.getUserData();
-      _userData = userData;
-      print("data : ${_userData}");
-    } else {
-      print("status : ${result.status}");
-      print(result.message);
-    }
-  }
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,10 +143,7 @@ class RegisterScreen extends StatelessWidget {
                                 height: media.height * .05,
                                 width: media.width * .5,
                                 onPressed: () async {
-                                  bloc.add(LoginEvent(
-                                      email: bloc.state.emailController.text,
-                                      password:
-                                          bloc.state.passwordController.text));
+                                  bloc.add(LoginByFaceBookEvent());
                                 },
                                 text: "Sign up",
                                 // color: Colors.pink,
@@ -215,24 +191,24 @@ class RegisterScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          x.signIn().then((value) async {
-                            String x = value!.email;
-                            String? y = value.displayName;
-                            String? n = value.photoUrl;
-                            String? o = value.id;
-
-                            /// TODO : here we will registration " => createUserWithEmailAndPassword "
-                            await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                              email: x,
-                              password: state.passwordController.toString(),
-                            );
-                            print(o);
-                            print(n);
-                            print(n);
-                            print(y);
-                            print(x);
-                          });
+                          // x.signIn().then((value) async {
+                          //   String x = value!.email;
+                          //   String? y = value.displayName;
+                          //   String? n = value.photoUrl;
+                          //   String? o = value.id;
+                          //
+                          //   /// TODO : here we will registration " => createUserWithEmailAndPassword "
+                          //   await FirebaseAuth.instance
+                          //       .createUserWithEmailAndPassword(
+                          //     email: x,
+                          //     password: state.passwordController.toString(),
+                          //   );
+                          //   print(o);
+                          //   print(n);
+                          //   print(n);
+                          //   print(y);
+                          //   print(x);
+                          // });
                         },
                         child: Container(
                           width: media.width * .15,
@@ -247,8 +223,8 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       SizedBox(width: media.width * .17),
                       GestureDetector(
-                        onTap: () async {
-                          await _login();
+                        onTap: ()  {
+                          bloc.add(LoginByFaceBookEvent());
                         },
                         child: Container(
                           width: media.width * .15,

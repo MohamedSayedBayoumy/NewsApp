@@ -6,20 +6,23 @@ import 'package:news_app_clean_architecture/_authenticator/domain/auth_entites/a
 import '../../../core/network/error/error.dart';
 import '../../../core/network/error/exception.dart';
 
-class AuthRepository extends AuthBaseRepository{
-  final BaseRemoteData baseRemoteData ;
-
+class AuthRepository extends AuthBaseRepository {
+  final BaseRemoteData baseRemoteData;
 
   AuthRepository(this.baseRemoteData);
 
-
   @override
-  Future<Either<Failure, AuthModel>> getData(AuthParameters authParameters) async {
-    final result = await baseRemoteData.fetchData(authParameters);
-    try{
+  Future<Either<ContractFailure, AuthModel>> login (
+      AuthParameters authParameters) async {
+    final result =
+        await baseRemoteData.remoteLogin(authParameters);
+    try {
       return Right(result);
-    } on ServerError catch(failure) {
-      return Left(FailureStatue(message: failure.failureModel.message ,status: failure.failureModel.status));
+    } on ServerError catch (failure) {
+      return Left(FailureStatue(
+          message: failure.failureModel.message,
+          status: failure.failureModel.status));
     }
   }
+
 }

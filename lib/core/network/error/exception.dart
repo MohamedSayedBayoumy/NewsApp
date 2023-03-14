@@ -9,7 +9,7 @@ class ServerError implements Exception {
 }
 
 class FailureModel extends Equatable {
-  String? status;
+  bool? status;
 
   String? message;
 

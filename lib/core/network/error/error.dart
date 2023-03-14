@@ -2,17 +2,17 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class Failure extends Equatable {
-  String? status;
+abstract class ContractFailure extends Equatable {
+  bool? status;
 
   String? message;
 
-  Failure({required this.status, required this.message});
+  ContractFailure({required this.status, required this.message});
 
   @override
   List<Object?> get props => [status ,message];
 }
 
-class FailureStatue extends Failure {
+class FailureStatue extends ContractFailure {
   FailureStatue({required super.status, required super.message});
 }
