@@ -9,7 +9,6 @@ Future init() async {
 
   if (sharedPreferences.getString('Localization') == null) {
     sharedPreferences.setString("Localization", "en");
-    sharedPreferences.setBool('isArabic', false);
     print(sharedPreferences.getString('Localization'));
   } else {}
 

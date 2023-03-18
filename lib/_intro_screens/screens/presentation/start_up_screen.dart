@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/login_screen.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_button/custom_button.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../../core/core_components/custom_do_animtion/custom_fade_animation.dart';
-import '../../../core/core_components/custom_text/text.dart';
+import '../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
+import '../../../core/widgets/custom_text/text.dart';
 import 'onboarding_screen.dart';
 
 class StartUpScreen extends StatelessWidget {
@@ -82,7 +82,7 @@ class StartUpScreen extends StatelessWidget {
                             PageTransition(
                                 child: fadeElasticIn(
                                     child: const OnBoardingScreen()),
-                                duration: const Duration(milliseconds: 1500),
+
                                 type: PageTransitionType.bottomToTop),
                             (route) => false);
                       },

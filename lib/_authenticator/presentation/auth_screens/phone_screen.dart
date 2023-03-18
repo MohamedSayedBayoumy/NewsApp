@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_button/custom_button.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_textfiled/text_filed.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_textfiled/text_filed.dart';
 
 import '../../../core/global/globals.dart';
 import '../../../core/services/services_locator.dart';

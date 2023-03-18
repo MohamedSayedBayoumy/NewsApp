@@ -7,14 +7,14 @@ class Test2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final media = MediaQuery.of(context).size;
+    print("hi 6") ;
     return Scaffold(
-        backgroundColor: Colors.amber,
+
         body: Center(
           child: Column(
             children: [
-              Text("${FirebaseAuth.instance.currentUser!.displayName}"),
-              Text("${FirebaseAuth.instance.currentUser!.email}"),
-              Text("${FirebaseAuth.instance.currentUser!.phoneNumber}"),
+              Text(" FirebaseAuth.instance.currentUser!.displayName "),
+
             ],
           ),
         ));

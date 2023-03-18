@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_bloc.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 
-import '../../../core/core_components/custom_button/custom_button.dart';
-import '../../../core/core_components/custom_textfiled/text_filed.dart';
+import '../../../core/widgets/custom_button/custom_button.dart';
+import '../../../core/widgets/custom_textfiled/text_filed.dart';
 import '../../../core/services/services_locator.dart';
 import '../auth_controller/auth_event.dart';
 

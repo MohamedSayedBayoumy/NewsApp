@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
 
-import '_intro_screens/screens/controller/intro_bloc.dart';
+import 'core/global/globals.dart';
 
 class Test3 extends StatefulWidget {
   const Test3({Key? key}) : super(key: key);
@@ -17,12 +18,16 @@ class _Test3State extends State<Test3> {
   dynamic y;
   List<Marker> data = [];
 
+
+
   @override
   Widget build(BuildContext context) {
-    LatLng y = LatLng(0.0, 0.0);
+    print("hi 3") ;
 
-    final bloc = BlocProvider.of<IntroScreensBloc>(context);
     final media = MediaQuery.of(context).size;
+
+    IntroBloc bloc = IntroBloc();
+    final cubit = BlocProvider.of<IntroBloc>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -208,23 +213,22 @@ class _Test3State extends State<Test3> {
                       ),
                     ),
 
-                    Text(
+                    const Text(
                       'You have pushed the button this many times:',
                     ),
-                    Text(
+                    const Text(
                       'hi',
-                      style: Theme.of(context).textTheme.headline4,
+
                     ),
                   ]),
             ),
             TextButton(
-                onPressed: () {
-                  bloc.add(ChangeLocalizationEvent(context: context));
+                onPressed: () async {
+                  cubit.changeLocalizationEvent() ;
                 },
                 child: const Text("change language")),
             TextButton(
                 onPressed: () {
-                  bloc.add(ChangeThemeModeEvent());
                 },
                 child: const Text("change Theme")),
           ],

@@ -2,8 +2,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_bloc.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/start_up_screen.dart';
+import 'package:news_app_clean_architecture/page_view_screen.dart';
+import 'package:news_app_clean_architecture/text3.dart';
 import '_authenticator/presentation/auth_screens/phone_screen.dart';
 import '_authenticator/presentation/auth_screens/register_screen.dart';
 import 'core/global/globals.dart';
@@ -40,8 +43,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<IntroScreensBloc>(),
-      child: BlocBuilder<IntroScreensBloc, IntroScreensState>(
+      create: (context) => sl<IntroBloc>(),
+      child: BlocBuilder<IntroBloc, IntroState>(
         builder: (context, state) {
           return MaterialApp(
             localizationsDelegates: const [
@@ -65,7 +68,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: RegisterScreen(),
+            home: StartUpScreen(),
           );
         },
       ),

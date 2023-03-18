@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 
 import '_articles_news/presentation/news_screens/news_article_screen.dart';
@@ -37,6 +37,8 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
 
   @override
   Widget build(BuildContext context) {
+    print("hi 2") ;
+
     final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
