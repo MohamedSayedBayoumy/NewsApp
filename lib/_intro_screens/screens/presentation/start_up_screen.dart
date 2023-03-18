@@ -80,7 +80,8 @@ class StartUpScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             PageTransition(
-                                child: fadeElasticIn(child: OnBoardingScreen()),
+                                child: fadeElasticIn(
+                                    child: const OnBoardingScreen()),
                                 duration: const Duration(milliseconds: 1500),
                                 type: PageTransitionType.bottomToTop),
                             (route) => false);
@@ -101,7 +102,7 @@ class StartUpScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               PageTransition(
-                                  child:   LoginScreen(),
+                                  child: LoginScreen(),
                                   duration: const Duration(milliseconds: 1200),
                                   type: PageTransitionType.rightToLeft),
                             );

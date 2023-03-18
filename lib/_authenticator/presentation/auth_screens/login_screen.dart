@@ -6,23 +6,11 @@ import 'package:news_app_clean_architecture/_authenticator/presentation/auth_con
 import 'package:news_app_clean_architecture/core/core_components/custom_button/custom_button.dart';
 import 'package:news_app_clean_architecture/core/core_components/custom_textfiled/text_filed.dart';
 
-import '../../../core/core_components/custom_app_bar/app_bar.dart';
 import '../../../core/core_components/custom_text/text.dart';
 import '../../../core/services/services_locator.dart';
 import '../auth_controller/auth_bloc.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_bloc.dart';
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
-
-import '../../../core/core_components/custom_button/custom_button.dart';
-import '../../../core/core_components/custom_textfiled/text_filed.dart';
-import '../../../core/services/services_locator.dart';
-import '../auth_controller/auth_event.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -60,23 +48,12 @@ class LoginScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               /// TODO : AutoFill
-                              SizedBox(height: media.height*.05,) ,
+                              SizedBox(
+                                height: media.height * .05,
+                              ),
                               CustomButton(
                                   onPressed: () {
-                                    final GoogleSignIn x = GoogleSignIn();
-
-                                    x.signIn().then((value) async {
-                                      String d = value!.email;
-                                      String? y = value.displayName;
-                                      String? n = value.photoUrl;
-                                      String? o = value.id;
-                                      /// TODO : here we will check not register " => signInWithEmailAndPassword "
-
-                                      print(o);
-                                      print(n);
-                                      print(y);
-                                      print(d);
-                                    });
+                                    bloc.add(LoginByGmailEvent());
                                   },
                                   elevation: 15.0,
                                   width: media.width,
@@ -102,7 +79,9 @@ class LoginScreen extends StatelessWidget {
                                           )),
                                     ],
                                   )),
-                              SizedBox(height: media.height*.05,) ,
+                              SizedBox(
+                                height: media.height * .05,
+                              ),
                               CustomButton(
                                   onPressed: () {
                                     bloc.add(LoginByFaceBookEvent());
@@ -131,16 +110,19 @@ class LoginScreen extends StatelessWidget {
                                           )),
                                     ],
                                   )),
-                              SizedBox(height: media.height*.05,) ,
+                              SizedBox(
+                                height: media.height * .05,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                       child: Container(
-                                        width: media.width * .03,
-                                        color: Colors.black87,
-                                        height: media.height * .001,
-                                      )),
+                                    width: media.width * .03,
+                                    color: Colors.black87,
+                                    height: media.height * .001,
+                                  )),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: media.width * .05),
@@ -151,13 +133,15 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Container(
-                                        width: media.width * .03,
-                                        color: Colors.white,
-                                        height: media.height * .001,
-                                      )),
+                                    width: media.width * .03,
+                                    color: Colors.white,
+                                    height: media.height * .001,
+                                  )),
                                 ],
                               ),
-                              SizedBox(height: media.height*.05,) ,
+                              SizedBox(
+                                height: media.height * .05,
+                              ),
                               CustomTextField(
                                 prefixIcon: Icons.email,
                                 textInputAction: TextInputAction.next,
@@ -233,7 +217,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         )),
                   ),
-
                 ],
               ),
             ),

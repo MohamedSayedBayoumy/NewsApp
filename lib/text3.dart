@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:news_app_clean_architecture/core/core_components/custom_text/text.dart';
 
 import '_intro_screens/screens/controller/intro_bloc.dart';
-import '_intro_screens/screens/controller/intro_state.dart';
-import 'core/global/globals.dart';
-import 'core/services/services_locator.dart';
-import 'home_screen_categories.dart';
 
 class Test3 extends StatefulWidget {
   const Test3({Key? key}) : super(key: key);
@@ -25,7 +19,7 @@ class _Test3State extends State<Test3> {
 
   @override
   Widget build(BuildContext context) {
-    LatLng x = LatLng(0.0, 0.0);
+    LatLng y = LatLng(0.0, 0.0);
 
     final bloc = BlocProvider.of<IntroScreensBloc>(context);
     final media = MediaQuery.of(context).size;
@@ -131,8 +125,8 @@ class _Test3State extends State<Test3> {
                               Colors.black.withOpacity(0.35),
                               BlendMode.multiply,
                             ),
-                            image:
-                                AssetImage('assets/images/image_profile.jpg'),
+                            image: const AssetImage(
+                                'assets/images/image_profile.jpg'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -163,7 +157,9 @@ class _Test3State extends State<Test3> {
                           ),
                           child: Padding(
                             padding: EdgeInsets.only(
-                                left: media.width * .05 , top: media.height*.04,right:media.width * .05 ),
+                                left: media.width * .05,
+                                top: media.height * .04,
+                                right: media.width * .05),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -181,21 +177,18 @@ class _Test3State extends State<Test3> {
                                             fontSize: media.width * .04),
                                       )),
                                 ),
-
-                        SizedBox(
-                                      width: media.width * .5,
-                                      child: Text(
-                                        "Ann Smarty",
-                                        maxLines: 2,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.white60,
-                                            fontFamily: "inter",
-                                            fontSize: media.width * .04),
-                                      )),
-
+                                SizedBox(
+                                    width: media.width * .5,
+                                    child: Text(
+                                      "Ann Smarty",
+                                      maxLines: 2,
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.white60,
+                                          fontFamily: "inter",
+                                          fontSize: media.width * .04),
+                                    )),
                                 Expanded(
-
                                   child: SizedBox(
                                       width: media.width * .5,
                                       child: Text(

@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_bloc.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
@@ -191,24 +189,7 @@ class RegisterScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // x.signIn().then((value) async {
-                          //   String x = value!.email;
-                          //   String? y = value.displayName;
-                          //   String? n = value.photoUrl;
-                          //   String? o = value.id;
-                          //
-                          //   /// TODO : here we will registration " => createUserWithEmailAndPassword "
-                          //   await FirebaseAuth.instance
-                          //       .createUserWithEmailAndPassword(
-                          //     email: x,
-                          //     password: state.passwordController.toString(),
-                          //   );
-                          //   print(o);
-                          //   print(n);
-                          //   print(n);
-                          //   print(y);
-                          //   print(x);
-                          // });
+                          bloc.add(RegisterByGmailEvent(context: context));
                         },
                         child: Container(
                           width: media.width * .15,
@@ -223,7 +204,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       SizedBox(width: media.width * .17),
                       GestureDetector(
-                        onTap: ()  {
+                        onTap: () {
                           bloc.add(LoginByFaceBookEvent());
                         },
                         child: Container(
@@ -239,7 +220,11 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ) ,
+                  TextButton(onPressed: (){
+                    final GoogleSignIn signInGoogle = GoogleSignIn();
+                    signInGoogle.signOut() ;
+                  }, child: Text(",kfdnsl")),
                 ],
               ),
             ),

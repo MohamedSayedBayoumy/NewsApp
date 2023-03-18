@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   dynamic title;
   dynamic color;
@@ -14,22 +13,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   dynamic toolbarHeight;
   dynamic heightFlexibleSpace;
   Widget? leading;
-  dynamic centerTitle ;
-  List<Widget>? widgets ;
+  dynamic centerTitle;
+  List<Widget>? widgets;
 
   CustomAppBar(
       {Key? key,
-        this.title,
-        this.elevation,
-        this.leading,
-        this.child,
-        this.color,
-        this.customSize,
-        this.toolbarHeight,
-        this.centerTitle,
-        this.heightFlexibleSpace,
-        this.widgets,
-        this.colorText})
+      this.title,
+      this.elevation,
+      this.leading,
+      this.child,
+      this.color,
+      this.customSize,
+      this.toolbarHeight,
+      this.centerTitle,
+      this.heightFlexibleSpace,
+      this.widgets,
+      this.colorText})
       : super(key: key);
 
   @override
@@ -39,21 +38,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return AppBar(
-        centerTitle: centerTitle == null ? true : false  ,
-        toolbarHeight: toolbarHeight ?? media.height*.1,
-        backgroundColor: Colors.transparent,
-        elevation: elevation ?? 15.0,
-        leading: leading  ,
-        actions: widgets ,
-        flexibleSpace: Container(height: heightFlexibleSpace),
-        title: Text(
-          title,
-          style: TextStyle(
-              fontFamily: 'gilroy',
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Colors.white),
-        ),
+      centerTitle: centerTitle == null ? true : false,
+      toolbarHeight: toolbarHeight ?? media.height * .1,
+      backgroundColor: Colors.transparent,
+      elevation: elevation ?? 15.0,
+      leading: leading,
+      actions: widgets,
+      flexibleSpace: Container(height: heightFlexibleSpace),
+      title: Text(
+        title,
+        style: const TextStyle(
+            fontFamily: 'gilroy',
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+            color: Colors.white),
+      ),
     );
   }
 }
