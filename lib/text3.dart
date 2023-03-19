@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
 
-import 'core/global/globals.dart';
+import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
+
+import '../../../core/services/services_locator.dart';
+import '_authenticator/presentation/auth_controller/auth_bloc.dart';
+import '_authenticator/presentation/auth_controller/auth_event.dart';
+import 'core/widgets/custom_button/custom_button.dart';
+import 'core/widgets/custom_textfiled/text_filed.dart';
 
 class Test3 extends StatefulWidget {
   const Test3({Key? key}) : super(key: key);
@@ -18,222 +23,182 @@ class _Test3State extends State<Test3> {
   dynamic y;
   List<Marker> data = [];
 
+  TextEditingController n1 = TextEditingController();
 
+  bool isEmpty = true;
+
+  //  void lol(){
+  //
+  //      setState(() {
+  //        isEmpty =! isEmpty ;
+  //      });
+  //  }
+  //
+  //  @override
+  //  void initState() {
+  // n1.addListener(() { lol() ; }) ;
+  //    super.initState();
+  //  }
+  //
 
   @override
   Widget build(BuildContext context) {
-    print("hi 3") ;
+    print("hi 3");
 
-    final media = MediaQuery.of(context).size;
+    final media = MediaQuery
+        .of(context)
+        .size;
 
-    IntroBloc bloc = IntroBloc();
-    final cubit = BlocProvider.of<IntroBloc>(context);
+    // IntroBloc bloc = IntroBloc();
+    // final cubit = BlocProvider.of<IntroBloc>(context);
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    //   Container(
-                    //     width: 500 ,
-                    //     height: 300 ,
-                    //     color: Colors.red,
-                    //     child: GoogleMap(
-                    //       onMapCreated: (x){},
-                    //       initialCameraPosition: CameraPosition (
-                    //         target: LatLng (24.77 , 34.66),
-                    //         zoom: 10.0,
-                    //       ),
-                    //       markers: {
-                    //         Marker( markerId: MarkerId (("")),
-                    //           position: LatLng (12, 12),
-                    //           infoWindow: InfoWindow (
-                    //             title: "Meto",
-                    //             snippet: "Hamzawy",
-                    //           ),
-                    //         )
-                    //       },
-                    //     ),
-                    //   ),
-                    //   Container(
-                    //     width: 500 ,
-                    //     height: 300 ,
-                    //     color: Colors.red,
-                    //     child: GoogleMap(
-                    //       onMapCreated: (x) {},
-                    //
-                    //       initialCameraPosition: CameraPosition(
-                    //         target: LatLng(
-                    //             sharedPreferences
-                    //                 .getDouble("latitude")!
-                    //                 .toDouble(),
-                    //             sharedPreferences
-                    //                 .getDouble("longitude")!
-                    //                 .toDouble()),
-                    //         zoom: 3.0,
-                    //       ),
-                    //       markers: {
-                    //         Marker(
-                    //           markerId: const MarkerId(("")),
-                    //           position: LatLng(
-                    //               sharedPreferences
-                    //                   .getDouble("latitude")!
-                    //                   .toDouble(),
-                    //               sharedPreferences
-                    //                   .getDouble("longitude")!
-                    //                   .toDouble()),
-                    //           infoWindow: InfoWindow(
-                    //             title: "Meto",
-                    //             snippet: "Hamzawy",
-                    //           ),
-                    //         )
-                    //       },
-                    //     ),
-                    //   ),
-                    //
-                    //   Container (
-                    //     child: RaisedButton (
-                    //       onPressed: () async {
-                    //
-                    //       },
-                    //       child: Text ("Get Location"),
-                    //     ),
-                    //   ),
+    // final bloc = ;
+    return BlocProvider<AuthBloc>(
+      create: (context) => sl<AuthBloc>(),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          final bloc = BlocProvider.of<AuthBloc>(context);
 
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: media.width * .03),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * .23,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(80),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.6),
-                              offset: const Offset(
-                                0.0,
-                                10.0,
-                              ),
-                              blurRadius: 10.0,
-                              spreadRadius: -6.0,
-                            ),
-                          ],
-                          image: DecorationImage(
-                            colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.35),
-                              BlendMode.multiply,
-                            ),
-                            image: const AssetImage(
-                                'assets/images/image_profile.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * .24,
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(80),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              stops: const [
-                                0.1,
-                                0.4,
-                                0.6,
-                                0.9,
-                              ],
-                              colors: [
-                                Colors.black45,
-                                Colors.black38.withOpacity(.2),
-                                Colors.white.withOpacity(.1),
-                                Colors.white.withOpacity(.2),
-                              ],
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: media.width * .05,
-                                top: media.height * .04,
-                                right: media.width * .05),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                      width: media.width * .5,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "Tools to Create, Optimize Meta Descriptions",
-                                        maxLines: 2,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "interBold",
-                                            fontSize: media.width * .04),
-                                      )),
-                                ),
-                                SizedBox(
-                                    width: media.width * .5,
-                                    child: Text(
-                                      "Ann Smarty",
-                                      maxLines: 2,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Colors.white60,
-                                          fontFamily: "inter",
-                                          fontSize: media.width * .04),
-                                    )),
-                                Expanded(
-                                  child: SizedBox(
-                                      width: media.width * .5,
-                                      child: Text(
-                                        "2023-02-16T 13:54:52Z",
-                                        maxLines: 2,
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.white60,
-                                            fontFamily: "inter",
-                                            fontSize: media.width * .04),
-                                      )),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+          return BlocListener<AuthBloc, AuthState>(
+            listener: (BuildContext context, AuthState state) {
+              if (state.isEmpty == true) {
+                print("object") ;
+              } else {
+                print("object 22") ;
+              }
+            },
+            child: Scaffold(
+              body: SafeArea(
+                child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: media.height * .03),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        CustomTextField(
+                        onChange: (value) {
+                          bloc.add(ChangeColorButton(value));
 
-                    const Text(
-                      'You have pushed the button this many times:',
-                    ),
-                    const Text(
-                      'hi',
+                          // if(state.phoneController.text.isNotEmpty){
+                    //   setState(() {
+                    //     state.isEmpty = false ;
+                    //     print("object") ;
+                    //   });
+                    //   print(value) ;
+                    // }else{
+                    //   setState(() {
+                    //     state.isEmpty = true ;
+                    //   });
+                    // }
+                    // BlocProvider.of<AuthBloc>(context).add(ChangeColorButton(value));
+                },
+                    borderColor: Colors.yellowAccent.shade400,
+                    styleBorder: const OutlineInputBorder(),
+                    labelText: "Phone Number",
+                    hinText: "+20",
+                    controller:
+                    bloc.state.phoneController),
+                SizedBox(
+                  height: media.height * .03,
+                ),
+                // BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                //   final bloc = BlocProvider.of<AuthBloc>(context);
+                //   print("object 2");
+                //   return
+                CustomButton(
+                  width: media.width,
+                  primary: state.isEmpty
+                      ? Colors.blueAccent
+                      : Colors.yellowAccent,
+                  onPressed: () {
+                    bloc.add(AddPhoneNumberEvent(
 
-                    ),
-                  ]),
+                        context: context,
+                        phoneNumber: bloc.state.phoneController.text));
+                  },
+                  text: "Add",
+                ) ,
+                // }
+                ],
+              ),
             ),
-            TextButton(
-                onPressed: () async {
-                  cubit.changeLocalizationEvent() ;
-                },
-                child: const Text("change language")),
-            TextButton(
-                onPressed: () {
-                },
-                child: const Text("change Theme")),
-          ],
-        ),
+          ),)
+          );
+        },
       ),
     );
   }
 }
+
+//
+// class _Test3State extends State<Test3> {
+//   final TextEditingController _inputController = TextEditingController();
+//   final TextEditingController _inputController2 = TextEditingController();
+//   bool enable = false;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+//
+//   @override
+//   void dispose() {
+//     _inputController.dispose();
+//     _inputController2.dispose();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: Scaffold(
+//         body: Center(
+//             child: Column(children: [
+//               TextField(
+//                 controller: _inputController,
+//                 onChanged: (data) {
+//                   if (_inputController.text.isEmpty ||
+//                       _inputController2.text.isEmpty) {
+//                     enable = false;
+//                   } else {
+//                     enable = true;
+//                   }
+//                   setState(() {});
+//                 },
+//               ),
+//               TextField(
+//                 controller: _inputController2,
+//                 onChanged: (data) {
+//                   if (_inputController.text.isEmpty ||
+//                       _inputController2.text.isEmpty) {
+//                     enable = false;
+//                   } else {
+//                     enable = true;
+//                   }
+//                   setState(() {});
+//                 },
+//               ),
+//               ElevatedButton(
+//                 onPressed: enable ? () {} : null,
+//                 child: Text('${enable}'),
+//               )
+//             ])),
+//       ),
+//     );
+//   }
+// }
+
+// class AddPhoneScreen extends StatefulWidget {
+//   const AddPhoneScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   State<AddPhoneScreen> createState() => _AddPhoneScreenState();
+// }
+//
+// class _AddPhoneScreenState extends State<AddPhoneScreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//
+//   }
+// }

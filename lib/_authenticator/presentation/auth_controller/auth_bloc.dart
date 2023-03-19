@@ -34,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterByFaceBookEvent>(_registerByFaceBookEvent);
     on<RegisterByGmailEvent>(_registerByGmailEvent);
     on<RegisterByEmailAndPasswordEvent>(_RegisterByEmailAndPasswordEvent);
+    on<ChangeColorButton>(_ChangeColorButton);
     on<AddPhoneNumberEvent>(_addPhoneNumber);
   }
 
@@ -94,12 +95,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> _RegisterByEmailAndPasswordEvent(
       RegisterByEmailAndPasswordEvent event, Emitter<AuthState> emit) async {
     if (state.formKeyLogin.currentState!.validate()) {
-      final result = await authUseCase.register(AuthParameters(
-          email: state.emailController.text,
-          password: state.passwordController.text,
-          name: state.nameController.text,
-          phone: state.phoneController.text));
+      final result = await authUseCase
+          .register(AuthParameters(
+              email: state.emailController.text,
+              password: state.passwordController.text,
+              name: state.nameController.text,
+              phone: state.phoneController.text))
+          .then((value) {
+        Navigator.pushAndRemoveUntil(
+            event.context,
+            PageTransition(
+                child: const AddPhoneScreen(),
+                type: PageTransitionType.rightToLeft),
+            (route) => false);
+      });
       print("Message : ${result.message}");
+      emit(state.copyWith());
     } else {}
   }
 
@@ -142,8 +153,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<FutureOr<void>> _addPhoneNumber(
       AddPhoneNumberEvent event, Emitter<AuthState> emit) async {
-    final email = sharedPreferences.getString("email")  ;
-    print(email) ;
+    final email = sharedPreferences.getString("email");
+    print(email);
     final result = await authUseCase
         .addPhoneNumber(AuthParameters(
             email: sharedPreferences.getString("email"),
@@ -160,7 +171,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               type: PageTransitionType.rightToLeft),
           (route) => false);
     });
-    print("Response Add Phone Number : $result") ;
+    print("Response Add Phone Number : $result");
   }
 
   FutureOr<void> _ChangeIconEvent(
@@ -178,4 +189,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           showPassword: true));
     }
   }
-}
+
+  FutureOr<void> _ChangeColorButton(
+      ChangeColorButton event, Emitter<AuthState> emit) {
+    print("final : ${state.isEmpty}") ;
+    if (state.isEmpty == true) {
+      state.isEmpty = false ;
+      emit(state.copyWith(isEmpty: false)) ;
+    }else{
+      state.isEmpty = true ;
+      emit(state.copyWith(isEmpty: true)) ;
+    }
+    print("final2 : ${state.isEmpty}") ;
+
+    }
+  }
+

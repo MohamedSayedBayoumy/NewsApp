@@ -98,7 +98,7 @@ class CustomTextField extends StatelessWidget {
                 labelText: labelText,
                 labelStyle: Theme.of(context).textTheme.displayMedium,
                 hintText: hinText,
-                hintStyle: TextStyle(fontSize: 15 , fontFamily: "inter" ,color: Colors.white38),
+                hintStyle: const TextStyle(fontSize: 15 , fontFamily: "inter" ,color: Colors.white38),
                 prefixIcon: prefixIcon == null
                     ? null
                     : Icon(prefixIcon, color: AppColorLight.buttonColor),
@@ -106,7 +106,7 @@ class CustomTextField extends StatelessWidget {
                     borderRadius:
                         BorderRadius.circular(enabledCurveBorder ?? 10),
                     borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor)),
+                        BorderSide(color: borderColor ?? Theme.of(context).primaryColor)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

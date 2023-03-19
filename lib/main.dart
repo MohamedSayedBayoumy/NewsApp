@@ -24,6 +24,7 @@ Future<void> main() async {
   await init();
   runApp(const MyApp());
 }
+
 //
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: StartUpScreen(),
+            home: Test3(),
           );
         },
       ),

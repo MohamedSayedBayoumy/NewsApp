@@ -16,24 +16,27 @@ class RegisterByFaceBookEvent extends AuthEvent {}
 
 class RegisterByGmailEvent extends AuthEvent {
   dynamic context;
+
   RegisterByGmailEvent({required this.context});
 }
 
 class RegisterByEmailAndPasswordEvent extends AuthEvent {
-  String? email;
+  dynamic context;
 
-  String? password;
-
-  RegisterByEmailAndPasswordEvent(
-      {required this.email, required this.password});
+  RegisterByEmailAndPasswordEvent(this.context);
 }
 
 class AddPhoneNumberEvent extends AuthEvent {
   String? phoneNumber;
-  dynamic context ;
+  dynamic context;
 
-  AddPhoneNumberEvent(
-      {required this.phoneNumber ,required this.context});
+  AddPhoneNumberEvent({required this.phoneNumber, required this.context});
 }
 
 class ChangeIconEvent extends AuthEvent {}
+
+class ChangeColorButton extends AuthEvent {
+  String? value ;
+
+  ChangeColorButton(this.value);
+}
