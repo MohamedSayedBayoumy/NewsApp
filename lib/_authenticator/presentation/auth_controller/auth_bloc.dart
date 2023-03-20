@@ -199,13 +199,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _ChangeColorButton(
       ChangeColorButton event, Emitter<AuthState> emit) {
-    (event.value == null || event.value == "")
-        ? state.StreamPhoneController.sink.addError("Invalid value entered!")
-        : state.StreamPhoneController.sink.add(event.value.toString());
-    emit(AuthState(
-        emailController: TextEditingController(),
-        passwordController: TextEditingController(),
-        nameController: TextEditingController(),
-        phoneController: state.phoneController));
+    if(event.value == null || event.value == ""){
+      emit(AuthState(
+          emailController: TextEditingController(),
+          passwordController: TextEditingController(),
+          nameController: TextEditingController(),
+          phoneController: state.phoneController));
+    }else{
+      emit(AuthState(
+          emailController: TextEditingController(),
+          passwordController: TextEditingController(),
+          nameController: TextEditingController(),
+          phoneController: state.phoneController));
+    }
+
+
   }
 }
