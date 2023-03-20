@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/start_up_screen.dart';
-import 'package:news_app_clean_architecture/page_view_screen.dart';
-import 'package:news_app_clean_architecture/text3.dart';
 import '_authenticator/presentation/auth_screens/phone_screen.dart';
-import '_authenticator/presentation/auth_screens/register_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
 import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
@@ -69,7 +65,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: Test3(),
+            home: AddPhoneScreen(),
           );
         },
       ),

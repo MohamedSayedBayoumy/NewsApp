@@ -19,74 +19,50 @@ class AddPhoneScreen extends StatefulWidget {
 class _AddPhoneScreenState extends State<AddPhoneScreen> {
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery
-        .of(context)
-        .size;
+    final media = MediaQuery.of(context).size;
     return BlocProvider<AuthBloc>(
         create: (context) => sl<AuthBloc>(),
-        child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: media.height * .03),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Add Your Phone",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "poppins",
-                        fontSize: 40),
-                  ),
-                  CustomText(
-                    "Please Sureable it your number personality",
-                    isBold: false,
-                  ),
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                BlocListener<AuthBloc, AuthState>(
-                  listener: (BuildContext context, AuthState state) {
-
-                    // if(state.title != _controller.text) {
-                    //   _controller.text = state.title;
-                    //   _controller.selection = TextSelection.collapsed(offset: state.title.length);
-                    // }
-                  },
-                  // child: CustomTextField(
-                  //     onChange: (value) {
-                  //       // if(state.phoneController.text.isNotEmpty){
-                  //       //   setState(() {
-                  //       //     state.isEmpty = false ;
-                  //       //     print("object") ;
-                  //       //   });
-                  //       //   print(value) ;
-                  //       // }else{
-                  //       //   setState(() {
-                  //       //     state.isEmpty = true ;
-                  //       //   });
-                  //       // }
-                  //       bloc.add(ChangeColorButton(value));
-                  //     },
-                  //     borderColor: Colors.yellowAccent.shade400,
-                  //     styleBorder: const OutlineInputBorder(),
-                  //     labelText: "Phone Number",
-                  //     hinText: "+20",
-                  //     // controller: bloc.state.phoneController
-                  // ) ,
-                ) ,
-
-                  SizedBox(
-                    height: media.height * .03,
-                  ),
-                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-                    final bloc = BlocProvider.of<AuthBloc>(context);
-                    print("object 2");
-                    return CustomButton(
+        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+          final bloc = BlocProvider.of<AuthBloc>(context);
+          return Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: media.height * .03),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Add Your Phone",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "poppins",
+                          fontSize: 40),
+                    ),
+                    CustomText(
+                      "Please Sureable it your number personality",
+                      isBold: false,
+                    ),
+                    SizedBox(
+                      height: media.height * .03,
+                    ),
+                    CustomTextField(
+                        onChange: (value) {
+                          bloc.add(ChangeColorButton(value));
+                        },
+                        borderColor: Colors.yellowAccent.shade400,
+                        styleBorder: const OutlineInputBorder(),
+                        labelText: "Phone Number",
+                        hinText: "+20",
+                        // controller: null,
+                        controller: bloc.state.phoneController),
+                    SizedBox(
+                      height: media.height * .03,
+                    ),
+                    CustomButton(
                       width: media.width,
-                      primary: state.isEmpty == true
-                          ? Colors.blueAccent
+                      primary: bloc.state.phoneController.text == ""
+                          ? Colors.transparent
                           : Colors.yellowAccent,
                       onPressed: () {
                         bloc.add(AddPhoneNumberEvent(
@@ -94,16 +70,12 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             context: context));
                       },
                       text: "Add",
-                    );
-                  }
-                  ),
-
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-
-    );
+          );
+        }));
   }
 }

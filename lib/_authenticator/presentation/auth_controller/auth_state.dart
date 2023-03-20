@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
+import 'dart:async';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,8 @@ class AuthState extends Equatable {
   var formKeyLogin = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  var StreamPhoneController = StreamController<String>();
+  var phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
 
   dynamic showPassword = true;
@@ -21,20 +24,9 @@ class AuthState extends Equatable {
 
   bool isEmpty = true ;
 
+  String? value ;
 
-  void lol(){
-    if(phoneController.text.isNotEmpty){
-      // setState(() {
-        isEmpty = false ;
-        print("object") ;
-      // });
-      // print(/value) ;
-    }else{
-      // setState(() {
-        isEmpty = true ;
-      // });
-    }
-  }
+  Stream<String> get textStream => StreamPhoneController.stream;
 
 
 
@@ -79,6 +71,7 @@ class AuthState extends Equatable {
       this.showPassword = true,
       this.errorMessage,
         this.isEmpty = true ,
+        this.value ,
       required this.emailController,
       required this.passwordController,
       required this.nameController,

@@ -17,10 +17,11 @@ abstract class BaseRemoteData {
 class RemoteData implements BaseRemoteData {
   @override
   Future<AuthModelData> remoteLogin(AuthParameters authParameters) async {
+    final lang =sharedPreferences.getString("Localization").toString() ;
+
     final response = await Dio().post(AppConstance.pathLogin,
         options: Options(headers: {
-          "lang":
-              sharedPreferences.getString("Localization") == "en" ? "en" : "ar",
+          "lang":   lang.toString() ,
           "Content-Type": "application/json"
         }),
         queryParameters: {
@@ -38,10 +39,11 @@ class RemoteData implements BaseRemoteData {
 
   @override
   Future<AuthModelData> remoteRegister(AuthParameters authParameters) async {
+    final lang =sharedPreferences.getString("Localization").toString() ;
+
     final response = await Dio().post(AppConstance.pathRegister,
         options: Options(headers: {
-          "lang":
-              sharedPreferences.getString("Localization") == "en" ? "en" : "ar",
+          "lang":  lang.toString() ,
           "Content-Type": "application/json"
         }),
         queryParameters: {
@@ -63,13 +65,12 @@ class RemoteData implements BaseRemoteData {
 
   @override
   Future<AuthModelData> addPhoneNumber(AuthParameters authParameters) async {
-    // final token =sharedPreferences.getString("token").toString() ;
+    final lang =sharedPreferences.getString("Localization").toString() ;
     final response = await Dio().put(AppConstance.pathUpdateProfile,
         options: Options(headers: {
-          "lang":  "ar" ,
+          "lang":  lang.toString() ,
           "Content-Type": "application/json" ,
           "Authorization": sharedPreferences.getString("token").toString()  ,
-
         }),
         queryParameters: {
           "email": authParameters.email,
@@ -80,6 +81,7 @@ class RemoteData implements BaseRemoteData {
         });
     if (response.data["message"] == "تم التعديل بنجاح" ||
         response.data["message"] == "Updated Successfully") {
+      print("Success : $response");
       return AuthModelData.fromJson(response.data);
     } else {
       print("Failure") ;

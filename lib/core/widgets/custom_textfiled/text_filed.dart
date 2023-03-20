@@ -4,7 +4,7 @@ import 'package:news_app_clean_architecture/core/theme/theme_data/light_theme/co
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
-  TextEditingController controller;
+  TextEditingController? controller;
   IconData? prefixIcon;
   IconData? suffixIcon;
   double? height;
@@ -27,7 +27,7 @@ class CustomTextField extends StatelessWidget {
   TextInputType? textInputType;
   dynamic enabledCurveBorder;
   TextInputAction? textInputAction;
-
+  String? errorText ;
   void Function()? onPressedSuffixIcon;
 
   CustomTextField(
@@ -55,7 +55,7 @@ class CustomTextField extends StatelessWidget {
       this.height,
       this.styleBorder,
       this.width,
-      this.borderColor})
+      this.borderColor, this. errorText})
       : super(key: key);
 
   @override
@@ -82,6 +82,7 @@ class CustomTextField extends StatelessWidget {
               maxLengthEnforcement:
                   MaxLengthEnforcement.truncateAfterCompositionEnds,
               decoration: InputDecoration(
+                errorText: errorText,
                 suffixIcon: suffixIcon == null
                     ? null
                     : IconButton(

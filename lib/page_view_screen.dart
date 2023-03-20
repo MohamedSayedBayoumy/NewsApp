@@ -43,7 +43,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: const [
           HomeScreenCategories(),
           Test2(),
-          Test3(),
+          // Test3(),
         ],
       ),
       bottomNavigationBar: Padding(

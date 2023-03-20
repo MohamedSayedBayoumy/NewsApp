@@ -13,6 +13,7 @@ import 'package:news_app_clean_architecture/_authenticator/presentation/auth_scr
 import 'package:news_app_clean_architecture/home_screen_categories.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../core/functions/snak_bar.dart';
 import '../../../core/global/globals.dart';
 import '../../../test2.dart';
 import '../../domain/auth_base_use_case/auth_use_case.dart';
@@ -164,12 +165,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             image: sharedPreferences.getString("image")))
         .then((value) {
       print("Message : ${value.message}");
-      Navigator.pushAndRemoveUntil(
-          event.context,
-          PageTransition(
-              child: const HomeScreenCategories(),
-              type: PageTransitionType.rightToLeft),
-          (route) => false);
+      if (value.message == "تم التعديل بنجاح" ||
+          value.message == "Updated Successfully") {
+        Navigator.pushAndRemoveUntil(
+            event.context,
+            PageTransition(
+                child: const HomeScreenCategories(),
+                type: PageTransitionType.rightToLeft),
+            (route) => false);
+      } else {
+        ScaffoldMessenger.of(event.context).showSnackBar(snackBar(value.message!));
+        print(value.message);
+      }
     });
     print("Response Add Phone Number : $result");
   }
@@ -192,16 +199,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _ChangeColorButton(
       ChangeColorButton event, Emitter<AuthState> emit) {
-    print("final : ${state.isEmpty}") ;
-    if (state.isEmpty == true) {
-      state.isEmpty = false ;
-      emit(state.copyWith(isEmpty: false)) ;
-    }else{
-      state.isEmpty = true ;
-      emit(state.copyWith(isEmpty: true)) ;
-    }
-    print("final2 : ${state.isEmpty}") ;
-
-    }
+    (event.value == null || event.value == "")
+        ? state.StreamPhoneController.sink.addError("Invalid value entered!")
+        : state.StreamPhoneController.sink.add(event.value.toString());
+    emit(AuthState(
+        emailController: TextEditingController(),
+        passwordController: TextEditingController(),
+        nameController: TextEditingController(),
+        phoneController: state.phoneController));
   }
-
+}
