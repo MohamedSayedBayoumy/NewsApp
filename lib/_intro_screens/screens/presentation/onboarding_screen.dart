@@ -11,7 +11,6 @@ import '../../../_authenticator/presentation/auth_screens/register_screen.dart';
 import '../../../core/widgets/custom_button/custom_button.dart';
 import '../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
 import '../../domain/entitie/entite_model.dart';
-import '../component/custom_text_on Boarding/text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -79,9 +78,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 controller: controller,
                 onPageChanged: (value) {
                   setState(() {
-                    turn = value ;
+                    turn = value;
                   });
-                  },
+                },
                 itemBuilder: (context, index) {
                   return fadeElasticIn(
                       child: Container(
@@ -106,11 +105,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     modelOnBoarding[index].image1.toString(),
                                     width: media.width * .4,
                                   )),
-                        CustomTextOnBoarding(modelOnBoarding[index].title),
+                        Container(
+                          padding: EdgeInsets.all(media.width * .02),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(colors: [
+                              Colors.black.withOpacity(.5),
+                              Colors.black.withOpacity(.4),
+                              Colors.black.withOpacity(.2),
+                              Colors.transparent
+                            ]),
+                          ),
+                          child: CustomText(
+                            text: modelOnBoarding[index].title,
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                        ),
                         SizedBox(
                           height: media.height * .03,
                         ),
-                        CustomText(modelOnBoarding[index].subTitle),
+                        CustomText(text: modelOnBoarding[index].subTitle),
                         const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -120,14 +134,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     onPressed: () {
                                       if (turn == 1) {
                                         setState(() {
-                                          transferWidget =! transferWidget;
+                                          transferWidget = !transferWidget;
                                         });
                                         controller.nextPage(
-                                            duration: const Duration(milliseconds: 1200),
+                                            duration: const Duration(
+                                                milliseconds: 1200),
                                             curve: Curves.easeInOut);
                                       } else {
                                         controller.nextPage(
-                                            duration: const Duration(milliseconds: 1200),
+                                            duration: const Duration(
+                                                milliseconds: 1200),
                                             curve: Curves.easeInOut);
                                       }
                                     },

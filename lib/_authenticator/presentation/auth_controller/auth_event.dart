@@ -1,15 +1,23 @@
+import 'package:flutter/widgets.dart';
+
 abstract class AuthEvent {}
 
 class LoginByFaceBookEvent extends AuthEvent {}
 
-class LoginByGmailEvent extends AuthEvent {}
+class LoginByGmailEvent extends AuthEvent {
+  dynamic context;
+  LoginByGmailEvent({required this.context});
+}
 
 class LoginByEmailAndPasswordEvent extends AuthEvent {
   String? email;
 
   String? password;
 
-  LoginByEmailAndPasswordEvent({required this.email, required this.password});
+  dynamic context;
+
+  LoginByEmailAndPasswordEvent(
+      {required this.email, required this.password, required this.context});
 }
 
 class RegisterByFaceBookEvent extends AuthEvent {}
@@ -36,7 +44,7 @@ class AddPhoneNumberEvent extends AuthEvent {
 class ChangeIconEvent extends AuthEvent {}
 
 class ChangeColorButton extends AuthEvent {
-  String? value ;
+  String? value;
 
   ChangeColorButton(this.value);
 }

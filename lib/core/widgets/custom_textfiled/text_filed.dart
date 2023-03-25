@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:news_app_clean_architecture/core/theme/theme_data/light_theme/color_light_app.dart';
+
+import '../../global/globals.dart';
+// import 'package:news_app_clean_architecture/core/theme/theme_data/light_theme/color_light_app.dart';
 
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
@@ -27,7 +29,7 @@ class CustomTextField extends StatelessWidget {
   TextInputType? textInputType;
   dynamic enabledCurveBorder;
   TextInputAction? textInputAction;
-  String? errorText ;
+  String? errorText;
   void Function()? onPressedSuffixIcon;
 
   CustomTextField(
@@ -55,7 +57,8 @@ class CustomTextField extends StatelessWidget {
       this.height,
       this.styleBorder,
       this.width,
-      this.borderColor, this. errorText})
+      this.borderColor,
+      this.errorText})
       : super(key: key);
 
   @override
@@ -64,9 +67,10 @@ class CustomTextField extends StatelessWidget {
         width: width,
         child: Theme(
             data: Theme.of(context).copyWith(
-                colorScheme: const ColorScheme.light(primary: Colors.white)),
+                colorScheme:
+                    const ColorScheme.light(primary: Colors.yellowAccent)),
             child: TextFormField(
-              style: Theme.of(context).textTheme.displaySmall,
+              style: Theme.of(context).textTheme.bodyMedium,
               obscureText:
                   obscureText == null || obscureText == false ? false : true,
               textInputAction: textInputAction,
@@ -76,8 +80,8 @@ class CustomTextField extends StatelessWidget {
               enabled: enabled,
               validator: valid,
               controller: controller,
-              minLines: maxLength,
-              maxLines: minLength,
+              maxLines: maxLength,
+              minLines: minLength,
               maxLength: length,
               maxLengthEnforcement:
                   MaxLengthEnforcement.truncateAfterCompositionEnds,
@@ -92,22 +96,24 @@ class CustomTextField extends StatelessWidget {
                                 ? suffixIcon
                                 : Icons.visibility_off_outlined,
                             color: obscureText == true
-                                ? AppColorLight.buttonColor
+                                ? Colors.yellow
                                 : Colors.grey.shade500)),
-                filled: fill,
-                fillColor: fillColor ?? Colors.white,
+                filled: true,
+                fillColor: sharedPreferences.getBool('isThemeModeDark') == true
+                    ? Colors.black
+                    : Colors.white,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
                 labelText: labelText,
-                labelStyle: Theme.of(context).textTheme.displayMedium,
+                labelStyle: Theme.of(context).textTheme.bodyMedium,
                 hintText: hinText,
-                hintStyle: const TextStyle(fontSize: 15 , fontFamily: "inter" ,color: Colors.white38),
                 prefixIcon: prefixIcon == null
                     ? null
-                    : Icon(prefixIcon, color: AppColorLight.buttonColor),
+                    : Icon(prefixIcon, color: Colors.yellow),
                 enabledBorder: OutlineInputBorder(
                     borderRadius:
                         BorderRadius.circular(enabledCurveBorder ?? 10),
-                    borderSide:
-                        BorderSide(color: borderColor ?? Theme.of(context).primaryColor)),
+                    borderSide: BorderSide(
+                        color: borderColor ?? Theme.of(context).primaryColor)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

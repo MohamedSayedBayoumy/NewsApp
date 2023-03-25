@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
 import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/start_up_screen.dart';
 import '_authenticator/presentation/auth_screens/phone_screen.dart';
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
-import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
-import 'core/theme/theme_data/light_theme/themes_light_app.dart';
+// import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
+// import 'core/theme/theme_data/light_theme/themes_light_app.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'core/themes/themes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +24,6 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-//
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   ServicesLocator.service();
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: AddPhoneScreen(),
+            home: const StartUpScreen(),
           );
         },
       ),

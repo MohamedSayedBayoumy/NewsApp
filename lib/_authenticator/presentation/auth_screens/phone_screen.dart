@@ -40,8 +40,8 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                           fontSize: 40),
                     ),
                     CustomText(
-                      "Please Sureable it your number personality",
-                      isBold: false,
+                      text: "Please Sureable it your number personality",
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     SizedBox(
                       height: media.height * .03,
@@ -49,6 +49,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     CustomTextField(
                         onChange: (value) {
                           bloc.add(ChangeColorButton(value));
+                          return null;
                         },
                         borderColor: Colors.yellowAccent.shade400,
                         styleBorder: const OutlineInputBorder(),
@@ -61,7 +62,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                     ),
                     CustomButton(
                       width: media.width,
-                      primary: bloc.state.phoneController.text == ""
+                      backgroundColor: bloc.state.phoneController.text == ""
                           ? Colors.transparent
                           : Colors.yellowAccent,
                       onPressed: () {

@@ -10,9 +10,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/phone_screen.dart';
-import 'package:news_app_clean_architecture/home_screen_categories.dart';
+import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/home_screen_categories.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../_intro_screens/screens/presentation/page_view_screen.dart';
 import '../../../core/functions/snak_bar.dart';
 import '../../../core/global/globals.dart';
 import '../../../test2.dart';
@@ -41,12 +42,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthUseCase authUseCase;
 
+  void navigate({required dynamic context, required Widget child}) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageTransition(child: child, type: PageTransitionType.rightToLeft),
+        (route) => false);
+  }
+
   Future<FutureOr<void>> _loginByEmailAndPasswordEvent(
       LoginByEmailAndPasswordEvent event, Emitter<AuthState> emit) async {
     if (state.formKeyLogin.currentState!.validate()) {
       final result = await authUseCase.login(AuthParameters(
           email: state.emailController.text,
           password: state.passwordController.text));
+      if (result.status == true) {
+        navigate(child: const PageViewScreen(), context: event.context);
+      } else {
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar(result.message!, context: event.context));
+      }
       print("Message : ${result.message}");
     } else {}
   }
@@ -86,6 +100,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     signInGoogle.signIn().then((value) async {
       final result = await authUseCase
           .login(AuthParameters(email: value!.email, password: value.id));
+      if (result.status == true) {
+        navigate(child: const AddPhoneScreen(), context: event.context);
+      } else {
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar(result.message!, context: event.context));
+      }
       print("Message : ${result.message}");
     });
   }
@@ -96,21 +116,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> _RegisterByEmailAndPasswordEvent(
       RegisterByEmailAndPasswordEvent event, Emitter<AuthState> emit) async {
     if (state.formKeyLogin.currentState!.validate()) {
-      final result = await authUseCase
-          .register(AuthParameters(
-              email: state.emailController.text,
-              password: state.passwordController.text,
-              name: state.nameController.text,
-              phone: state.phoneController.text))
-          .then((value) {
-        Navigator.pushAndRemoveUntil(
-            event.context,
-            PageTransition(
-                child: const AddPhoneScreen(),
-                type: PageTransitionType.rightToLeft),
-            (route) => false);
-      });
-      print("Message : ${result.message}");
+      final result = await authUseCase.register(AuthParameters(
+          email: state.emailController.text,
+          password: state.passwordController.text,
+          name: state.nameController.text,
+          phone: state.phoneController.text));
+      if (result.status == true) {
+        navigate(child: const PageViewScreen(), context: event.context);
+      } else {
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar(result.message!, context: event.context));
+      }
+
       emit(state.copyWith());
     } else {}
   }
@@ -127,7 +144,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             name: value.displayName,
             phone: number + 3,
             image: value.photoUrl));
-        print("Success : ${result}");
+
         await sharedPreferences.setString("email", value.email);
         await sharedPreferences.setString("password", value.id);
         await sharedPreferences.setString("id", value.id);
@@ -137,18 +154,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         try {
           await sharedPreferences.setString("token", result.data!["token"]);
         } catch (e) {
-          print(e);
+          ScaffoldMessenger.of(event.context)
+              .showSnackBar(snackBar("Server down", context: event.context));
+          if (result.status == true) {
+            navigate(child: const AddPhoneScreen(), context: event.context);
+          } else {
+            ScaffoldMessenger.of(event.context).showSnackBar(
+                snackBar(result.message!, context: event.context));
+          }
         }
       } else {
-        print("Some Thing Error");
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar("Some Thing Error", context: event.context));
       }
-    }).then((value) {
-      Navigator.pushAndRemoveUntil(
-          event.context,
-          PageTransition(
-              child: const AddPhoneScreen(),
-              type: PageTransitionType.rightToLeft),
-          (route) => false);
     });
   }
 
@@ -165,16 +183,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             image: sharedPreferences.getString("image")))
         .then((value) {
       print("Message : ${value.message}");
-      if (value.message == "تم التعديل بنجاح" ||
-          value.message == "Updated Successfully") {
-        Navigator.pushAndRemoveUntil(
-            event.context,
-            PageTransition(
-                child: const HomeScreenCategories(),
-                type: PageTransitionType.rightToLeft),
-            (route) => false);
+      if (value.status == true) {
+        navigate(child: const PageViewScreen(), context: event.context);
       } else {
-        ScaffoldMessenger.of(event.context).showSnackBar(snackBar(value.message!));
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar(value.message!, context: event.context));
         print(value.message);
       }
     });
@@ -199,20 +212,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> _ChangeColorButton(
       ChangeColorButton event, Emitter<AuthState> emit) {
-    if(event.value == null || event.value == ""){
+    if (event.value == null || event.value == "") {
       emit(AuthState(
           emailController: TextEditingController(),
           passwordController: TextEditingController(),
           nameController: TextEditingController(),
           phoneController: state.phoneController));
-    }else{
+    } else {
       emit(AuthState(
           emailController: TextEditingController(),
           passwordController: TextEditingController(),
           nameController: TextEditingController(),
           phoneController: state.phoneController));
     }
-
-
   }
 }

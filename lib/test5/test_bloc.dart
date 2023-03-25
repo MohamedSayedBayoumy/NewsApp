@@ -9,7 +9,6 @@ import '../../../core/services/services_locator.dart';
 import '../_authenticator/presentation/auth_controller/auth_bloc.dart';
 import '../_authenticator/presentation/auth_controller/auth_event.dart';
 
-
 class AddPhoneScreen extends StatefulWidget {
   const AddPhoneScreen({Key? key}) : super(key: key);
 
@@ -42,28 +41,27 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                             fontSize: 40),
                       ),
                       CustomText(
-                        "Please Sureable it your number personality",
-                        isBold: false,
+                        text: "Please Sureable it your number personality",
                       ),
                       SizedBox(
                         height: media.height * .03,
                       ),
                       StreamBuilder(
-                        stream: bloc.state.textStream ,
-                        builder: (context,  AsyncSnapshot<String> textStream) {
+                        stream: bloc.state.textStream,
+                        builder: (context, AsyncSnapshot<String> textStream) {
                           return CustomTextField(
                               onChange: (value) {
                                 bloc.add(ChangeColorButton(value));
-
                               },
-                              errorText:  textStream.hasError ? textStream.error.toString() : null,
+                              errorText: textStream.hasError
+                                  ? textStream.error.toString()
+                                  : null,
                               borderColor: Colors.yellowAccent.shade400,
                               styleBorder: const OutlineInputBorder(),
                               labelText: "Phone Number",
                               hinText: "+20",
                               // controller: null,
-                              controller: bloc.state.phoneController
-                          ) ;
+                              controller: bloc.state.phoneController);
                         },
                       ),
                       SizedBox(
@@ -71,7 +69,7 @@ class _AddPhoneScreenState extends State<AddPhoneScreen> {
                       ),
                       CustomButton(
                         width: media.width,
-                        primary: bloc.state.phoneController.text == ""
+                        backgroundColor: bloc.state.phoneController.text == ""
                             ? Colors.blueAccent
                             : Colors.yellowAccent,
                         onPressed: () {

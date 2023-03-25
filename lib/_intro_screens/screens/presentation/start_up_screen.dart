@@ -61,16 +61,16 @@ class StartUpScreen extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: CustomTextLarge(
-                      AppLocalizations.of(context)!.startUp1,
+                    child: CustomText(
+                      text: AppLocalizations.of(context)!.startUp1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   SizedBox(
                     height: media.height * .04,
                   ),
                   CustomText(
-                    AppLocalizations.of(context)!.startUp2,
-                    isBold: false,
+                    text: AppLocalizations.of(context)!.startUp2,
                   ),
                   SizedBox(
                     height: media.height * .05,
@@ -80,10 +80,8 @@ class StartUpScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             PageTransition(
-                                child: fadeElasticIn(
-                                    child: const OnBoardingScreen()),
-
-                                type: PageTransitionType.bottomToTop),
+                                child: const OnBoardingScreen(),
+                                type: PageTransitionType.rightToLeftWithFade),
                             (route) => false);
                       },
                       text: AppLocalizations.of(context)!.startUp3,
@@ -94,8 +92,8 @@ class StartUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                          AppLocalizations.of(context)!.startUp4,
-                          isBold: false,
+                          text: AppLocalizations.of(context)!.startUp4,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         TextButton(
                           onPressed: () {
@@ -103,12 +101,12 @@ class StartUpScreen extends StatelessWidget {
                               context,
                               PageTransition(
                                   child: LoginScreen(),
-                                  duration: const Duration(milliseconds: 1200),
-                                  type: PageTransitionType.rightToLeft),
+                                  type: PageTransitionType.rightToLeftWithFade),
                             );
                           },
-                          child: CustomTextButton(
-                            AppLocalizations.of(context)!.startUp5,
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.startUp5,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
                       ],

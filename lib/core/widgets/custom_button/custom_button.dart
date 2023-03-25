@@ -1,29 +1,29 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 
 class CustomButton extends StatelessWidget {
   void Function()? onPressed;
 
-  dynamic text;
+  String? text;
 
-  dynamic child;
+  Widget? child;
 
-  dynamic elevation;
+  double? elevation;
 
+  double? width;
+  double? padding;
 
-  dynamic width;
-  dynamic padding;
+  double? height;
 
-  dynamic height;
-
-  Color? primary ;
+  Color? backgroundColor;
 
   CustomButton({
     Key? key,
     required this.onPressed,
     this.child,
-    this.primary,
+    this.backgroundColor,
     this.elevation,
     this.text,
     this.padding,
@@ -39,17 +39,21 @@ class CustomButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: child ??
-            Text(
-              text,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
         style: ElevatedButton.styleFrom(
-          primary: primary,
+            backgroundColor: backgroundColor ?? Colors.yellowAccent,
             padding:
                 EdgeInsets.symmetric(horizontal: padding ?? media.width * .07),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        child: child ??
+            CustomText(
+              text: text!,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "inter",
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold),
+            ),
       ),
     );
   }
