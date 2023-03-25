@@ -2,19 +2,16 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_cubit.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/controller/intro_state.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/start_up_screen.dart';
-import '_authenticator/presentation/auth_screens/phone_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
+
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
-// import 'core/theme/theme_data/dark_theme/themes_dark_app.dart';
-// import 'core/theme/theme_data/light_theme/themes_light_app.dart';
-
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'core/themes/themes.dart';
+import 'presentation_screens/presentation/controller/intro_cubit.dart';
+import 'presentation_screens/presentation/controller/intro_state.dart';
+import 'presentation_screens/presentation/screens/home_screen/page_view_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,10 +64,23 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             debugShowCheckedModeBanner: false,
-            home: const StartUpScreen(),
+            home: const Condition(),
           );
         },
       ),
     );
+  }
+}
+
+class Condition extends StatelessWidget {
+  const Condition({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (sharedPreferences.getBool('isLogin') == true) {
+      return const PageViewScreen();
+    } else {
+      return const StartUpScreen();
+    }
   }
 }

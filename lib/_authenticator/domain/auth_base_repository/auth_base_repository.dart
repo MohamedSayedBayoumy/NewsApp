@@ -6,4 +6,6 @@ abstract class AuthBaseRepository {
   Future<AuthModel> register(AuthParameters authParameters);
 
   Future<AuthModel> addPhoneNumber(AuthParameters authParameters);
+
+  Future<AuthModel> logOut(AuthParameters authParameters);
 }

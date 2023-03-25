@@ -17,4 +17,8 @@ class AuthUseCase {
   Future<AuthModel> addPhoneNumber(AuthParameters parameters) async {
     return await authBaseRepository.addPhoneNumber(parameters);
   }
+
+  Future<AuthModel> logOut(AuthParameters parameters) async {
+    return await authBaseRepository.logOut(parameters);
+  }
 }

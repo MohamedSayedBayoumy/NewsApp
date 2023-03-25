@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 class OnBoardingModel extends Equatable {
   dynamic image;
@@ -21,12 +22,3 @@ class OnBoardingModel extends Equatable {
   List<Object> get props => [image, title!, subTitle!];
 }
 
-class BottomNavigationModel {
-  String? image;
-
-  bool? index;
-
-
-
-  BottomNavigationModel({required this.image, required this.index});
-}

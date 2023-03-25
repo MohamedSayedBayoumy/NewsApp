@@ -5,7 +5,7 @@ import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_use_
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_bloc.dart';
 
 import '../../_authenticator/data/auth_repository_data/auth_data_repository.dart';
-import '../../_intro_screens/screens/controller/intro_cubit.dart';
+import '../../presentation_screens/presentation/controller/intro_cubit.dart';
 
 final sl = GetIt.asNewInstance();
 
@@ -16,7 +16,7 @@ class ServicesLocator {
     sl.registerFactory<IntroBloc>(() => IntroBloc());
     sl.registerFactory<AuthBloc>(() => AuthBloc(sl()));
 
-    sl.registerLazySingleton<BaseRemoteData>(() => RemoteData( ));
+    sl.registerLazySingleton<BaseRemoteData>(() => RemoteData());
     sl.registerLazySingleton<AuthBaseRepository>(() => AuthRepository(sl()));
     sl.registerLazySingleton(() => AuthUseCase(sl()));
   }

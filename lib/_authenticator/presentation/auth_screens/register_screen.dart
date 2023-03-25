@@ -174,46 +174,15 @@ class RegisterScreen extends StatelessWidget {
                           onPressed: () {
                             bloc.add(RegisterByGmailEvent(context: context));
                           },
-                          icon: Image.asset("assets/icons/google.png")),
+                          icon: Image.asset("assets/icons/google.png"),
+                          iconSize: media.width * .12),
                       SizedBox(width: media.width * .17),
                       IconButton(
                           onPressed: () {
                             bloc.add(LoginByFaceBookEvent());
                           },
-                          icon: Image.asset("assets/icons/facebook.png")),
-
-                      // GestureDetector(
-                      //   onTap: () {
-                      //
-                      //   },
-                      //   child: Container(
-                      //     width: media.width * .15,
-                      //     height: media.height * .07,
-                      //     margin: EdgeInsets.only(top: media.height * .03),
-                      //     decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.circular(8),
-                      //         image: const DecorationImage(
-                      //             image: AssetImage(),
-                      //             fit: BoxFit.cover)),
-                      //   ),
-                      // ),
-                      //
-                      // GestureDetector(
-                      //   onTap: () {
-                      //
-                      //   },
-                      //   child: Container(
-                      //     width: media.width * .15,
-                      //     height: media.height * .07,
-                      //     margin: EdgeInsets.only(top: media.height * .03),
-                      //     decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.circular(8),
-                      //         image: const DecorationImage(
-                      //             image:
-                      //                 AssetImage("assets/icons/facebook.png"),
-                      //             fit: BoxFit.cover)),
-                      //   ),
-                      // ),
+                          icon: Image.asset("assets/icons/facebook.png"),
+                          iconSize: media.width * .12),
                     ],
                   ),
                 ],

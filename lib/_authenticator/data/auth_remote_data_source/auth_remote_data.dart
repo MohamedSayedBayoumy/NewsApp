@@ -14,6 +14,8 @@ abstract class BaseRemoteData {
   Future<AuthModelData> remoteRegister(AuthParameters authParameters);
 
   Future<AuthModelData> addPhoneNumber(AuthParameters authParameters);
+
+  Future<AuthModelData> logOut(AuthParameters authParameters);
 }
 
 class RemoteData implements BaseRemoteData {
@@ -85,6 +87,28 @@ class RemoteData implements BaseRemoteData {
       // ignore: avoid_print
       print(e.error);
       return AuthModelData.fromJson(const {"message": "cheak your connection"});
+    }
+  }
+
+  @override
+  Future<AuthModelData> logOut(AuthParameters authParameters) async {
+    final lang = sharedPreferences.getString("Localization").toString();
+    try {
+      final response = await Dio().post(AppConstance.logoutProfile,
+          options: Options(headers: {
+            "lang": lang.toString(),
+            "Content-Type": "application/json",
+            "Authorization": sharedPreferences.getString("token").toString(),
+          }),
+          queryParameters: {
+            "fcm_token": sharedPreferences.getString("token").toString(),
+          });
+
+      return AuthModelData.fromJson(response.data);
+    } on DioError catch (e) {
+      // ignore: avoid_print
+      print(e.error);
+      return AuthModelData.fromJson(const {"message": "check your connection"});
     }
   }
 }

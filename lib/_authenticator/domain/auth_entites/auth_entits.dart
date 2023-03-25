@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-  import 'package:equatable/equatable.dart';
+import 'package:equatable/equatable.dart';
 
 class AuthModel extends Equatable {
   bool? status;
@@ -17,15 +17,20 @@ class AuthModel extends Equatable {
 
 class AuthParameters extends Equatable {
   String? email;
-
   String? password;
   dynamic phone;
-  dynamic name;
-  dynamic image;
+  String? name;
+  String? image;
+  String? token;
 
   AuthParameters(
-      {this.email, this.password, this.image, this.name, this.phone});
+      {this.email,
+      this.password,
+      this.image,
+      this.name,
+      this.phone,
+      this.token});
 
   @override
-  List<Object> get props => [email!, password!, phone, name, image];
+  List<Object> get props => [email!, password!, phone!, name!, image!, token!];
 }

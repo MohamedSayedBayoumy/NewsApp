@@ -8,15 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/phone_screen.dart';
-import 'package:news_app_clean_architecture/_intro_screens/screens/presentation/home_screen_categories.dart';
+import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../_intro_screens/screens/presentation/page_view_screen.dart';
 import '../../../core/functions/snak_bar.dart';
 import '../../../core/global/globals.dart';
-import '../../../test2.dart';
+import '../../../presentation_screens/presentation/screens/home_screen/page_view_screen.dart';
 import '../../domain/auth_base_use_case/auth_use_case.dart';
 import '../../domain/auth_entites/auth_entits.dart';
 import 'auth_event.dart';
@@ -38,6 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterByEmailAndPasswordEvent>(_RegisterByEmailAndPasswordEvent);
     on<ChangeColorButton>(_ChangeColorButton);
     on<AddPhoneNumberEvent>(_addPhoneNumber);
+    on<LogOut>(_logOut);
   }
 
   final AuthUseCase authUseCase;
@@ -49,6 +49,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (route) => false);
   }
 
+  Future<void> saveSharedPreferences({
+    String? email,
+    String? password,
+    String? id,
+    String? name,
+    String? image,
+    String? token,
+  }) async {
+    await sharedPreferences.setBool("isLogin", true);
+    await sharedPreferences.setString("token", token!);
+    await sharedPreferences.setString("email", email!);
+    await sharedPreferences.setString("password", password!);
+    await sharedPreferences.setString("id", id!);
+    await sharedPreferences.setString("name", name!);
+    await sharedPreferences.setString("phone", "0");
+    await sharedPreferences.setString("image", image!);
+  }
+
   Future<FutureOr<void>> _loginByEmailAndPasswordEvent(
       LoginByEmailAndPasswordEvent event, Emitter<AuthState> emit) async {
     if (state.formKeyLogin.currentState!.validate()) {
@@ -56,6 +74,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: state.emailController.text,
           password: state.passwordController.text));
       if (result.status == true) {
+        saveSharedPreferences(
+            token: result.data!["token"],
+            email: result.data!["email"],
+            password: state.passwordController.text,
+            id: result.data!["id"],
+            image: result.data!["image"],
+            name: result.data!["name"]);
+
         navigate(child: const PageViewScreen(), context: event.context);
       } else {
         ScaffoldMessenger.of(event.context)
@@ -82,12 +108,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await authUseCase.login(AuthParameters(
           email: userData["email"], password: userData["accessToken"]));
       print("Message : ${result.message}");
-
-      // await sharedPreferences.setString("name", userData["name"]);
-      // await sharedPreferences.setString("email", userData["email"]);
-      // await sharedPreferences.setString("url", userData["url"]);
-      // await sharedPreferences.setString(
-      //     "applicationId", userData["482067707344686"]);
     } else {
       print("status : ${loginFacebook.status}");
       print("Error Mohamed: ${loginFacebook.message}");
@@ -101,7 +121,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await authUseCase
           .login(AuthParameters(email: value!.email, password: value.id));
       if (result.status == true) {
-        navigate(child: const AddPhoneScreen(), context: event.context);
+        saveSharedPreferences(
+            token: result.data!["token"],
+            email: result.data!["email"],
+            password: value.id,
+            id: result.data!["id"].toString() ,
+            image: result.data!["image"],
+            name: result.data!["name"]);
+
+        navigate(child: const PageViewScreen(), context: event.context);
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));
@@ -122,6 +150,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           name: state.nameController.text,
           phone: state.phoneController.text));
       if (result.status == true) {
+        saveSharedPreferences(
+            token: result.data!["token"],
+            email: result.data!["email"],
+            password: state.passwordController.text.toString(),
+            id: result.data!["id"],
+            image: result.data!["image"],
+            name: result.data!["name"]);
+
         navigate(child: const PageViewScreen(), context: event.context);
       } else {
         ScaffoldMessenger.of(event.context)
@@ -137,35 +173,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final GoogleSignIn signInGoogle = GoogleSignIn();
     final number = Random().nextInt(50000);
     await signInGoogle.signIn().then((value) async {
-      if (signInGoogle.currentUser?.serverAuthCode != null) {
-        final result = await authUseCase.register(AuthParameters(
-            email: signInGoogle.currentUser?.email,
-            password: value!.id,
-            name: value.displayName,
-            phone: number + 3,
-            image: value.photoUrl));
+      // if (signInGoogle.currentUser?.serverAuthCode != null) {
+      final result = await authUseCase.register(AuthParameters(
+          email: signInGoogle.currentUser?.email,
+          password: value!.id,
+          name: value.displayName,
+          phone: number + 3,
+          image: value.photoUrl));
 
-        await sharedPreferences.setString("email", value.email);
-        await sharedPreferences.setString("password", value.id);
-        await sharedPreferences.setString("id", value.id);
-        await sharedPreferences.setString("name", value.displayName.toString());
-        await sharedPreferences.setString("phone", "0");
-        await sharedPreferences.setString("image", value.photoUrl.toString());
-        try {
-          await sharedPreferences.setString("token", result.data!["token"]);
-        } catch (e) {
-          ScaffoldMessenger.of(event.context)
-              .showSnackBar(snackBar("Server down", context: event.context));
-          if (result.status == true) {
-            navigate(child: const AddPhoneScreen(), context: event.context);
-          } else {
-            ScaffoldMessenger.of(event.context).showSnackBar(
-                snackBar(result.message!, context: event.context));
-          }
-        }
+      if (result.status == true) {
+        saveSharedPreferences(
+            token: result.data!["token"],
+            email: value.email,
+            password: value.id,
+            id: value.id,
+            image: value.photoUrl.toString(),
+            name: value.displayName.toString());
+
+        navigate(child: const AddPhoneScreen(), context: event.context);
       } else {
         ScaffoldMessenger.of(event.context)
-            .showSnackBar(snackBar("Some Thing Error", context: event.context));
+            .showSnackBar(snackBar(result.message!, context: event.context));
       }
     });
   }
@@ -181,9 +209,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             name: sharedPreferences.getString("name"),
             phone: state.phoneController.text,
             image: sharedPreferences.getString("image")))
-        .then((value) {
+        .then((value) async {
       print("Message : ${value.message}");
       if (value.status == true) {
+        await sharedPreferences.setString("phone", state.phoneController.text);
         navigate(child: const PageViewScreen(), context: event.context);
       } else {
         ScaffoldMessenger.of(event.context)
@@ -225,5 +254,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           nameController: TextEditingController(),
           phoneController: state.phoneController));
     }
+  }
+
+  Future<FutureOr<void>> _logOut(LogOut event, Emitter<AuthState> emit) async {
+    final result = await authUseCase
+        .logOut(AuthParameters(
+      token: sharedPreferences.getString("token"),
+    ))
+        .then((value) async {
+      print("Message : ${value.message}");
+      if (value.status == true) {
+        await sharedPreferences.setBool('isLogin', false);
+        navigate(child: const StartUpScreen(), context: event.context);
+      } else {
+        ScaffoldMessenger.of(event.context)
+            .showSnackBar(snackBar(value.message!, context: event.context));
+        print(value.message);
+      }
+    });
   }
 }

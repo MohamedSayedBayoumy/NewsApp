@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract class AuthEvent {}
 
@@ -6,6 +6,7 @@ class LoginByFaceBookEvent extends AuthEvent {}
 
 class LoginByGmailEvent extends AuthEvent {
   dynamic context;
+
   LoginByGmailEvent({required this.context});
 }
 
@@ -39,6 +40,12 @@ class AddPhoneNumberEvent extends AuthEvent {
   dynamic context;
 
   AddPhoneNumberEvent({required this.phoneNumber, required this.context});
+}
+
+class LogOut extends AuthEvent {
+  dynamic context;
+
+  LogOut(this.context);
 }
 
 class ChangeIconEvent extends AuthEvent {}

@@ -66,7 +66,7 @@ dependencies:
   email_validator: ^2.0.1
   google_maps_flutter: ^2.2.0
   location: ^4.4.0
- 
+
 
 
 
@@ -102,18 +102,18 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/animation_image/on_boarding/onBoarding1.json
-    - assets/images/on_boarding/basketball.png
-    - assets/images/on_boarding/cloudy.png
-    - assets/images/start_up/phone.jpg
-    - assets/icons/homepage.png
-    - assets/icons/user.png
-    - assets/icons/cloud.png
-    - assets/images/back.jpg
-    - assets/images/back_register.jpg
-    - assets/icons/google.png
-    - assets/icons/facebook.png
-    - assets/images/image_profile.jpg
+    - assets/animation_image/on_boarding/
+
+
+    - assets/images/start_up/
+    - assets/icons/
+
+
+    - assets/images/
+
+
+
+    - assets/images/
     - assets/map.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -128,19 +128,19 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-      - family: poppins
-        fonts:
-          - asset: assets/Fonts/Poppins-Bold.ttf
-      - family: inter
-        fonts:
-          - asset: assets/Fonts/Inter-Regular.ttf
-     
-    
-      - family: titanOne
-        fonts:
-          - asset: assets/Fonts/TitanOne-Regular.ttf
+    - family: poppins
+      fonts:
+        - asset: assets/Fonts/Poppins-Bold.ttf
+    - family: inter
+      fonts:
+        - asset: assets/Fonts/Inter-Regular.ttf
+
+
+    - family: titanOne
+      fonts:
+        - asset: assets/Fonts/TitanOne-Regular.ttf
     
 
 
-   # For details regarding fonts from package dependencies,
-   # see https://flutter.dev/custom-fonts/#from-packages
+    # For details regarding fonts from package dependencies,
+    # see https://flutter.dev/custom-fonts/#from-packages

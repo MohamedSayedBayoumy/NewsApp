@@ -16,6 +16,11 @@ Future init() async {
     sharedPreferences.setBool("isThemeModeDark", true);
   } else {}
 
+  if (sharedPreferences.getBool('isLogin') == null) {
+    sharedPreferences.setBool("isLogin", false);
+  } else {}
+
+
   Location a = Location();
   dynamic b = await a.getLocation();
   await sharedPreferences.setDouble("longitude", b.longitude);

@@ -3,8 +3,8 @@ import 'package:news_app_clean_architecture/_authenticator/presentation/auth_scr
 import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
-import '../../../core/widgets/custom_text/text.dart';
+import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
+import '../../../../core/widgets/custom_text/text.dart';
 import 'onboarding_screen.dart';
 
 class StartUpScreen extends StatelessWidget {
@@ -80,7 +80,8 @@ class StartUpScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             PageTransition(
-                                child: const OnBoardingScreen(),
+                                child: fadeDownTOUp(
+                                    child: const OnBoardingScreen()),
                                 type: PageTransitionType.rightToLeftWithFade),
                             (route) => false);
                       },
@@ -100,8 +101,8 @@ class StartUpScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               PageTransition(
-                                  child: LoginScreen(),
-                                  type: PageTransitionType.rightToLeftWithFade),
+                                  child: fadeDownTOUp(child: LoginScreen()),
+                                  type: PageTransitionType.bottomToTop),
                             );
                           },
                           child: CustomText(

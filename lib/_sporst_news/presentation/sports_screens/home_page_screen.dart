@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({Key? key}) : super(key: key);
+class SportScreen extends StatelessWidget {
+  const SportScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: CustomText(text: "SportScreen"),
+    );
   }
 }

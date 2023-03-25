@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 
-import '../../../_articles_news/presentation/news_screens/news_article_screen.dart';
+import '../../../../_articles_news/presentation/news_screens/news_article_screen.dart';
 
 class HomeScreenCategories extends StatefulWidget {
   const HomeScreenCategories({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
           CustomText(
             text: DateFormat.MMMMEEEEd().format(DateTime.now()).toString(),
           ),
-          CustomText(text: "Welcome Mohamed ,"),
+          CustomText(text: "Welcome ${sharedPreferences.getString("name")} ,"),
         ]),
         actions: [
           Column(

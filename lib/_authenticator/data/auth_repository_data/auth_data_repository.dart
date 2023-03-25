@@ -21,4 +21,9 @@ class AuthRepository extends AuthBaseRepository {
   Future<AuthModel> addPhoneNumber(AuthParameters authParameters) async {
     return await baseRemoteData.addPhoneNumber(authParameters);
   }
+
+  @override
+  Future<AuthModel> logOut(AuthParameters authParameters) async {
+    return await baseRemoteData.logOut(authParameters);
+  }
 }
