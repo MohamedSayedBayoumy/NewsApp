@@ -23,7 +23,7 @@ class RemoteData implements BaseRemoteData {
   Future<AuthModelData> remoteLogin(AuthParameters authParameters) async {
     final lang = sharedPreferences.getString("Localization").toString();
     try {
-      final response = await Dio().post(AppConstance.pathLogin,
+      final response = await Dio().post(ApiConstanceAuth.pathLogin,
           options: Options(headers: {
             "lang": lang.toString(),
             "Content-Type": "application/json"
@@ -44,7 +44,7 @@ class RemoteData implements BaseRemoteData {
   Future<AuthModelData> remoteRegister(AuthParameters authParameters) async {
     final lang = sharedPreferences.getString("Localization").toString();
     try {
-      final response = await Dio().post(AppConstance.pathRegister,
+      final response = await Dio().post(ApiConstanceAuth.pathRegister,
           options: Options(headers: {
             "lang": lang.toString(),
             "Content-Type": "application/json"
@@ -68,7 +68,7 @@ class RemoteData implements BaseRemoteData {
   Future<AuthModelData> addPhoneNumber(AuthParameters authParameters) async {
     final lang = sharedPreferences.getString("Localization").toString();
     try {
-      final response = await Dio().put(AppConstance.pathUpdateProfile,
+      final response = await Dio().put(ApiConstanceAuth.pathUpdateProfile,
           options: Options(headers: {
             "lang": lang.toString(),
             "Content-Type": "application/json",
@@ -94,7 +94,7 @@ class RemoteData implements BaseRemoteData {
   Future<AuthModelData> logOut(AuthParameters authParameters) async {
     final lang = sharedPreferences.getString("Localization").toString();
     try {
-      final response = await Dio().post(AppConstance.logoutProfile,
+      final response = await Dio().post(ApiConstanceAuth.logoutProfile,
           options: Options(headers: {
             "lang": lang.toString(),
             "Content-Type": "application/json",

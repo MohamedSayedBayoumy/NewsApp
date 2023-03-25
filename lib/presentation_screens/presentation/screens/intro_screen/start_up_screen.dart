@@ -41,8 +41,7 @@ class StartUpScreen extends StatelessWidget {
                 Rect.fromLTRB(
                     media.height * .03, 0, bounds.width * .09, bounds.height),
               ),
-              child: Image.asset("assets/images/start_up/phone.jpg",
-                  fit: BoxFit.cover),
+              child: Image.asset("assets/images/phone.jpg", fit: BoxFit.cover),
             ),
           ),
         ),

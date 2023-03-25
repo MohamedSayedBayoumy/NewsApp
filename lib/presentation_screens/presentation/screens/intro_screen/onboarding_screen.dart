@@ -57,16 +57,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     List<OnBoardingModel> modelOnBoarding = [
       OnBoardingModel(
         title: AppLocalizations.of(context)!.onBoardingTitle1,
-        image: "assets/animation_image/on_boarding/onBoarding1.json",
+        image: "assets/animation_image/onBoarding1.json",
         subTitle: AppLocalizations.of(context)!.onBoarding1,
       ),
       OnBoardingModel(
           title: AppLocalizations.of(context)!.onBoardingTitle2,
-          image1: "assets/images/on_boarding/basketball.png",
+          image1: "assets/images/basketball.png",
           subTitle: AppLocalizations.of(context)!.onBoarding2),
       OnBoardingModel(
           title: AppLocalizations.of(context)!.onBoardingTitle3,
-          image1: "assets/images/on_boarding/cloudy.png",
+          image1: "assets/images/cloudy.png",
           subTitle: AppLocalizations.of(context)!.onBoarding3),
     ];
     return Scaffold(
