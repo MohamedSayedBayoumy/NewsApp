@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app_clean_architecture/_weather_news/domain/weather_base_use_case/weather_base_usecase.dart';
+import 'package:news_app_clean_architecture/_weather_news/domain/weather_entites/weather_model.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 
@@ -60,13 +61,14 @@ class _HomeScreenCategoriesState extends State<HomeScreenCategories>
             ],
           ),
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 WeatherBaseRemoteDataSource weatherBaseRemoteDataSource = WeatherRemoteDataSource();
                 WeatherBaseRepository weatherBaseRepository =
                 WeatherRepository(weatherBaseRemoteDataSource);
                 BaseWeatherUseCase baseWeatherUseCase =BaseWeatherUseCase(weatherBaseRepository);
-                baseWeatherUseCase.fetchWeatherByLanAndLat() ;
-              },
+                 final x = await baseWeatherUseCase.fetchWeatherByLanAndLat() ;
+                          print("lol : ${x.codeCountry}") ;
+                              },
               icon: const CircleAvatar(
                 backgroundImage: AssetImage("assets/images/image_profile.jpg"),
               )),

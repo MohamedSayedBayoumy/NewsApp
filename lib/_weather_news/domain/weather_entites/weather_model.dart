@@ -4,7 +4,7 @@ class WeatherModel {
   double? latitude;
   double? longitude;
 
-  Map<String, dynamic>? codeCountry;
+  String? codeCountry;
   List<Weather>? weather;
   double? speedWind;
 
