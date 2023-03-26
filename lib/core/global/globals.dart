@@ -1,5 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final SharedPreferences sharedPreferences;
@@ -9,7 +7,7 @@ Future init() async {
 
   if (sharedPreferences.getString('Localization') == null) {
     sharedPreferences.setString("Localization", "en");
-    print(sharedPreferences.getString('Localization'));
+    // print(sharedPreferences.getString('Localization'));
   } else {}
 
   if (sharedPreferences.getBool('isThemeModeDark') == null) {
@@ -19,12 +17,4 @@ Future init() async {
   if (sharedPreferences.getBool('isLogin') == null) {
     sharedPreferences.setBool("isLogin", false);
   } else {}
-
-
-  Location a = Location();
-  dynamic b = await a.getLocation();
-  await sharedPreferences.setDouble("longitude", b.longitude);
-  await sharedPreferences.setDouble("latitude", b.latitude);
-  print(
-      "latitude : ${sharedPreferences.getDouble('latitude')} / longitude : ${sharedPreferences.getDouble('longitude')}");
 }

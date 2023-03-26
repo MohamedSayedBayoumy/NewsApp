@@ -55,7 +55,6 @@ dependencies:
   image_picker: ^0.8.6+1
   lottie: ^1.4.2
   page_transition: ^2.0.9
-  url_launcher: ^6.1.8
   smooth_page_indicator: ^1.0.1
   device_preview: ^1.1.0
   auto_size_text: ^3.0.0
@@ -64,8 +63,10 @@ dependencies:
   firebase_core: ^2.3.0
   flutter_facebook_auth: ^5.0.7
   email_validator: ^2.0.1
-  google_maps_flutter: ^2.2.0
-  location: ^4.4.0
+  google_maps_flutter: ^2.2.5
+  # location: ^4.4.0
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
 
 
 

@@ -3,11 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:news_app_clean_architecture/_authenticator/data/auth_remote_data_source/auth_remote_data.dart';
-import 'package:news_app_clean_architecture/_weather_news/data/weather_remote_data_source/weather_remote_data_source.dart';
-import 'package:news_app_clean_architecture/_weather_news/data/weather_repository_data/weather_repository_data.dart';
-import 'package:news_app_clean_architecture/_weather_news/domain/weather_base_repository/base_repository_weather.dart';
-import 'package:news_app_clean_architecture/_weather_news/domain/weather_base_use_case/weather_base_usecase.dart';
 import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 
 import 'core/global/globals.dart';
@@ -45,7 +40,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<IntroBloc>(),
+      create: (context) => sl<IntroBloc>()..checkPermission()..getLatAndLong()..GetAddressFromLatLong(),
       child: BlocBuilder<IntroBloc, IntroState>(
         builder: (context, state) {
           return MaterialApp(

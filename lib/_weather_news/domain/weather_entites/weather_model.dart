@@ -1,9 +1,7 @@
 class WeatherModel {
   String? message;
-
   double? latitude;
   double? longitude;
-
   String? codeCountry;
   List<Weather>? weather;
   double? speedWind;
@@ -13,7 +11,6 @@ class WeatherModel {
       this.longitude,
       this.speedWind,
       this.message,
-
       this.codeCountry,
       this.weather});
 }
@@ -30,9 +27,8 @@ class Weather {
 }
 
 class WeatherParameter {
-  double? latitude;
-  double? longitude;
+ 
   String? country;
 
-  WeatherParameter({this.latitude, this.longitude, this.country});
+  WeatherParameter({this.country});
 }

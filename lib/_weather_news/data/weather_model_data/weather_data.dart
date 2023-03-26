@@ -1,4 +1,5 @@
 
+
 import '../../domain/weather_entites/weather_model.dart';
 
 class WeatherData extends Weather {
