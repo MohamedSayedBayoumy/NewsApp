@@ -31,11 +31,13 @@ class CustomTextField extends StatelessWidget {
   TextInputAction? textInputAction;
   String? errorText;
   void Function()? onPressedSuffixIcon;
+  FloatingLabelBehavior? needLabel; 
 
   CustomTextField(
       {Key? key,
       required this.controller,
       this.obscureText,
+      this.needLabel ,
       this.prefixIcon,
       this.textInputAction,
       this.suffixIcon,
@@ -70,7 +72,7 @@ class CustomTextField extends StatelessWidget {
                 colorScheme:
                     const ColorScheme.light(primary: Colors.yellowAccent)),
             child: TextFormField(
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodySmall,
               obscureText:
                   obscureText == null || obscureText == false ? false : true,
               textInputAction: textInputAction,
@@ -83,7 +85,6 @@ class CustomTextField extends StatelessWidget {
               maxLines: maxLength,
               minLines: minLength,
               maxLength: length,
-              
               maxLengthEnforcement:
                   MaxLengthEnforcement.truncateAfterCompositionEnds,
               decoration: InputDecoration(
@@ -103,7 +104,7 @@ class CustomTextField extends StatelessWidget {
                 fillColor: sharedPreferences.getBool('isThemeModeDark') == true
                     ? Colors.black
                     : Colors.white,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
+                floatingLabelBehavior: needLabel ?? FloatingLabelBehavior.never,
                 labelText: labelText,
                 labelStyle: Theme.of(context).textTheme.bodyMedium,
                 hintText: hinText,

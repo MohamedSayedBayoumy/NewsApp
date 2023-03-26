@@ -74,15 +74,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: state.emailController.text,
           password: state.passwordController.text));
       if (result.status == true) {
-        saveSharedPreferences(
+        await saveSharedPreferences(
             token: result.data!["token"],
             email: result.data!["email"],
             password: state.passwordController.text,
             id: result.data!["id"],
             image: result.data!["image"],
-            name: result.data!["name"]);
-
-        navigate(child: const PageViewScreen(), context: event.context);
+            name: result.data!["name"]).whenComplete(() {
+          navigate(child: const PageViewScreen(), context: event.context);
+        });
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));
@@ -121,15 +121,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await authUseCase
           .login(AuthParameters(email: value!.email, password: value.id));
       if (result.status == true) {
-        saveSharedPreferences(
+        await saveSharedPreferences(
             token: result.data!["token"],
             email: result.data!["email"],
             password: value.id,
-            id: result.data!["id"].toString() ,
+            id: result.data!["id"].toString(),
             image: result.data!["image"],
-            name: result.data!["name"]);
-
-        navigate(child: const PageViewScreen(), context: event.context);
+            name: result.data!["name"]).whenComplete(() {
+          navigate(child: const PageViewScreen(), context: event.context);
+        });
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));
@@ -150,15 +150,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           name: state.nameController.text,
           phone: state.phoneController.text));
       if (result.status == true) {
-        saveSharedPreferences(
-            token: result.data!["token"],
-            email: result.data!["email"],
-            password: state.passwordController.text.toString(),
-            id: result.data!["id"],
-            image: result.data!["image"],
-            name: result.data!["name"]);
-
-        navigate(child: const PageViewScreen(), context: event.context);
+        await saveSharedPreferences(
+                token: result.data!["token"],
+                email: result.data!["email"],
+                password: state.passwordController.text.toString(),
+                id: result.data!["id"],
+                image: result.data!["image"],
+                name: result.data!["name"])
+            .whenComplete(() {
+          navigate(child: const PageViewScreen(), context: event.context);
+        });
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));
@@ -182,15 +183,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           image: value.photoUrl));
 
       if (result.status == true) {
-        saveSharedPreferences(
+       await  saveSharedPreferences(
             token: result.data!["token"],
             email: value.email,
             password: value.id,
             id: value.id,
             image: value.photoUrl.toString(),
-            name: value.displayName.toString());
-
-        navigate(child: const AddPhoneScreen(), context: event.context);
+            name: value.displayName.toString()).whenComplete(() {
+          navigate(child: const PageViewScreen(), context: event.context);
+        });
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));

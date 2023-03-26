@@ -50,14 +50,10 @@ class IntroBloc extends Cubit<IntroState> {
 
   Future<void> getLatAndLong() async {
     Position position = await checkPermission();
-    await sharedPreferences.setDouble("longitude", position.longitude);
-    await sharedPreferences.setDouble("latitude", position.latitude);
-  }
 
-  Future<void> GetAddressFromLatLong() async {
-    Position position = Position(
-        longitude: sharedPreferences.getDouble("longitude")!.toDouble(),
-        latitude: sharedPreferences.getDouble("latitude")!.toDouble(),
+    position =  Position(
+        longitude: position.longitude,
+        latitude: position.latitude,
         timestamp: DateTime.now(),
         accuracy: 0.0,
         altitude: 0.0,
@@ -70,5 +66,9 @@ class IntroBloc extends Cubit<IntroState> {
     Placemark place = placemarks[0];
     await sharedPreferences.setString("address",
         '${place.locality} - ${place.subAdministrativeArea}, ${place.administrativeArea}');
+    await sharedPreferences.setDouble("longitude", position.longitude);
+    await sharedPreferences.setDouble("latitude", position.latitude);
   }
+
+ 
 }

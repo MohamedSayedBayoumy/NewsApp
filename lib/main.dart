@@ -40,7 +40,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<IntroBloc>()..checkPermission()..getLatAndLong()..GetAddressFromLatLong(),
+      create: (context) => sl<IntroBloc>()
+        ..checkPermission()..getLatAndLong()
+         ,
       child: BlocBuilder<IntroBloc, IntroState>(
         builder: (context, state) {
           return MaterialApp(

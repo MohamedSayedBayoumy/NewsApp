@@ -57,12 +57,6 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
                   "Welcome ${sharedPreferences.getString("name")!.split(" ").first} ,"),
         ]),
         actions: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomText(text: "EG"),
-            ],
-          ),
           IconButton(
               onPressed: () async {
                 WeatherBaseRemoteDataSource weatherBaseRemoteDataSource =
@@ -71,28 +65,27 @@ class _MyStatelessWidgetState extends State<MyStatelessWidget> {
                     WeatherRepository(weatherBaseRemoteDataSource);
                 BaseWeatherUseCase baseWeatherUseCase =
                     BaseWeatherUseCase(weatherBaseRepository);
-           await baseWeatherUseCase.fetchWeatherByLanAndLat();
-          
+                final x = await baseWeatherUseCase.fetchWeatherByLanAndLat();
+                final i = x.weather!.map((e) {
+                  print("hi : ${e.statusWeather}");
+                });
+                print(i);
               },
               icon: const CircleAvatar(
                 backgroundImage: AssetImage("assets/images/image_profile.jpg"),
               )),
         ],
       ),
-      body: 
-        Padding(
-          padding: EdgeInsets.only(top: media.height * .01),
-          child: DefaultTabController(
-            length: tabs.length,
-            child: TabBarView(
-              physics: const BouncingScrollPhysics(),
-              children: MyStatelessWidget.views,
-            ),
+      body: Padding(
+        padding: EdgeInsets.only(top: media.height * .01),
+        child: DefaultTabController(
+          length: tabs.length,
+          child: TabBarView(
+            physics: const BouncingScrollPhysics(),
+            children: MyStatelessWidget.views,
           ),
         ),
-     
+      ),
     );
   }
 }
-
- 
