@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_textfiled/text_filed.dart';
 
 class WeatherSearchScreen extends StatelessWidget {
