@@ -12,7 +12,7 @@ import '../../../domain/weather_base_use_case/weather_base_usecase.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(this.baseWeatherUseCase) : super(WeatherState()) {
     on<FetchWeatherDataEvent>(_fetchWeatherDataEvent);
-    on<FetchWeatherDataEvent>(_fetchWeatherDataEvent);
+
 
   }
 
