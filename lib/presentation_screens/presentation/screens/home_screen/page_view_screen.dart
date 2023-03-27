@@ -1,7 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_screens/weather_screen_.dart';
+import 'package:news_app_clean_architecture/_weather_news/presentation/weather_screens/weather_screen.dart';
 import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/home_screen/home_screen_categories.dart';
 
 import '../../../../_authenticator/presentation/auth_screens/profile_screen.dart';
