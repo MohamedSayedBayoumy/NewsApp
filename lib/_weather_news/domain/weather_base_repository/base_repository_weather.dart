@@ -4,5 +4,5 @@ abstract class WeatherBaseRepository {
 
   Future<WeatherModel> getWeatherByLanAndLat();
 
-  Future<WeatherModel> getWeatherByCountry(WeatherParameter weatherParameter);
+  Future<WeatherModel> getWeatherByCountry(String? country);
 }

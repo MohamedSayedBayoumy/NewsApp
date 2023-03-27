@@ -7,11 +7,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/phone_screen.dart';
 import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/functions/snak_bar.dart';
 import '../../../core/global/globals.dart';
@@ -75,12 +72,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: state.passwordController.text));
       if (result.status == true) {
         await saveSharedPreferences(
-            token: result.data!["token"],
-            email: result.data!["email"],
-            password: state.passwordController.text,
-            id: result.data!["id"],
-            image: result.data!["image"],
-            name: result.data!["name"]).whenComplete(() {
+                token: result.data!["token"],
+                email: result.data!["email"],
+                password: state.passwordController.text,
+                id: result.data!["id"].toString(),
+                image: result.data!["image"],
+                name: result.data!["name"])
+            .whenComplete(() {
           navigate(child: const PageViewScreen(), context: event.context);
         });
       } else {
@@ -122,12 +120,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           .login(AuthParameters(email: value!.email, password: value.id));
       if (result.status == true) {
         await saveSharedPreferences(
-            token: result.data!["token"],
-            email: result.data!["email"],
-            password: value.id,
-            id: result.data!["id"].toString(),
-            image: result.data!["image"],
-            name: result.data!["name"]).whenComplete(() {
+                token: result.data!["token"],
+                email: result.data!["email"],
+                password: value.id,
+                id: result.data!["id"].toString(),
+                image: result.data!["image"],
+                name: result.data!["name"])
+            .whenComplete(() {
           navigate(child: const PageViewScreen(), context: event.context);
         });
       } else {
@@ -183,13 +182,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           image: value.photoUrl));
 
       if (result.status == true) {
-       await  saveSharedPreferences(
-            token: result.data!["token"],
-            email: value.email,
-            password: value.id,
-            id: value.id,
-            image: value.photoUrl.toString(),
-            name: value.displayName.toString()).whenComplete(() {
+        await saveSharedPreferences(
+                token: result.data!["token"],
+                email: value.email,
+                password: value.id,
+                id: value.id,
+                image: value.photoUrl.toString(),
+                name: value.displayName.toString())
+            .whenComplete(() {
           navigate(child: const PageViewScreen(), context: event.context);
         });
       } else {

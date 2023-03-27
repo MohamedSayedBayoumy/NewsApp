@@ -24,6 +24,7 @@ class CustomTextField extends StatelessWidget {
   InputBorder? styleBorder;
   String? Function(String?)? valid;
   String? Function(String?)? onChange;
+  String? Function(String?)? onFieldSubmitted;
   void Function()? onTapIcon;
   bool? enabled;
   TextInputType? textInputType;
@@ -48,6 +49,7 @@ class CustomTextField extends StatelessWidget {
       this.onChange,
       this.onTapIcon,
       this.maxLength,
+      this.onFieldSubmitted,
       this.hinText,
       this.minLength,
       this.fill,
@@ -78,6 +80,7 @@ class CustomTextField extends StatelessWidget {
               textInputAction: textInputAction,
               keyboardType: textInputType,
               onChanged: onChange,
+              onFieldSubmitted: onFieldSubmitted ,
               onTap: onTapIcon,
               enabled: enabled,
               validator: valid,

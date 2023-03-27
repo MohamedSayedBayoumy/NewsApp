@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:news_app_clean_architecture/_weather_news/data/weather_model_data/weather_model_data.dart';
+import 'package:news_app_clean_architecture/_weather_news/domain/weather_entites/weather_model.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 import 'package:news_app_clean_architecture/core/utils/api_constance.dart';
 
 abstract class WeatherBaseRemoteDataSource {
   Future<WeatherModelData> getWeatherByLanAndLat();
 
-  Future<WeatherModelData> getWeatherByCountry();
+  Future<WeatherModelData> getWeatherByCountry(String? country);
 }
 
 class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
@@ -20,13 +21,6 @@ class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
         "lang": sharedPreferences.getString("Localization"),
         "appid": ApiConstanceWeather.key,
       });
-      // print("hi Data: ${respone.data}");
-      // final x = WeatherModelData.fromJson(respone.data);
-      // print("hhhhhhhhhhhhhh : ${x.codeCountry}");
-      // print("hhhhhhhhhhhhhh : ${x.speedWind}");
-      // print("hhhhhhhhhhhhhh : ${x.weather![0].description}");
-
-      // print("hhhhhhhhhhhhhh : ${x.latitude}");
 
       return WeatherModelData.fromJson(respone.data);
     } on DioError catch (e) {
@@ -38,7 +32,20 @@ class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
   }
 
   @override
-  Future<WeatherModelData> getWeatherByCountry() {
-    throw UnimplementedError();
+  Future<WeatherModelData> getWeatherByCountry(String? country) async {
+    try {
+      final respone =
+          await Dio().get(ApiConstanceWeather.baseUrl, queryParameters: {
+        "q": country,
+        "appid": ApiConstanceWeather.key,
+      });
+
+      return WeatherModelData.fromJson(respone.data);
+    } on DioError catch (e) {
+      // ignore: avoid_print
+      print("hi Data: $e");
+
+      return WeatherModelData.fromJson({"message": "check your connection"});
+    }
   }
 }

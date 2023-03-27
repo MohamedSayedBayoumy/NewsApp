@@ -9,8 +9,8 @@ class WeatherRepository extends WeatherBaseRepository{
   WeatherRepository(this.weatherBaseRemoteDataSource);
 
   @override
-  Future<WeatherModel> getWeatherByCountry(WeatherParameter weatherParameter) {
-    final result = weatherBaseRemoteDataSource.getWeatherByLanAndLat( ) ;
+  Future<WeatherModel> getWeatherByCountry(String? country) async {
+    final result = await weatherBaseRemoteDataSource.getWeatherByCountry(country) ;
     return result ;
   }
 

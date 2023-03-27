@@ -16,23 +16,26 @@ class WeatherState extends Equatable {
   String? themeMode;
 
   TextEditingController addressController = TextEditingController();
+  TextEditingController? searchController = TextEditingController();
 
-  WeatherState(
-      {this.weatherModel,
-        this.statusRequest = Request.loading,
-        this.message,
-      });
+  WeatherState({
+    this.weatherModel,
+    this.statusRequest = Request.loading,
+    this.message,
+    this.searchController,
+  });
 
-  WeatherState copyWith({
-    WeatherModel? weatherModel,
-    List<Weather?>? weatherList,
-    Request? statusRequest,
-    String? message,
-  }) =>
+  WeatherState copyWith(
+          {WeatherModel? weatherModel,
+          List<Weather?>? weatherList,
+          Request? statusRequest,
+          String? message,
+          TextEditingController? searchController}) =>
       WeatherState(
         message: message ?? this.message,
         weatherModel: weatherModel ?? this.weatherModel,
         statusRequest: statusRequest ?? this.statusRequest,
+        searchController: searchController ?? this.searchController,
       );
 
   @override

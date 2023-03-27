@@ -10,4 +10,7 @@ class BaseWeatherUseCase {
   Future<WeatherModel> fetchWeatherByLanAndLat() async {
     return await weatherBaseRepository.getWeatherByLanAndLat();
   }
+   Future<WeatherModel> fetchWeatherByCountryName({required String? country}) async {
+    return await weatherBaseRepository.getWeatherByCountry(country);
+  }
 }

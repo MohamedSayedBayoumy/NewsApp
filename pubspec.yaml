@@ -64,7 +64,6 @@ dependencies:
   flutter_facebook_auth: ^5.0.7
   email_validator: ^2.0.1
   google_maps_flutter: ^2.2.5
-  # location: ^4.4.0
   geolocator: ^9.0.2
   geocoding: ^2.1.0
 

@@ -1,4 +1,3 @@
-
 class WeatherEvent {}
 
 class FetchWeatherDataEvent extends WeatherEvent {
@@ -6,6 +5,11 @@ class FetchWeatherDataEvent extends WeatherEvent {
   FetchWeatherDataEvent({required this.context});
 }
 
+class FetchWeatherDataByCountryNameEvent extends WeatherEvent {
+  dynamic context;
+  String? country;
+  FetchWeatherDataByCountryNameEvent({required this.context ,required this.country});
+}
 
 class ChangesEvent extends WeatherEvent {
   dynamic context;
