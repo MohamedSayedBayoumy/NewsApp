@@ -76,13 +76,13 @@ class StartUpScreen extends StatelessWidget {
                   ),
                   CustomButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            PageTransition(
-                                child: fadeDownTOUp(
-                                    child: const OnBoardingScreen()),
-                                type: PageTransitionType.rightToLeftWithFade),
-                            (route) => false);
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                              child:
+                                  fadeDownTOUp(child: const OnBoardingScreen()),
+                              type: PageTransitionType.rightToLeftWithFade),
+                        );
                       },
                       text: AppLocalizations.of(context)!.startUp3,
                       width: media.width,

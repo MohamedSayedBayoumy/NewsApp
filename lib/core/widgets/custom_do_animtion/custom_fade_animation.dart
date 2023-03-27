@@ -8,7 +8,7 @@ Widget fadeDownTOUp({required Widget child}) => FadeInDown(
     delay: const Duration(milliseconds: 200),
     child: child);
 
-Widget fadeDownToUp({required Widget child}) => FadeInUp(
+Widget fadeUpToDown({required Widget child}) => FadeInUp(
     duration: const Duration(milliseconds: 1400),
     delay: const Duration(milliseconds: 200),
     child: child);

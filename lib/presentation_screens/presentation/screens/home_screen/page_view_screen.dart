@@ -31,7 +31,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         controller: controllerHomeScreen,
         children:   [
           MyStatelessWidget(),
-            const WeatherScreen() ,
+          const WeatherScreen() ,
           const ProfileScreen()
         ],
       ),

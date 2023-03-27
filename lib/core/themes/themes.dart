@@ -5,7 +5,10 @@ ThemeData appLightThem = ThemeData(
   primaryColor: Colors.yellow,
   textTheme: const TextTheme(
       displayMedium: TextStyle(
-          color: Colors.yellowAccent, fontFamily: "inter", fontSize: 25.0),
+          color: Colors.yellowAccent,
+          fontFamily: "inter",
+          fontSize: 25.0,
+          fontWeight: FontWeight.bold),
       bodyLarge: TextStyle(
           color: Colors.black, fontFamily: "titanOne", fontSize: 40.0),
       bodySmall:
@@ -19,7 +22,10 @@ ThemeData appDarkThem = ThemeData(
   primaryColor: Colors.yellow,
   textTheme: const TextTheme(
       displayMedium: TextStyle(
-          color: Colors.yellowAccent, fontFamily: "inter", fontSize: 25.0),
+          color: Colors.yellowAccent,
+          fontFamily: "inter",
+          fontSize: 25.0,
+          fontWeight: FontWeight.bold),
       bodyLarge: TextStyle(
           color: Colors.white, fontFamily: "titanOne", fontSize: 40.0),
       bodySmall:
