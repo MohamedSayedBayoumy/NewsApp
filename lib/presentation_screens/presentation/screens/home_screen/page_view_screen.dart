@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:news_app_clean_architecture/_weather_news/presentation/weather_screens/weather_screen.dart';
 
@@ -29,11 +27,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controllerHomeScreen,
-        children:   [
-          MyStatelessWidget(),
-          const WeatherScreen() ,
-          const ProfileScreen()
-        ],
+        children: const [MyStatelessWidget(), WeatherScreen(), ProfileScreen()],
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: media.width * .05),

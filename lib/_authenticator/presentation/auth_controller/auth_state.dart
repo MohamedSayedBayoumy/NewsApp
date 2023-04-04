@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/auth_entites/auth_entits.dart';
 
@@ -15,6 +16,10 @@ class AuthState extends Equatable {
   var StreamPhoneController = StreamController<String>();
   var phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+
+
+    final GoogleSignIn signInGoogle = GoogleSignIn();
+
 
   dynamic showPassword = true;
 

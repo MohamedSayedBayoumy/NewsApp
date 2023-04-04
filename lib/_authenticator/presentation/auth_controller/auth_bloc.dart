@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../core/functions/snak_bar.dart';
+import '../../../core/functions/snack_bar.dart';
 import '../../../core/global/globals.dart';
 import '../../../presentation_screens/presentation/screens/home_screen/page_view_screen.dart';
 import '../../domain/auth_base_use_case/auth_use_case.dart';
@@ -115,7 +115,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> _loginByGmailEvent(
       LoginByGmailEvent event, Emitter<AuthState> emit) async {
     final GoogleSignIn signInGoogle = GoogleSignIn();
-    signInGoogle.signIn().then((value) async {
+    await signInGoogle.signIn().then((value) async {
       final result = await authUseCase
           .login(AuthParameters(email: value!.email, password: value.id));
       if (result.status == true) {
@@ -153,7 +153,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 token: result.data!["token"],
                 email: result.data!["email"],
                 password: state.passwordController.text.toString(),
-                id: result.data!["id"],
+                id: result.data!["id"].toString(),
                 image: result.data!["image"],
                 name: result.data!["name"])
             .whenComplete(() {
@@ -170,12 +170,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<FutureOr<void>> _registerByGmailEvent(
       RegisterByGmailEvent event, Emitter<AuthState> emit) async {
-    final GoogleSignIn signInGoogle = GoogleSignIn();
     final number = Random().nextInt(50000);
-    await signInGoogle.signIn().then((value) async {
+    await state.signInGoogle.signIn().then((value) async {
       // if (signInGoogle.currentUser?.serverAuthCode != null) {
       final result = await authUseCase.register(AuthParameters(
-          email: signInGoogle.currentUser?.email,
+          email: state.signInGoogle.currentUser?.email,
           password: value!.id,
           name: value.displayName,
           phone: number + 3,
@@ -258,15 +257,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<FutureOr<void>> _logOut(LogOut event, Emitter<AuthState> emit) async {
-    final result = await authUseCase
+    await authUseCase
         .logOut(AuthParameters(
       token: sharedPreferences.getString("token"),
     ))
         .then((value) async {
       print("Message : ${value.message}");
       if (value.status == true) {
-        await sharedPreferences.setBool('isLogin', false);
-        navigate(child: const StartUpScreen(), context: event.context);
+        await sharedPreferences.setBool('isLogin', false).then((value) async {
+          await state.signInGoogle.disconnect().then((value) {
+            navigate(child: const StartUpScreen(), context: event.context);
+          });
+        });
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(value.message!, context: event.context));

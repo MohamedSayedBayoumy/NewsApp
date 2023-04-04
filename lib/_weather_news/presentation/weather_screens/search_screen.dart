@@ -7,6 +7,7 @@ import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_textfiled/text_filed.dart';
 
 import '../../../core/services/services_locator.dart';
+import '../../../core/utils/api_constance.dart';
 import '../../../core/utils/enum.dart';
 
 class WeatherSearchScreen extends StatelessWidget {
@@ -67,7 +68,68 @@ class WeatherSearchScreen extends StatelessWidget {
                   case Request.loaded:
                     final weatherData = state.weatherModel!.weather![0];
                     final weatherState = state.weatherModel;
-                    return Container();
+                    return Center(
+                      child: Container(
+                        width: media.width * .9,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white30.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomText(
+                              text: "Weather Statue in Your City",
+                              style: Theme.of(context).textTheme.displayMedium,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(ApiConstanceWeather.urlIcon(
+                                        weatherData.icon)),
+                                    CustomText(
+                                        text: weatherData.statusWeather
+                                            .toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall)
+                                  ],
+                                )),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                          text:
+                                              "WindSpeed: ${weatherState!.speedWind}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                      SizedBox(
+                                        height: media.height * .03,
+                                      ),
+                                      CustomText(
+                                          text:
+                                              "Weather Stauts: ${weatherData.description}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall)
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   case Request.error:
                     return Container();
                 }

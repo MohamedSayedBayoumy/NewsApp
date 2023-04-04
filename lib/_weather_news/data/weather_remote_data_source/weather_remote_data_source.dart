@@ -46,6 +46,6 @@ class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
       print("hi Data: $e");
 
       return WeatherModelData.fromJson({"message": "check your connection"});
-    }
+    } 
   }
 }

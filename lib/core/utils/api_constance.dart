@@ -9,7 +9,12 @@ class ApiConstanceAuth {
 
 class ApiConstanceWeather {
   static const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
-  static String urlIcon(String? icon) => "https://openweathermap.org/img/wn/$icon@2x.png";
+  static String urlIcon(String? icon) =>
+      "https://openweathermap.org/img/wn/$icon@2x.png";
   static const key = "de322af954e0a15b65def971432d2621";
 }
 
+class ApiConstanceArticles {
+  static const baseUrl = "https://newsapi.org/v2/everything";
+  static const apiKey  = "0483b40cc649482caf433ccb39f35ec7";
+}

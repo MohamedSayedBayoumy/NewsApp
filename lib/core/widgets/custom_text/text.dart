@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 class CustomText extends StatelessWidget {
   String? text;
   TextStyle? style;
+  TextAlign? textAlign;
 
-  CustomText({this.style, this.text, Key? key}) : super(key: key);
+  CustomText({this.style, this.text,   this.textAlign,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CustomText extends StatelessWidget {
       maxFontSize: 30,
       minFontSize: 12,
       maxLines: 2,
-      textAlign: TextAlign.center,
+      textAlign: textAlign ?? TextAlign.center,
       style: style ?? Theme.of(context).textTheme.bodyMedium,
     );
   }
