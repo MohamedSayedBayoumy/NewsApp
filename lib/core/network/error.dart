@@ -1,4 +1,3 @@
-import 'package:news_app_clean_architecture/_articles_news/domain/news_entites/entites_articles.dart';
 
 class FailureExcpetion implements Exception {
   final Failure failure;

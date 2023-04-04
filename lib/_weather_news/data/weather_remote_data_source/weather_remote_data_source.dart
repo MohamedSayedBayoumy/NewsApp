@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:news_app_clean_architecture/_weather_news/data/weather_model_data/weather_model_data.dart';
-import 'package:news_app_clean_architecture/_weather_news/domain/weather_entites/weather_model.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
 import 'package:news_app_clean_architecture/core/utils/api_constance.dart';
 

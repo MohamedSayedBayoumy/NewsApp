@@ -6,8 +6,8 @@ import '../../../domain/news_entites/entites_articles.dart';
 class ArticlesState extends Equatable {
   final ArticlesModel? articlesModel;
   final bool? isReadOnly;
-  Request? request;
-  ArticlesState(
+  final Request? request;
+   const  ArticlesState(
       {this.articlesModel,
       this.isReadOnly = false,
       this.request = Request.loading});

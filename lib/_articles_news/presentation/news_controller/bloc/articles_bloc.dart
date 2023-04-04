@@ -8,7 +8,7 @@ import 'articles_event.dart';
 import 'articles_state.dart';
 
 class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
-  ArticlesBloc(this.useCaseArticles) : super(ArticlesState()) {
+  ArticlesBloc(this.useCaseArticles) : super(const ArticlesState()) {
     on<FetchArticleDataEvent>(_fetchDataEvent);
   }
 

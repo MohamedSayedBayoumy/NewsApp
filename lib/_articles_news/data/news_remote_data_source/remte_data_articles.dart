@@ -16,7 +16,7 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
         "apiKey": ApiConstanceArticles.apiKey,
       });
       return ArticlesModelData.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioError {
       return ArticlesModelData.fromJson({"status": "error", "articles": []});
     }
   }

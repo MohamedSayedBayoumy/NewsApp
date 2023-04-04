@@ -12,8 +12,7 @@ import '../../../core/utils/enum.dart';
 import '../../../core/widgets/custom_text/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-// ignore: must_be_immutable
-class NewsArticleScreen extends StatelessWidget {
+ class NewsArticleScreen extends StatelessWidget {
   const NewsArticleScreen({super.key});
 
   @override
