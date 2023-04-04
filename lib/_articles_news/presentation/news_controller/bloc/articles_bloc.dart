@@ -8,7 +8,7 @@ import 'articles_event.dart';
 import 'articles_state.dart';
 
 class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
-  ArticlesBloc(this.useCaseArticles) : super(const ArticlesState()) {
+  ArticlesBloc(this.useCaseArticles) : super(ArticlesState()) {
     on<FetchArticleDataEvent>(_fetchDataEvent);
   }
 
@@ -16,8 +16,12 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
 
   Future<FutureOr<void>> _fetchDataEvent(
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
+    emit(state.copyWith(request: Request.loading));
     final data = await useCaseArticles.getArticlesData();
-
-    emit(state.copyWith(articlesModel: data , request: Request.loaded));
+    if (data.status == "error") {
+      emit(state.copyWith(request: Request.error));
+    } else {
+      emit(state.copyWith(articlesModel: data, request: Request.loaded));
+    }
   }
 }

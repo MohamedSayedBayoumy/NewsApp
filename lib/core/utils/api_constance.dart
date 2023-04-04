@@ -16,5 +16,5 @@ class ApiConstanceWeather {
 
 class ApiConstanceArticles {
   static const baseUrl = "https://newsapi.org/v2/everything";
-  static const apiKey  = "0483b40cc649482caf433ccb39f35ec7";
+  static const apiKey = "0483b40cc649482caf433ccb39f35ec7";
 }
