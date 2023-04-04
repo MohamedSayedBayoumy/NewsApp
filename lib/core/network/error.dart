@@ -1,14 +1,13 @@
-
-class FailureExcpetion implements Exception {
-  final Failure failure;
-  FailureExcpetion({required this.failure});
-}
-
 abstract class Failure {
-  String? text;
-  Failure({required this.text});
+  String? errorMessage;
+  Failure({required this.errorMessage});
 }
 
- class StatusFailure extends Failure {
-  StatusFailure({required super.text});
+
+class FailureModelData extends Failure {
+  FailureModelData({required super.errorMessage});
+  factory FailureModelData.fromJson(Map<String, dynamic> json) =>
+      FailureModelData(
+        errorMessage: json["message"],
+      );
 }

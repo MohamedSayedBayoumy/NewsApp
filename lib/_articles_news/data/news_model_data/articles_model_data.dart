@@ -6,7 +6,7 @@ class ArticlesModelData extends ArticlesModel {
   factory ArticlesModelData.fromJson(Map<String, dynamic> json) =>
       ArticlesModelData(
         articles: List<CurrentModelData>.from(
-            json["articles"]!.map((e) => CurrentModelData.fromJson(e)) ?? []) ,
+            json["articles"]!.map((e) => CurrentModelData.fromJson(e)) ?? []),
         status: json["status"] ?? "",
       );
 }
@@ -23,12 +23,14 @@ class CurrentModelData extends Articles {
 
   factory CurrentModelData.fromJson(Map<String, dynamic> json) =>
       CurrentModelData(
-        author: json["author"]?? "",
-        title: json["title"]?? "",
-        description: json["description"]?? "",
-        url: json["url"]?? "",
-        urlToImage: json["urlToImage"]?? "",
-        publishedAt: json["publishedAt"]?? "",
-        content: json["content"]?? "",
+        author: json["author"] ?? "",
+        title: json["title"] ?? "",
+        description: json["description"] ?? "",
+        url: json["url"] ?? "",
+        urlToImage: json["urlToImage"] ?? "",
+        publishedAt: json["publishedAt"] ?? "",
+        content: json["content"] ?? "",
       );
 }
+
+

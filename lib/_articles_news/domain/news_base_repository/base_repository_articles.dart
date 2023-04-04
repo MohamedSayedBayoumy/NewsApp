@@ -1,7 +1,10 @@
+import 'package:dartz/dartz.dart';
+
+import '../../../core/network/error.dart';
 import '../news_entites/entites_articles.dart';
 
 abstract class BaseRepositoryArticles {
-  Future<ArticlesModel> getArticlesData();
+  Future<Either<Failure ,ArticlesModel >> getArticlesData();
 
  
 }

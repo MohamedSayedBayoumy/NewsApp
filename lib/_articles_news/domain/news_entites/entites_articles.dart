@@ -24,7 +24,4 @@ class Articles {
       required this.content});
 }
 
-class Failure {
-  String? text;
-  Failure({required this.text});
-}
+

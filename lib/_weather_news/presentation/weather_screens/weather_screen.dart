@@ -11,12 +11,12 @@ import '../../../core/global/globals.dart';
 import '../../../core/services/services_locator.dart';
 import '../../../core/utils/api_constance.dart';
 import '../../../core/utils/enum.dart';
+import '../../../core/widgets/custom_button/custom_button.dart';
 import '../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
 import '../../../core/widgets/custom_text/text.dart';
 import '../../../core/widgets/custom_textfiled/text_filed.dart';
 import '../weather_controller/bloc/weather_bloc.dart';
 import '../weather_controller/bloc/weather_event.dart';
-
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class WeatherScreen extends StatelessWidget {
     final media = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) =>
-      sl<WeatherBloc>()..add(FetchWeatherDataEvent(context: context)),
+          sl<WeatherBloc>()..add(FetchWeatherDataEvent(context: context)),
       child: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           switch (state.statusRequest) {
@@ -117,7 +117,7 @@ class WeatherScreen extends StatelessWidget {
                       top: media.height * .13,
                       child: Padding(
                         padding:
-                        EdgeInsets.symmetric(horizontal: media.width * .05),
+                            EdgeInsets.symmetric(horizontal: media.width * .05),
                         child: fadeUpToDown(
                           child: SizedBox(
                               width: media.width * .9,
@@ -148,36 +148,36 @@ class WeatherScreen extends StatelessWidget {
                               CustomText(
                                 text: "Weather Statue in Your City",
                                 style:
-                                Theme.of(context).textTheme.displayMedium,
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                               Row(
                                 children: [
                                   Expanded(
                                       child: Column(
-                                        crossAxisAlignment:
+                                    crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Image.network(ApiConstanceWeather.urlIcon(
-                                              weatherData.icon)),
-                                          CustomText(
-                                              text: weatherData.statusWeather
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall)
-                                        ],
-                                      )),
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.network(ApiConstanceWeather.urlIcon(
+                                          weatherData.icon)),
+                                      CustomText(
+                                          text: weatherData.statusWeather
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall)
+                                    ],
+                                  )),
                                   Expanded(
                                     child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         CustomText(
                                             text:
-                                            "WindSpeed: ${weatherState!.speedWind}",
+                                                "WindSpeed: ${weatherState!.speedWind}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall),
@@ -186,7 +186,7 @@ class WeatherScreen extends StatelessWidget {
                                         ),
                                         CustomText(
                                             text:
-                                            "Weather Stauts: ${weatherData.description}",
+                                                "Weather Stauts: ${weatherData.description}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodySmall)
@@ -205,12 +205,21 @@ class WeatherScreen extends StatelessWidget {
               );
 
             case Request.error:
-              return TextButton(
-                  onPressed: () {},
-                  child: CustomText(
-                    text: "Refreshing",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ));
+              final bloc = BlocProvider.of<WeatherBloc>(context);
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(text: "Check your connection"),
+                    CustomButton(
+                      onPressed: () {
+                        bloc.add(FetchWeatherDataEvent(context: context));
+                      },
+                      text: "Refresh",
+                    )
+                  ],
+                ),
+              );
           }
         },
       ),

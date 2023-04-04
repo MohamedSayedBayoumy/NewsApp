@@ -39,5 +39,5 @@ class WeatherState extends Equatable {
       );
 
   @override
-  List<Object> get props => [weatherModel!, statusRequest];
+  List<Object> get props => [statusRequest];
 }

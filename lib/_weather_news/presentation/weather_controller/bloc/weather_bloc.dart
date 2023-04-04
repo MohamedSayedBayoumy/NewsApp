@@ -19,7 +19,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   Future<FutureOr<void>> _fetchWeatherDataEvent(
       FetchWeatherDataEvent event, Emitter<WeatherState> emit) async {
-    state.weatherModel = await baseWeatherUseCase.fetchWeatherByLanAndLat();
+    emit(state.copyWith(
+      statusRequest: Request.loading,
+    ));
+    final result = await baseWeatherUseCase.fetchWeatherByLanAndLat();
 
     DefaultAssetBundle.of(event.context)
         .loadString("assets/map.json")
@@ -27,27 +30,41 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       state.themeMode = value;
     });
 
-    emit(state.copyWith(
-      statusRequest: Request.loaded,
-      weatherModel: state.weatherModel,
-    ));
+    result.fold((l) {
+      emit(state.copyWith(
+        statusRequest: Request.error,
+      ));
+    }, (r) {
+      emit(state.copyWith(
+        statusRequest: Request.loaded,
+        weatherModel: r,
+      ));
+    });
   }
 
   Future<FutureOr<void>> _fetchWeatherDataByCountryNameEvent(
       FetchWeatherDataByCountryNameEvent event,
       Emitter<WeatherState> emit) async {
     try {
-      state.weatherModel = await baseWeatherUseCase.fetchWeatherByCountryName(
+      final result = await baseWeatherUseCase.fetchWeatherByCountryName(
           country: event.country);
-      emit(state.copyWith(
-        statusRequest: Request.loaded,
-        weatherModel: state.weatherModel,
-      ));
+
+      result.fold((l) {
+        emit(state.copyWith(
+          statusRequest: Request.error,
+        ));
+      }, (r) {
+        emit(state.copyWith(
+          statusRequest: Request.loaded,
+          weatherModel: r,
+        ));
+      });
     } catch (e) {
       if (e.toString() ==
           "NoSuchMethodError: The method 'map' was called on null.") {
-        ScaffoldMessenger.of(event.context)
-            .showSnackBar(snackBar("يرجى التحقق من الاسم الذي أدخلته ", context: event.context));
+        ScaffoldMessenger.of(event.context).showSnackBar(snackBar(
+            "يرجى التحقق من الاسم الذي أدخلته ",
+            context: event.context));
       }
     }
   }

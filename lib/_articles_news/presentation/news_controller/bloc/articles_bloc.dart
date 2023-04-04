@@ -18,10 +18,11 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
     emit(state.copyWith(request: Request.loading));
     final data = await useCaseArticles.getArticlesData();
-    if (data.status == "error") {
+
+    data.fold((l) {
       emit(state.copyWith(request: Request.error));
-    } else {
-      emit(state.copyWith(articlesModel: data, request: Request.loaded));
-    }
+    }, (r) {
+      emit(state.copyWith(articlesModel: r, request: Request.loaded));
+    });
   }
 }
