@@ -32,5 +32,3 @@ class CurrentModelData extends Articles {
         content: json["content"] ?? "",
       );
 }
-
-

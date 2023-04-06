@@ -1,8 +1,17 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
+import 'package:news_app_clean_architecture/_articles_news/data/local_data_base_articles/local_data_base.dart';
+import 'package:news_app_clean_architecture/_articles_news/data/news_model_data/articles_model_data.dart';
+import 'package:news_app_clean_architecture/_articles_news/data/news_remote_data_source/remte_data_articles.dart';
+import 'package:news_app_clean_architecture/_articles_news/domain/news_base_repository/base_repository_articles.dart';
+import 'package:news_app_clean_architecture/_articles_news/domain/news_entites/entites_articles.dart';
 
+import '../../../core/widgets/custom_post/article_post.dart';
+import '../../data/news_repository_data/repository_data_articles.dart';
+import '../../domain/news_base_use_case/use_case_aritcles.dart';
 import '../news_controller/bloc/articles_bloc.dart';
 import '../news_controller/bloc/articles_event.dart';
 import '../news_controller/bloc/articles_state.dart';
@@ -10,9 +19,8 @@ import '../../../core/global/globals.dart';
 import '../../../core/services/services_locator.dart';
 import '../../../core/utils/enum.dart';
 import '../../../core/widgets/custom_text/text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
- class NewsArticleScreen extends StatelessWidget {
+class NewsArticleScreen extends StatelessWidget {
   const NewsArticleScreen({super.key});
 
   @override
@@ -34,7 +42,23 @@ import 'package:cached_network_image/cached_network_image.dart';
         ]),
         actions: [
           IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                BaseLocalArticlesData baseLocalArticlesData =
+                    LocalArticlesData();
+
+                BaseRemoteArticlesData baseRemoteArticlesData =
+                    RemoteArticlesData();
+                BaseRepositoryArticles baseRepositoryArticles =
+                    RepositoryDataArticles(
+                        baseLocalArticlesData: baseLocalArticlesData,
+                        baseRemoteArticlesData: baseRemoteArticlesData);
+                UseCaseArticles useCaseArticles = UseCaseArticles(
+                    baseRepositoryArticles: baseRepositoryArticles);
+
+                List articles = await useCaseArticles.getLocalArticlesData();
+
+                print(articles[0]["author"]);
+              },
               icon: const CircleAvatar(
                 backgroundImage: AssetImage("assets/images/image_profile.jpg"),
               )),
@@ -54,143 +78,47 @@ import 'package:cached_network_image/cached_network_image.dart';
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.articlesModel!.articles!.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: media.width * .03,
-                            vertical: media.height * .006),
-                        child: Container(
-                            width: media.width,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300.withOpacity(.5),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(media.width * .03),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/profile.png",
-                                        width: media.width * .09,
-                                      ),
-                                      SizedBox(
-                                        width: media.width * .01,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          CustomText(
-                                              text: state.articlesModel!
-                                                      .articles![index].author
-                                                      ?.toString() ??
-                                                  "User",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall),
-                                          CustomText(
-                                              textAlign: TextAlign.start,
-                                              text: state.articlesModel!
-                                                  .articles![index].publishedAt
-                                                  .toString()
-                                                  .split("T")
-                                                  .first,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: media.height * .01,
-                                  ),
-                                  CustomText(
-                                      textAlign: TextAlign.start,
-                                      text: state.articlesModel!
-                                              .articles![index].title ??
-                                          "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  SizedBox(
-                                    height: media.height * .01,
-                                  ),
-                                  CustomText(
-                                      textAlign: TextAlign.start,
-                                      text: state.articlesModel!
-                                              .articles![index].description ??
-                                          "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  SizedBox(
-                                    height: media.height * .01,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        state.articlesModel!.articles![index]
-                                                .url ??
-                                            "",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: media.width * .04,
-                                          color: Colors.blueAccent,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      )),
-                                  SizedBox(
-                                    height: media.height * .01,
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: state.articlesModel!
-                                          .articles![index].urlToImage
-                                          .toString(),
-                                      placeholder: (context, url) => SizedBox(
-                                        height: media.height * .06,
-                                        child: Center(
-                                            child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: Colors.yellowAccent,
-                                          backgroundColor:
-                                              Colors.black.withOpacity(.2),
-                                        )),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const SizedBox(
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )),
+                      return CustomArticlePost(
+                        author: state.articlesModel!.articles![index].author
+                                ?.toString() ??
+                            "User",
+                        description:
+                            state.articlesModel!.articles![index].description ??
+                                "",
+                        publishedAt: state
+                            .articlesModel!.articles![index].publishedAt
+                            .toString()
+                            .split("T")
+                            .first,
+                        title:
+                            state.articlesModel!.articles![index].title ?? "",
+                        urlToImage: state
+                            .articlesModel!.articles![index].urlToImage
+                            .toString(),
+                        url: state.articlesModel!.articles![index].url ?? "",
+                        onPressedUrl: () {},
                       );
                     });
               case Request.error:
-                final bloc = BlocProvider.of<ArticlesBloc>(context);
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(text: "Check your connection"),
-                      CustomButton(
-                        onPressed: () {
-                          bloc.add(FetchArticleDataEvent());
-                        },
-                        text: "Refresh",
-                      )
-                    ],
-                  ),
-                );
+                return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: state.localData!.length,
+                    itemBuilder: (context, index) {
+                      return CustomArticlePost(
+                        author: state.localData![index]["author"] ?? "",
+                        description:
+                            state.localData![index]["description"] ?? "",
+                        publishedAt: state.localData![index]["publishedAt"]
+                            .toString()
+                            .split("T")
+                            .first,
+                        title: state.localData![index]["title"] ?? "",
+                        urlToImage: state.localData![index]["urlToImage"] ??
+                            "".toString(),
+                        url: state.localData![index]["url"] ?? "",
+                        onPressedUrl: () {},
+                      );
+                    });
             }
           },
         ),

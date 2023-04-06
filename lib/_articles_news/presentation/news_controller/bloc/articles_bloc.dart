@@ -17,10 +17,12 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
   Future<FutureOr<void>> _fetchDataEvent(
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
     emit(state.copyWith(request: Request.loading));
-    final data = await useCaseArticles.getArticlesData();
+    final remoteData = await useCaseArticles.getArticlesData();
+    final localArticlesData = await useCaseArticles.getLocalArticlesData();
 
-    data.fold((l) {
-      emit(state.copyWith(request: Request.error));
+    remoteData.fold((l) {
+      emit(
+          state.copyWith(request: Request.error, localData: localArticlesData));
     }, (r) {
       emit(state.copyWith(articlesModel: r, request: Request.loaded));
     });

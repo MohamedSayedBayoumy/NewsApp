@@ -13,6 +13,7 @@ import '../../../core/utils/api_constance.dart';
 import '../../../core/utils/enum.dart';
 import '../../../core/widgets/custom_button/custom_button.dart';
 import '../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
+import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_text/text.dart';
 import '../../../core/widgets/custom_textfiled/text_filed.dart';
 import '../weather_controller/bloc/weather_bloc.dart';
@@ -206,19 +207,10 @@ class WeatherScreen extends StatelessWidget {
 
             case Request.error:
               final bloc = BlocProvider.of<WeatherBloc>(context);
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomText(text: "Check your connection"),
-                    CustomButton(
-                      onPressed: () {
-                        bloc.add(FetchWeatherDataEvent(context: context));
-                      },
-                      text: "Refresh",
-                    )
-                  ],
-                ),
+              return CustomError(
+                onPressed: () {
+                  bloc.add(FetchWeatherDataEvent(context: context));
+                },
               );
           }
         },

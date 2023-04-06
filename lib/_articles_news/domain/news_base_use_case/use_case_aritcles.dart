@@ -8,7 +8,11 @@ class UseCaseArticles {
   final BaseRepositoryArticles baseRepositoryArticles;
   UseCaseArticles({required this.baseRepositoryArticles});
 
-  Future<Either<Failure,ArticlesModel>> getArticlesData() async {
+  Future<Either<Failure, ArticlesModel>> getArticlesData() async {
     return await baseRepositoryArticles.getArticlesData();
+  }
+
+  Future<List> getLocalArticlesData() {
+    return baseRepositoryArticles.getLocalArticlesData();
   }
 }

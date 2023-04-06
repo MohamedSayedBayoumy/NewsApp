@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:news_app_clean_architecture/_articles_news/data/local_data_base_articles/local_data_base.dart';
 import 'package:news_app_clean_architecture/_articles_news/presentation/news_controller/bloc/articles_bloc.dart';
 import 'package:news_app_clean_architecture/_authenticator/data/auth_remote_data_source/auth_remote_data.dart';
 import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_repository/auth_base_repository.dart';
@@ -28,7 +29,6 @@ class ServicesLocator {
     sl.registerFactory<AuthBloc>(() => AuthBloc(sl()));
     sl.registerFactory<ArticlesBloc>(() => ArticlesBloc(sl()));
 
-
     sl.registerLazySingleton<BaseRemoteData>(() => RemoteData());
     sl.registerLazySingleton<AuthBaseRepository>(() => AuthRepository(sl()));
     sl.registerLazySingleton(() => AuthUseCase(sl()));
@@ -39,13 +39,17 @@ class ServicesLocator {
         () => WeatherRepository(sl()));
     sl.registerLazySingleton(() => BaseWeatherUseCase(sl()));
 
+    sl.registerLazySingleton<BaseLocalArticlesData>(() => LocalArticlesData());
+
     sl.registerLazySingleton<BaseRemoteArticlesData>(
         () => RemoteArticlesData());
 
-    sl.registerLazySingleton<BaseRepositoryArticles>(
-        () => RepositoryDataArticles(baseRemoteArticlesData: sl()));
+    sl.registerLazySingleton<BaseRepositoryArticles>(() =>
+        RepositoryDataArticles(
+            baseRemoteArticlesData: sl(), baseLocalArticlesData: sl()));
 
-    sl.registerLazySingleton<UseCaseArticles>(
-        () => UseCaseArticles(baseRepositoryArticles: sl()));
+    sl.registerLazySingleton<UseCaseArticles>(() => UseCaseArticles(
+          baseRepositoryArticles: sl(),
+        ));
   }
 }
