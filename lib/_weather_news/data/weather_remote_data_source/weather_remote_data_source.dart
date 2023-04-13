@@ -25,8 +25,6 @@ class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
         "appid": ApiConstanceWeather.key,
       });
 
-      print("hi : ${sharedPreferences.getDouble("longitude")}");
-
       return Right(WeatherModelData.fromJson(respone.data));
     } on DioError {
       return Left(FailureModelData.fromJson({"message": "Invalid"}));
@@ -45,7 +43,7 @@ class WeatherRemoteDataSource implements WeatherBaseRemoteDataSource {
 
       return Right(WeatherModelData.fromJson(respone.data));
     } on DioError {
-      return Left(FailureModelData.fromJson({"message": "Invalid"}));
+      return Left(FailureModelData.fromJson({"message": "Invalid Data"}));
     }
   }
 }

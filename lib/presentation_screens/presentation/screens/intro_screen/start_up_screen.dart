@@ -100,7 +100,8 @@ class StartUpScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               PageTransition(
-                                  child: fadeDownTOUp(child: LoginScreen()),
+                                  child: const LoginScreen(),
+                                  duration: const Duration(milliseconds: 1000),
                                   type: PageTransitionType.bottomToTop),
                             );
                           },

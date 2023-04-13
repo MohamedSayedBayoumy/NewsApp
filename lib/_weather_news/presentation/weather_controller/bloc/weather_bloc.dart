@@ -19,16 +19,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
   Future<FutureOr<void>> _fetchWeatherDataEvent(
       FetchWeatherDataEvent event, Emitter<WeatherState> emit) async {
-    emit(state.copyWith(
-      statusRequest: Request.loading,
-    ));
+    emit(state.copyWith(statusRequest: Request.loading));
     final result = await baseWeatherUseCase.fetchWeatherByLanAndLat();
-
-    DefaultAssetBundle.of(event.context)
-        .loadString("assets/map.json")
-        .then((value) {
-      state.themeMode = value;
-    });
 
     result.fold((l) {
       emit(state.copyWith(
@@ -45,12 +37,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Future<FutureOr<void>> _fetchWeatherDataByCountryNameEvent(
       FetchWeatherDataByCountryNameEvent event,
       Emitter<WeatherState> emit) async {
+    emit(state.copyWith(statusRequest: Request.loading));
+
     try {
       final result = await baseWeatherUseCase.fetchWeatherByCountryName(
           country: event.country);
 
       result.fold((l) {
         emit(state.copyWith(
+          message: l.errorMessage,
           statusRequest: Request.error,
         ));
       }, (r) {

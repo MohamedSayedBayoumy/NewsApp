@@ -20,7 +20,7 @@ class WeatherState extends Equatable {
 
   WeatherState({
     this.weatherModel,
-    this.statusRequest = Request.loading,
+    this.statusRequest = Request.noAction,
     this.message,
     this.searchController,
   });

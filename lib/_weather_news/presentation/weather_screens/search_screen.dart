@@ -43,6 +43,11 @@ class WeatherSearchScreen extends StatelessWidget {
               builder: (context) {
                 switch (state.statusRequest) {
                   case Request.loading:
+                    return const Center(
+                      child:
+                          CircularProgressIndicator(color: Colors.yellowAccent),
+                    );
+                  case Request.noAction:
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +136,26 @@ class WeatherSearchScreen extends StatelessWidget {
                       ),
                     );
                   case Request.error:
-                    return Container();
+                    return Center(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: media.width * .04),
+                        child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white30.withOpacity(.5),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: media.width * .03,
+                            ),
+                            width: media.width,
+                            height: media.height * .12,
+                            child: CustomText(
+                                text: state.message.toString(),
+                                style: Theme.of(context).textTheme.bodySmall)),
+                      ),
+                    );
                 }
               },
             ),

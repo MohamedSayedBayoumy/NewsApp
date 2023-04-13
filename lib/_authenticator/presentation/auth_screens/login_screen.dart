@@ -10,17 +10,16 @@ import '../../../core/widgets/custom_text/text.dart';
 import '../../../core/services/services_locator.dart';
 import '../auth_controller/auth_bloc.dart';
 
-import 'package:google_sign_in/google_sign_in.dart';
-
+ 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
-  final GoogleSignIn x = GoogleSignIn();
+  const LoginScreen({Key? key}) : super(key: key);
+ 
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return BlocProvider(
+      
       create: (context) => sl<AuthBloc>(),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {

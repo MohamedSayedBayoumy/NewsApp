@@ -68,7 +68,5 @@ class IntroBloc extends Cubit<IntroState> {
         '${place.locality} - ${place.subAdministrativeArea}, ${place.administrativeArea}');
     await sharedPreferences.setDouble("longitude", position.longitude);
     await sharedPreferences.setDouble("latitude", position.latitude);
-  }
-
- 
+  } 
 }
