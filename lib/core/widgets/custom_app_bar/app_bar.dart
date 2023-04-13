@@ -1,19 +1,22 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  dynamic title;
-  dynamic color;
-  dynamic colorText;
-  dynamic elevation;
-  dynamic child;
-  dynamic customSize;
+  String? title;
+  Color? textColor;
+  Color? colorBackground;
+  Color? colorText;
+  double? elevation;
+  Widget? child;
+  double? customSize;
 
-  dynamic toolbarHeight;
-  dynamic heightFlexibleSpace;
+  double? toolbarHeight;
+  double? heightFlexibleSpace;
   Widget? leading;
-  dynamic centerTitle;
+  bool? centerTitle;
+
   List<Widget>? widgets;
 
   CustomAppBar(
@@ -22,9 +25,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.elevation,
       this.leading,
       this.child,
-      this.color,
+      this.textColor,
       this.customSize,
       this.toolbarHeight,
+      this.colorBackground,
       this.centerTitle,
       this.heightFlexibleSpace,
       this.widgets,
@@ -38,21 +42,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return AppBar(
-      centerTitle: centerTitle == null ? true : false,
-      toolbarHeight: toolbarHeight ?? media.height * .1,
-      backgroundColor: Colors.transparent,
-      elevation: elevation ?? 15.0,
-      leading: leading,
-      actions: widgets,
-      flexibleSpace: Container(height: heightFlexibleSpace),
-      title: Text(
-        title,
-        style: const TextStyle(
-            fontFamily: 'gilroy',
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: Colors.white),
-      ),
-    );
+        centerTitle: centerTitle == null ? true : false,
+        toolbarHeight: toolbarHeight ?? media.height * .1,
+        backgroundColor: colorBackground ?? Colors.transparent,
+        elevation: elevation ?? 15.0,
+        leading: leading,
+        actions: widgets,
+        flexibleSpace: Container(height: heightFlexibleSpace),
+        title: CustomText(
+          text: title!,
+          style: const TextStyle(color: Colors.black, fontFamily: "poppins"),
+        ));
   }
 }

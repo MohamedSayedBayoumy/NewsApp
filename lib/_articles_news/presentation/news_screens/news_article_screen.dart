@@ -8,6 +8,7 @@ import 'package:news_app_clean_architecture/_articles_news/data/news_remote_data
 import 'package:news_app_clean_architecture/_articles_news/domain/news_base_repository/base_repository_articles.dart';
 
 import '../../../core/widgets/custom_post/article_post.dart';
+import '../../../core/widgets/custom_user_image/user_image.dart';
 import '../../data/news_repository_data/repository_data_articles.dart';
 import '../../domain/news_base_use_case/use_case_aritcles.dart';
 import '../news_controller/bloc/articles_bloc.dart';
@@ -78,8 +79,8 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
 
                 print(articles[0]["author"]);
               },
-              icon: const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/image_profile.jpg"),
+              icon: const UserImage(
+                isAppBar: true,
               )),
         ],
       ),
