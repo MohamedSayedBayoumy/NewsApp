@@ -7,6 +7,7 @@ import 'package:news_app_clean_architecture/_articles_news/data/local_data_base_
 import 'package:news_app_clean_architecture/_articles_news/data/news_remote_data_source/remte_data_articles.dart';
 import 'package:news_app_clean_architecture/_articles_news/domain/news_base_repository/base_repository_articles.dart';
 
+import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_post/article_post.dart';
 import '../../../core/widgets/custom_user_image/user_image.dart';
 import '../../data/news_repository_data/repository_data_articles.dart';
@@ -26,17 +27,17 @@ class NewsArticleScreen extends StatefulWidget {
 }
 
 class _NewsArticleScreenState extends State<NewsArticleScreen> {
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
 
-    _scrollController.addListener(loading);
+    scrollController.addListener(loading);
   }
 
   loading() {
-    if (_scrollController.position.maxScrollExtent ==
-        _scrollController.offset) {
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.offset) {
       context.read<ArticlesBloc>().add(FetchArticleDataEvent(
           from:
               BlocProvider.of<ArticlesBloc>(context).state.articlesModel.length,
@@ -44,7 +45,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                   .state
                   .articlesModel
                   .length +
-              7));
+              11));
     }
   }
 
@@ -67,23 +68,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
         ]),
         actions: [
           IconButton(
-              onPressed: () async {
-                BaseLocalArticlesData baseLocalArticlesData =
-                    LocalArticlesData();
-
-                BaseRemoteArticlesData baseRemoteArticlesData =
-                    RemoteArticlesData();
-                BaseRepositoryArticles baseRepositoryArticles =
-                    RepositoryDataArticles(
-                        baseLocalArticlesData: baseLocalArticlesData,
-                        baseRemoteArticlesData: baseRemoteArticlesData);
-                UseCaseArticles useCaseArticles = UseCaseArticles(
-                    baseRepositoryArticles: baseRepositoryArticles);
-
-                List articles = await useCaseArticles.getLocalArticlesData();
-
-                print(articles[0]["author"]);
-              },
+              onPressed: () async {},
               icon: const UserImage(
                 isAppBar: true,
               )),
@@ -102,11 +87,22 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                 );
               case Request.loaded:
                 return ListView.builder(
-                    controller: _scrollController,
+                    controller: scrollController,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: state.articlesModel.length + 1,
+                    itemCount: state.noMorePosts
+                        ? state.articlesModel.length
+                        : state.articlesModel.length + 1,
                     itemBuilder: (context, index) {
-                      if (index <= state.articlesModel.length) {
+                      if (index >= state.articlesModel.length) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: media.height * .03),
+                          child: const Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.yellow,
+                          )),
+                        );
+                      } else {
                         return CustomArticlePost(
                           author:
                               state.articlesModel[index].author?.toString() ??
@@ -123,18 +119,9 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           url: state.articlesModel[index].url ?? "",
                           onPressedUrl: () {},
                         );
-                      } else {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: media.height * .03),
-                          child: const Center(
-                              child: CircularProgressIndicator(
-                            color: Colors.yellow,
-                          )),
-                        );
                       }
                     });
-              case Request.error:
+              case Request.offline:
                 return ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.localData!.length,
@@ -154,6 +141,12 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                         onPressedUrl: () {},
                       );
                     });
+              case Request.error:
+                final bloc = BlocProvider.of<ArticlesBloc>(context);
+                return CustomError(
+                  onPressed: () =>
+                      bloc.add(FetchArticleDataEvent(from: 0, to: 7)),
+                );
             }
           },
         ),

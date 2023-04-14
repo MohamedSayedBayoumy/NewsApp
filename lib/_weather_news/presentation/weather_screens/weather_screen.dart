@@ -110,8 +110,8 @@ class WeatherScreen extends StatelessWidget {
                     previous.statusRequest != current.statusRequest,
                 builder: (context, state) {
                   switch (state.statusRequest) {
-                     case Request.noAction:
-                    return Container();
+                    case Request.noAction:
+                      return Container();
                     case Request.loading:
                       return Positioned(
                           bottom: media.height * .06,
@@ -242,6 +242,8 @@ class WeatherScreen extends StatelessWidget {
                           ),
                         ),
                       );
+                    case Request.offline:
+                      return Container();
                   }
                 }),
           ),

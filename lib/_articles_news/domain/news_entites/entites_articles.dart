@@ -1,9 +1,4 @@
-// class ArticlesModel {
-//   String? status;
-//   List<Articles>? articles;
-
-//   ArticlesModel({required this.status, required this.articles});
-// }
+ 
 
 class Articles {
   String? author;

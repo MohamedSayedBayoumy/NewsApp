@@ -33,8 +33,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
         controller: controllerHomeScreen,
         children: [
           BlocProvider(
-              create: (context) =>
-                  sl<ArticlesBloc>()..add(FetchArticleDataEvent( from: 0 ,to: 7)),
+              create: (context) => sl<ArticlesBloc>()
+                ..add(FetchArticleDataEvent(from: 0, to: 11)),
               child: const NewsArticleScreen()),
           const WeatherScreen(),
           const ProfileScreen()

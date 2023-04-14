@@ -135,7 +135,7 @@ class WeatherSearchScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                  case Request.error:
+                  case Request.offline:
                     return Center(
                       child: Padding(
                         padding:
@@ -156,6 +156,8 @@ class WeatherSearchScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall)),
                       ),
                     );
+                  case Request.error:
+                    return Container();
                 }
               },
             ),

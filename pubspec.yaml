@@ -41,8 +41,9 @@ dependencies:
   dartz: ^0.10.1
   dio: ^5.0.0
   flutter_bloc: ^8.1.2
+  bloc_concurrency: ^0.2.1
   get_it: ^7.2.0
-  flutter_offline: ^2.1.0
+  
   carousel_slider: ^4.2.1
   animate_do: ^3.0.2
   cached_network_image: ^3.0.0

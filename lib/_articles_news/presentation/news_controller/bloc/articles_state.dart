@@ -5,14 +5,16 @@ import 'package:news_app_clean_architecture/core/utils/enum.dart';
 import '../../../domain/news_entites/entites_articles.dart';
 
 class ArticlesState extends Equatable {
-   final List<Articles>  articlesModel ;
+  final List<Articles> articlesModel;
   final bool? isReadOnly;
   final Request? request;
   final List? localData;
+  final bool noMorePosts;
 
-   const ArticlesState(
-      {this.articlesModel = const [] ,
+  const ArticlesState(
+      {this.articlesModel = const [],
       this.isReadOnly = false,
+      this.noMorePosts = false,
       this.localData,
       this.request = Request.loading});
 
@@ -22,8 +24,10 @@ class ArticlesState extends Equatable {
       List<Articles>? articlesModel,
       final ScrollController? controller,
       int? countArical,
+      bool? noMorePosts,
       Request? request = Request.loading}) {
     return ArticlesState(
+        noMorePosts: noMorePosts ?? this.noMorePosts,
         localData: localData ?? this.localData,
         isReadOnly: isReadOnly ?? this.isReadOnly,
         request: request ?? this.request,
@@ -31,5 +35,5 @@ class ArticlesState extends Equatable {
   }
 
   @override
-  List<Object> get props => [isReadOnly!, request!, articlesModel ];
+  List<Object> get props => [isReadOnly!, request!, articlesModel ,noMorePosts];
 }

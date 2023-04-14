@@ -1,6 +1,1 @@
-enum Request{
-  noAction ,
-  loading ,
-  loaded ,
-  error
-}
+enum Request { noAction, loading, loaded, offline , error }

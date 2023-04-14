@@ -24,7 +24,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
     result.fold((l) {
       emit(state.copyWith(
-        statusRequest: Request.error,
+        statusRequest: Request.offline,
       ));
     }, (r) {
       emit(state.copyWith(
