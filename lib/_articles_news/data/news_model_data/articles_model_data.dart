@@ -1,15 +1,15 @@
 import '../../domain/news_entites/entites_articles.dart';
 
-class ArticlesModelData extends ArticlesModel {
-  ArticlesModelData({required super.status, required super.articles});
+// class ArticlesModelData extends ArticlesModel {
+//   ArticlesModelData({required super.status, required super.articles});
 
-  factory ArticlesModelData.fromJson(Map<String, dynamic> json) =>
-      ArticlesModelData(
-        articles: List<CurrentModelData>.from(
-            json["articles"]!.map((e) => CurrentModelData.fromJson(e)) ?? []),
-        status: json["status"] ?? "",
-      );
-}
+//   factory ArticlesModelData.fromJson(Map<String, dynamic> json) =>
+//       ArticlesModelData(
+//         articles: List<CurrentModelData>.from(
+//             json["articles"]!.map((e) => CurrentModelData.fromJson(e)) ?? []),
+//         status: json["status"] ?? "",
+//       );
+// }
 
 class CurrentModelData extends Articles {
   CurrentModelData(

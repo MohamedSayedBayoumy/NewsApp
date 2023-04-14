@@ -15,7 +15,6 @@ import '../news_controller/bloc/articles_bloc.dart';
 import '../news_controller/bloc/articles_event.dart';
 import '../news_controller/bloc/articles_state.dart';
 import '../../../core/global/globals.dart';
-import '../../../core/services/services_locator.dart';
 import '../../../core/utils/enum.dart';
 import '../../../core/widgets/custom_text/text.dart';
 
@@ -27,19 +26,25 @@ class NewsArticleScreen extends StatefulWidget {
 }
 
 class _NewsArticleScreenState extends State<NewsArticleScreen> {
-  final controller = ScrollController();
-
+  ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    controller.addListener(fetchMoreData);
+
+    _scrollController.addListener(loading);
   }
 
-  void fetchMoreData() {
-    if (controller.position.pixels == controller.position.maxScrollExtent) {
-      print("object");
-    } else {
-      print("object2");
+  loading() {
+    if (_scrollController.position.maxScrollExtent ==
+        _scrollController.offset) {
+      context.read<ArticlesBloc>().add(FetchArticleDataEvent(
+          from:
+              BlocProvider.of<ArticlesBloc>(context).state.articlesModel.length,
+          to: BlocProvider.of<ArticlesBloc>(context)
+                  .state
+                  .articlesModel
+                  .length +
+              7));
     }
   }
 
@@ -47,8 +52,8 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
 
-    return Scaffold(
-      appBar: AppBar(
+    return ListView(children: [
+      AppBar(
         toolbarHeight: media.height * .08,
         backgroundColor: Colors.transparent,
         centerTitle: false,
@@ -84,10 +89,9 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               )),
         ],
       ),
-      body: BlocProvider(
-        create: (context) => sl<ArticlesBloc>()..add(FetchArticleDataEvent()),
+      SizedBox(
+        height: media.height * .8,
         child: BlocBuilder<ArticlesBloc, ArticlesState>(
-          buildWhen: (previous, current) => previous.request != current.request,
           builder: (context, state) {
             switch (state.request!) {
               case Request.noAction:
@@ -98,30 +102,37 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                 );
               case Request.loaded:
                 return ListView.builder(
-                    controller: controller,
+                    controller: _scrollController,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: 10,
+                    itemCount: state.articlesModel.length + 1,
                     itemBuilder: (context, index) {
-                      return CustomArticlePost(
-                        author: state.articlesModel!.articles![index].author
-                                ?.toString() ??
-                            "User",
-                        description:
-                            state.articlesModel!.articles![index].description ??
-                                "",
-                        publishedAt: state
-                            .articlesModel!.articles![index].publishedAt
-                            .toString()
-                            .split("T")
-                            .first,
-                        title:
-                            state.articlesModel!.articles![index].title ?? "",
-                        urlToImage: state
-                            .articlesModel!.articles![index].urlToImage
-                            .toString(),
-                        url: state.articlesModel!.articles![index].url ?? "",
-                        onPressedUrl: () {},
-                      );
+                      if (index <= state.articlesModel.length) {
+                        return CustomArticlePost(
+                          author:
+                              state.articlesModel[index].author?.toString() ??
+                                  "User",
+                          description:
+                              state.articlesModel[index].description ?? "",
+                          publishedAt: state.articlesModel[index].publishedAt
+                              .toString()
+                              .split("T")
+                              .first,
+                          title: state.articlesModel[index].title ?? "",
+                          urlToImage:
+                              state.articlesModel[index].urlToImage.toString(),
+                          url: state.articlesModel[index].url ?? "",
+                          onPressedUrl: () {},
+                        );
+                      } else {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: media.height * .03),
+                          child: const Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.yellow,
+                          )),
+                        );
+                      }
                     });
               case Request.error:
                 return ListView.builder(
@@ -147,6 +158,6 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
           },
         ),
       ),
-    );
+    ]);
   }
 }
