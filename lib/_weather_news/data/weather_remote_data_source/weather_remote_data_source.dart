@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:news_app_clean_architecture/_weather_news/data/weather_model_data/weather_model_data.dart';
-import 'package:news_app_clean_architecture/core/global/globals.dart';
-import 'package:news_app_clean_architecture/core/utils/api_constance.dart';
+ 
 
+import '../../../core/global/globals.dart';
 import '../../../core/network/error.dart';
+import '../../../core/utils/api_constance.dart';
 import '../../domain/weather_entites/weather_model.dart';
+import '../weather_model_data/weather_model_data.dart';
 
 abstract class WeatherBaseRemoteDataSource {
   Future<Either<Failure, WeatherModel>> getWeatherByLanAndLat();

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_bloc.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_event.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_state.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_textfiled/text_filed.dart';
 
 import '../../../core/services/services_locator.dart';
 import '../../../core/utils/api_constance.dart';
 import '../../../core/utils/enum.dart';
+import '../../../core/widgets/custom_text/text.dart';
+import '../../../core/widgets/custom_textfiled/text_filed.dart';
+import '../weather_controller/bloc/weather_bloc.dart';
+import '../weather_controller/bloc/weather_event.dart';
+import '../weather_controller/bloc/weather_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class WeatherSearchScreen extends StatelessWidget {
   const WeatherSearchScreen({super.key});
@@ -56,13 +58,14 @@ class WeatherSearchScreen extends StatelessWidget {
                           Image.asset(
                             "assets/images/search.png",
                             height: media.width * .20,
-                            color: const Color.fromARGB(255, 148, 141, 80),
+                            color: Colors.white,
                           ),
                           SizedBox(
                             height: media.height * .03,
                           ),
                           CustomText(
-                              text: "Start Search By Country Name  .. .",
+                              text: AppLocalizations.of(context)!
+                                              .searchByCountryname,
                               style: const TextStyle(
                                   fontFamily: "poppins",
                                   fontSize: 10.0,
@@ -85,7 +88,8 @@ class WeatherSearchScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(
-                              text: "Weather Statue in Your City",
+                              text:  AppLocalizations.of(context)!
+                                              .weatherstatus,
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Row(

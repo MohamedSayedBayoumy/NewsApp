@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:news_app_clean_architecture/_weather_news/domain/weather_base_repository/base_repository_weather.dart';
 
 import '../../../core/network/error.dart';
+import '../weather_base_repository/base_repository_weather.dart';
 import '../weather_entites/weather_model.dart';
 
 class BaseWeatherUseCase {

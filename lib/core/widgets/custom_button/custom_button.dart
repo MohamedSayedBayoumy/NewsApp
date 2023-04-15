@@ -17,12 +17,15 @@ class CustomButton extends StatelessWidget {
 
   double? height;
 
+  double? fontSize;
+
   Color? backgroundColor;
 
   CustomButton({
     Key? key,
     required this.onPressed,
     this.child,
+    this.fontSize,
     this.backgroundColor,
     this.elevation,
     this.text,
@@ -35,26 +38,23 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return SizedBox(
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundColor ?? Colors.yellowAccent,
-            padding:
-                EdgeInsets.symmetric(horizontal: padding ?? media.width * .07),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        child: child ??
-            CustomText(
-              text: text!,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontFamily: "inter",
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
-            ),
-      ),
-    );
+        width: width,
+        height: height,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor ?? Colors.amber,
+              padding: EdgeInsets.symmetric(
+                  horizontal: padding ?? media.width * .07),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8))),
+          child: child ??
+              CustomText(
+                text: text!,
+                color: Colors.black,
+                
+                fontSize:fontSize??  media.width * .065,
+              ),
+        ));
   }
 }

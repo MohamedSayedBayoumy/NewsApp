@@ -1,6 +1,8 @@
-import 'package:news_app_clean_architecture/_authenticator/data/auth_remote_data_source/auth_remote_data.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_repository/auth_base_repository.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_entites/auth_entits.dart';
+ 
+
+import '../../domain/auth_base_repository/auth_base_repository.dart';
+import '../../domain/auth_entites/auth_entits.dart';
+import '../auth_remote_data_source/auth_remote_data.dart';
 
 class AuthRepository extends AuthBaseRepository {
   final BaseRemoteData baseRemoteData;

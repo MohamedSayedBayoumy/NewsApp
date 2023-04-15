@@ -98,6 +98,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/animation_image/on_boarding/onBoarding1.json
     - assets/map.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -122,6 +123,11 @@ flutter:
     - family: titanOne
       fonts:
         - asset: assets/Fonts/TitanOne-Regular.ttf
+
+    - family: arabic
+      fonts:
+        - asset: assets/Fonts/Harmattan-Regular.ttf
+
 
     # For details regarding fonts from package dependencies,
     # see https://flutter.dev/custom-fonts/#from-packages

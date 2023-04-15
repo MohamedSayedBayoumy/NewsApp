@@ -1,4 +1,5 @@
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_entites/auth_entits.dart';
+ 
+import '../auth_entites/auth_entits.dart';
 
 abstract class AuthBaseRepository {
   Future<AuthModel> login(AuthParameters authParameters);

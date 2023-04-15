@@ -6,8 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_state.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_screens/search_screen.dart';
+
 import 'package:page_transition/page_transition.dart';
 
 import '../../../core/global/globals.dart';
@@ -19,9 +18,26 @@ import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_text/text.dart';
 import '../weather_controller/bloc/weather_bloc.dart';
 import '../weather_controller/bloc/weather_event.dart';
+import '../weather_controller/bloc/weather_state.dart';
+import 'search_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  String? themeMode;
+  @override
+  void initState() {
+    super.initState();
+    DefaultAssetBundle.of(context).loadString("assets/map.json").then((value) {
+      themeMode = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +48,31 @@ class WeatherScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: media.height * .09,
         backgroundColor: Colors.transparent,
         bottom: PreferredSize(
-            preferredSize: Size(0, media.height * .03), child: Container()),
+            preferredSize: Size(0, media.height * .05), child: Container()),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.search,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: media.width * .03),
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.black, shape: BoxShape.circle),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.yellow,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const WeatherSearchScreen(),
+                        type: PageTransitionType.rightToLeftWithFade),
+                  );
+                },
+              ),
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                    child: const WeatherSearchScreen(),
-                    type: PageTransitionType.rightToLeftWithFade),
-              );
-            },
           ),
         ],
       ),
@@ -57,6 +82,9 @@ class WeatherScreen extends StatelessWidget {
             child: GoogleMap(
               compassEnabled: false,
               zoomControlsEnabled: false,
+              onMapCreated: (controller) {
+                controller.setMapStyle(themeMode);
+              },
               initialCameraPosition: CameraPosition(
                   target: LatLng(
                       sharedPreferences.getDouble("latitude")!.toDouble(),
@@ -81,172 +109,220 @@ class WeatherScreen extends StatelessWidget {
               },
             ),
           ),
-          Positioned(
-            top: media.height * .13,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: media.width * .05),
-              child: fadeUpToDown(
-                child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.black,
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        vertical: media.height * .03,
-                        horizontal: media.width * .01),
-                    width: media.width * .9,
-                    child: CustomText(
-                      text: sharedPreferences.getString("address"),
-                    )),
-              ),
-            ),
-          ),
-          BlocProvider(
-            create: (context) =>
-                sl<WeatherBloc>()..add(FetchWeatherDataEvent(context: context)),
-            child: BlocBuilder<WeatherBloc, WeatherState>(
-                buildWhen: (previous, current) =>
-                    previous.statusRequest != current.statusRequest,
-                builder: (context, state) {
-                  switch (state.statusRequest) {
-                    case Request.noAction:
-                      return Container();
-                    case Request.loading:
-                      return Positioned(
-                          bottom: media.height * .06,
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                                color: Colors.yellowAccent),
-                          ));
 
-                    case Request.loaded:
-                      final weatherData = state.weatherModel!.weather![0];
-                      final weatherState = state.weatherModel;
-                      state.addressController.text =
-                          sharedPreferences.getString("address").toString();
-                      return Positioned(
-                          bottom: media.height * .06,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: media.width * .05,
-                            ),
-                            child: Container(
-                              width: media.width * .9,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(15),
+          Padding(
+            padding: EdgeInsets.only(top: media.height * .13),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                fadeOutLeft(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: media.width * .05),
+                    child: Container(
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(50),
+                                topRight: Radius.circular(50))),
+                        width: media.width,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: media.width * .03,
+                                height: media.height * .15,
+                                decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(50),
+                                        topRight: Radius.circular(50))),
+                                child: CustomText(
+                                  fontSize: media.width * .04,
+                                  color: Colors.white,
+                                  text: AppLocalizations.of(context)!.location,
+                                ),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomText(
-                                    text: "Weather Statue in Your City",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayMedium,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: CustomText(
+                                fontSize: media.width * .04,
+                                needDefaultStyle: true,
+                                color: Colors.black,
+                                text: sharedPreferences
+                                            .getString("localization") ==
+                                        "ar"
+                                    ? sharedPreferences.getString("addressAr")
+                                    : sharedPreferences.getString("addressEn"),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  child: BlocProvider(
+                    create: (context) => sl<WeatherBloc>()
+                      ..add(FetchWeatherDataEvent(context: context)),
+                    child: BlocBuilder<WeatherBloc, WeatherState>(
+                        buildWhen: (previous, current) =>
+                            previous.statusRequest != current.statusRequest,
+                        builder: (context, state) {
+                          switch (state.statusRequest) {
+                            case Request.noAction:
+                              return Container();
+                            case Request.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                    color: Colors.yellowAccent),
+                              );
+
+                            case Request.loaded:
+                              final weatherData =
+                                  state.weatherModel!.weather![0];
+                              final weatherState = state.weatherModel;
+
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: media.width * .04,
+                                ),
+                                child: Container(
+                                  width: media.width * .9,
+                                  height: media.height,
+                                  decoration: BoxDecoration(
+                                    // color: ,
+                                    gradient: LinearGradient(colors: [
+                                      Colors.black12,
+                                      Colors.amber.withOpacity(.5)
+                                    ]),
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20)),
                                   ),
-                                  Row(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                          child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      CustomText(
+                                        text: AppLocalizations.of(context)!
+                                            .weatherStatueinYourlocation,
+                                      ),
+                                      Row(
                                         children: [
-                                          CachedNetworkImage(
-                                            imageUrl:
-                                                ApiConstanceWeather.urlIcon(
-                                                    weatherData.icon),
-                                            placeholder: (context, url) =>
+                                          Expanded(
+                                              child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl:
+                                                    ApiConstanceWeather.urlIcon(
+                                                        weatherData.icon),
+                                                placeholder: (context, url) =>
+                                                    SizedBox(
+                                                  height: media.height * .06,
+                                                  child: Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                    color: Colors.yellowAccent,
+                                                    backgroundColor: Colors
+                                                        .black
+                                                        .withOpacity(.2),
+                                                  )),
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const SizedBox(
+                                                  height: 0,
+                                                ),
+                                              ),
+                                              CustomText(
+                                                  text: weatherData
+                                                      .statusWeather
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall)
+                                            ],
+                                          )),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                CustomText(
+                                                    text:
+                                                        "${AppLocalizations.of(context)!.windSpeed}: ${weatherState!.speedWind}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall),
                                                 SizedBox(
-                                              height: media.height * .06,
-                                              child: Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: Colors.yellowAccent,
-                                                backgroundColor: Colors.black
-                                                    .withOpacity(.2),
-                                              )),
-                                            ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    const SizedBox(
-                                              height: 0,
+                                                  height: media.height * .03,
+                                                ),
+                                                CustomText(
+                                                    text:
+                                                        "${AppLocalizations.of(context)!.weatherstatus}: ${weatherData.description}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall)
+                                              ],
                                             ),
                                           ),
-                                          CustomText(
-                                              text: weatherData.statusWeather
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall)
                                         ],
-                                      )),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            CustomText(
-                                                text:
-                                                    "WindSpeed: ${weatherState!.speedWind}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall),
-                                            SizedBox(
-                                              height: media.height * .03,
-                                            ),
-                                            CustomText(
-                                                text:
-                                                    "Weather Stauts: ${weatherData.description}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall)
-                                          ],
-                                        ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ));
+                                ),
+                              );
 
-                    case Request.error:
-                      final bloc = BlocProvider.of<WeatherBloc>(context);
-                      return Positioned(
-                        bottom: media.height * .06,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: media.width * .05,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: media.height * .03),
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(25)),
-                            width: media.width,
-                            child: CustomError(
-                              onPressed: () {
-                                bloc.add(
-                                    FetchWeatherDataEvent(context: context));
-                              },
-                            ),
-                          ),
-                        ),
-                      );
-                    case Request.offline:
-                      return Container();
-                  }
-                }),
+                            case Request.error:
+                              final bloc =
+                                  BlocProvider.of<WeatherBloc>(context);
+                              return Positioned(
+                                bottom: media.height * .06,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: media.width * .05,
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: media.height * .03),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(.5),
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    width: media.width,
+                                    child: CustomError(
+                                      onPressed: () {
+                                        bloc.add(FetchWeatherDataEvent(
+                                            context: context));
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            case Request.offline:
+                              return Container();
+                          }
+                        }),
+                  ),
+                ),
+              ],
+            ),
           ),
+          // Positioned(
+          //   top: media.height * .13,
+          //   // right: media.width * .03,
+          //   left: media.width * .3,
+          //   child:
+          // ),
         ],
       ),
     );

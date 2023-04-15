@@ -3,14 +3,28 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
+import '../../global/globals.dart';
+
 class CustomText extends StatelessWidget {
   String? text;
   TextStyle? style;
   TextAlign? textAlign;
   TextDirection? textDirection;
+  Color? color;
+  String? fontStyle;
+  double? fontSize;
+  final bool needDefaultStyle;
 
   CustomText(
-      {this.textDirection, this.style, this.text, this.textAlign, Key? key})
+      {this.textDirection,
+      this.style,
+      this.needDefaultStyle = false,
+      this.text,
+      this.textAlign,
+      this.color,
+      this.fontSize,
+      this.fontStyle,
+      Key? key})
       : super(key: key);
 
   @override
@@ -18,11 +32,18 @@ class CustomText extends StatelessWidget {
     return AutoSizeText(
       textDirection: textDirection,
       text!,
-      maxFontSize: 30,
+      maxFontSize: 100,
       minFontSize: 12,
-      maxLines: 2,
+      maxLines: 3,
       textAlign: textAlign ?? TextAlign.center,
-      style: style ?? Theme.of(context).textTheme.bodyMedium,
+      style: TextStyle(
+          fontSize: fontSize,
+          color: color ?? Colors.white,
+          fontFamily: needDefaultStyle == true
+              ? "poppins"
+              : sharedPreferences.getString("Localization") == "en"
+                  ? fontStyle ?? "poppins"
+                  : "arabic"),
     );
   }
 }

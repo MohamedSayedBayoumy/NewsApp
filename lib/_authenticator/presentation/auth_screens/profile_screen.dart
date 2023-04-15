@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_event.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
-import 'package:news_app_clean_architecture/presentation_screens/presentation/controller/intro_cubit.dart';
+ 
 
 import '../../../core/global/globals.dart';
 import '../../../core/services/services_locator.dart';
 import '../../../core/widgets/custom_app_bar/app_bar.dart';
+import '../../../core/widgets/custom_button/custom_button.dart';
+import '../../../core/widgets/custom_text/text.dart';
 import '../../../core/widgets/custom_user_image/user_image.dart';
+import '../../../presentation_screens/presentation/controller/intro_cubit.dart';
 import '../auth_controller/auth_bloc.dart';
+import '../auth_controller/auth_event.dart';
 import '../auth_controller/auth_state.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                 height: media.height * .45,
               ),
               CustomAppBar(
-                  colorBackground: Colors.yellow,
+                  colorBackground: Colors.amber,
                   textColor: Colors.black,
                   title: 'My Account',
                   widgets: [
@@ -108,6 +109,8 @@ class ProfileScreen extends StatelessWidget {
                     BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
                   final bloc = BlocProvider.of<AuthBloc>(context);
                   return CustomButton(
+                    fontSize: media.width * .05,
+                    
                     onPressed: () {
                       bloc.add(LogOut(context));
                     },

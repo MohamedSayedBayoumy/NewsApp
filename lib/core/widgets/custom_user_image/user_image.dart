@@ -12,7 +12,7 @@ class UserImage extends StatelessWidget {
     final media = MediaQuery.of(context).size;
 
     return CircleAvatar(
-      backgroundColor: Colors.white,
+      backgroundColor: isAppBar == true ? Colors.amber : Colors.white,
       radius: media.height * .08,
       child: CircleAvatar(
         radius: isAppBar == true ? media.height * .015 : media.height * .07,

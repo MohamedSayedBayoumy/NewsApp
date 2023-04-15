@@ -2,13 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';
+ 
 import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../_authenticator/presentation/auth_screens/register_screen.dart';
 import '../../../../core/widgets/custom_button/custom_button.dart';
 import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
+import '../../../../core/widgets/custom_text/text.dart';
 import '../../../domain/entitie/entite_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,7 +28,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   bool transferWidget = false;
 
   void iconButton() {
-    if (turn == 1) {
+    if (turn == 0) {
       Future.delayed(
         const Duration(milliseconds: 800),
         () {
@@ -42,13 +43,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   void navigataButton() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        PageTransition(
-            child: fadeDownTOUp(child: const RegisterScreen()),
-            duration: const Duration(milliseconds: 1500),
-            type: PageTransitionType.bottomToTop),
-        (route) => false);
+    Navigator.push(
+      context,
+      PageTransition(
+          child: fadeDownTOUp(child: const RegisterScreen()),
+          duration: const Duration(milliseconds: 1500),
+          type: PageTransitionType.bottomToTop),
+    );
   }
 
   @override
@@ -57,13 +58,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     List<OnBoardingModel> modelOnBoarding = [
       OnBoardingModel(
         title: AppLocalizations.of(context)!.onBoardingTitle1,
-        image: "assets/animation_image/onBoarding1.json",
+        image: "assets/animation_image/on_boarding/onBoarding1.json",
         subTitle: AppLocalizations.of(context)!.onBoarding1,
       ),
-      OnBoardingModel(
-          title: AppLocalizations.of(context)!.onBoardingTitle2,
-          image1: "assets/images/basketball.png",
-          subTitle: AppLocalizations.of(context)!.onBoarding2),
       OnBoardingModel(
           title: AppLocalizations.of(context)!.onBoardingTitle3,
           image1: "assets/images/cloudy.png",
@@ -133,13 +130,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                         child: CustomText(
                           text: modelOnBoarding[index].title,
-                          style: Theme.of(context).textTheme.displayMedium,
+                          fontSize: media.width * .05,
+                          color: Colors.amber,
                         ),
                       ),
                       SizedBox(
                         height: media.height * .03,
                       ),
-                      CustomText(text: modelOnBoarding[index].subTitle),
+                      CustomText(
+                          text: modelOnBoarding[index].subTitle,
+                          fontSize: media.width * .04),
                       const Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

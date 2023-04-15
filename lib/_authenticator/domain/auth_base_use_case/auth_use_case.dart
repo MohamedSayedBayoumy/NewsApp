@@ -1,6 +1,7 @@
 
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_base_repository/auth_base_repository.dart';
-import 'package:news_app_clean_architecture/_authenticator/domain/auth_entites/auth_entits.dart';
+ 
+import '../auth_base_repository/auth_base_repository.dart';
+import '../auth_entites/auth_entits.dart';
 
 class AuthUseCase {
   final AuthBaseRepository authBaseRepository;

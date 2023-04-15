@@ -17,3 +17,8 @@ Widget fadeElasticIn({required Widget child}) => ElasticIn(
     duration: const Duration(milliseconds: 1400),
     delay: const Duration(milliseconds: 200),
     child: child);
+
+Widget fadeOutLeft({required Widget child}) => FadeInLeft(
+    duration: const Duration(milliseconds: 1000),
+    delay: const Duration(milliseconds: 100),
+    child: child);

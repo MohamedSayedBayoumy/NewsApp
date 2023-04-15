@@ -16,13 +16,12 @@ class CustomArticlePost extends StatelessWidget {
   final bool? showTranslation;
   final bool? isLoading;
 
-
   final void Function()? onPressedUrl;
   final void Function()? translateMethod;
 
   const CustomArticlePost(
       {this.author,
-      this.isLoading , 
+      this.isLoading,
       this.translateTitle,
       this.translateDescription,
       this.showTranslation,
@@ -68,12 +67,14 @@ class CustomArticlePost extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                            text: author,
-                            style: Theme.of(context).textTheme.bodySmall),
+                          text: author,
+                          fontSize: media.width * .03,
+                          needDefaultStyle: true,
+                        ),
                         CustomText(
-                            textAlign: TextAlign.start,
-                            text: publishedAt,
-                            style: Theme.of(context).textTheme.bodySmall),
+                          text: publishedAt,
+                          needDefaultStyle: true,
+                        ),
                       ],
                     ),
                   ],
@@ -81,19 +82,24 @@ class CustomArticlePost extends StatelessWidget {
                 SizedBox(
                   height: media.height * .01,
                 ),
-                CustomText(
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    needDefaultStyle: true,
                     textDirection: TextDirection.ltr,
                     textAlign: TextAlign.start,
                     text: title,
-                    style: Theme.of(context).textTheme.bodySmall),
+                  ),
+                ),
                 SizedBox(
                   height: media.height * .01,
                 ),
                 CustomText(
-                    textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.start,
-                    text: description,
-                    style: Theme.of(context).textTheme.bodySmall),
+                  needDefaultStyle: true,
+                  textDirection: TextDirection.ltr,
+                  text: description,
+                  textAlign: TextAlign.start,
+                ),
                 SizedBox(
                   height: media.height * .01,
                 ),
@@ -102,14 +108,11 @@ class CustomArticlePost extends StatelessWidget {
                     InkWell(
                       onTap: translateMethod,
                       child: CustomText(
-                          textAlign: TextAlign.start,
-                          text: AppLocalizations.of(context)!.translate,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 203, 203, 203),
-                            fontSize: 16,
-                            fontFamily: "",
-                            fontWeight: FontWeight.normal,
-                          )),
+                        textAlign: TextAlign.start,
+                        text: AppLocalizations.of(context)!.translate,
+                        color: const Color.fromARGB(255, 187, 186, 186),
+                        fontSize: 15,
+                      ),
                     ),
                     SizedBox(
                       width: media.width * .012,
@@ -119,7 +122,6 @@ class CustomArticlePost extends StatelessWidget {
                             height: media.height * .01,
                             width: media.height * .01,
                             child: CircularProgressIndicator(
-                              
                               strokeWidth: 1,
                               backgroundColor:
                                   Colors.grey.shade300.withOpacity(.5),
@@ -136,46 +138,19 @@ class CustomArticlePost extends StatelessWidget {
                     firstChild: Container(),
                     secondChild: Padding(
                       padding: EdgeInsets.only(bottom: media.height * .01),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(200)),
-                            height: media.height * .14,
-                            width: media.width * .003,
-                          ),
-                          SizedBox(
-                            width: media.width * .012,
-                          ),
-                          Expanded(
-                            flex: 9,
-                            child: SizedBox(
-                              height: media.height * .12,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomText(
-                                      textDirection: TextDirection.rtl,
-                                      textAlign: TextAlign.start,
-                                      text: translateTitle,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  SizedBox(
-                                    height: media.height * .01,
-                                  ),
-                                  CustomText(
-                                      textDirection: TextDirection.rtl,
-                                      textAlign: TextAlign.start,
-                                      text: translateDescription,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: media.width * .011),
+                        decoration: const BoxDecoration(
+                            border:
+                                Border(right: BorderSide(color: Colors.black))),
+                        child: CustomText(
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          needDefaultStyle: true,
+                          fontSize: media.width * .07,
+                          text: "$translateTitle \n $translateDescription",
+                        ),
                       ),
                     ),
                     crossFadeState: showTranslation == true

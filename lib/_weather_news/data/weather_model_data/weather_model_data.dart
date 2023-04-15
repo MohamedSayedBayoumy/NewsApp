@@ -1,6 +1,6 @@
-import 'package:news_app_clean_architecture/_weather_news/data/weather_model_data/weather_data.dart';
-
+ 
 import '../../domain/weather_entites/weather_model.dart';
+import 'weather_data.dart';
 
 class WeatherModelData extends WeatherModel {
   WeatherModelData(

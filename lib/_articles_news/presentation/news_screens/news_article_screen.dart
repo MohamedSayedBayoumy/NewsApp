@@ -75,10 +75,10 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                 final translator = GoogleTranslator();
 
                 const input =
-                    "How to organize all of your tabs on Chrome and other browsers";
+                    "AZ Zaytoun Al Gharbeyah Zeitoun Cairo Governorate";
 
-                var translation =
-                    await translator.translate(input.toString(), to: 'ar');
+                var translation = await translator
+                    .translate(input.toString().toLowerCase(), to: 'ar');
                 print(translation);
               },
               icon: const UserImage(

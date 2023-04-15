@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_screens/login_screen.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+ 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../../../_authenticator/presentation/auth_screens/login_screen.dart';
+import '../../../../core/widgets/custom_app_bar/app_bar.dart';
+import '../../../../core/widgets/custom_button/custom_button.dart';
 import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
 import '../../../../core/widgets/custom_text/text.dart';
+import '../../controller/intro_cubit.dart';
 import 'onboarding_screen.dart';
 
 class StartUpScreen extends StatelessWidget {
@@ -45,6 +49,21 @@ class StartUpScreen extends StatelessWidget {
             ),
           ),
         ),
+        CustomAppBar(
+            colorBackground: Colors.transparent,
+            elevation: 0.0,
+            title: "",
+            widgets: [
+              IconButton(
+                  onPressed: () {
+                    BlocProvider.of<IntroBloc>(context)
+                        .changeLocalizationEvent();
+                  },
+                  icon: const Icon(
+                    Icons.language,
+                    color: Color.fromARGB(255, 255, 230, 0),
+                  ))
+            ]),
         Positioned(
           bottom: media.height * .01,
           child: Padding(
@@ -62,14 +81,15 @@ class StartUpScreen extends StatelessWidget {
                     flex: 2,
                     child: CustomText(
                       text: AppLocalizations.of(context)!.startUp1,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      fontSize: media.width * .071,
                     ),
                   ),
                   SizedBox(
-                    height: media.height * .04,
+                    height: media.height * .01,
                   ),
                   CustomText(
                     text: AppLocalizations.of(context)!.startUp2,
+                    fontSize: media.width * .035,
                   ),
                   SizedBox(
                     height: media.height * .05,
@@ -107,7 +127,6 @@ class StartUpScreen extends StatelessWidget {
                           },
                           child: CustomText(
                             text: AppLocalizations.of(context)!.startUp5,
-                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
                       ],

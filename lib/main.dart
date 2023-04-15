@@ -3,15 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
-
+ 
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
-import 'core/themes/themes.dart';
 import 'presentation_screens/presentation/controller/intro_cubit.dart';
 import 'presentation_screens/presentation/controller/intro_state.dart';
 import 'presentation_screens/presentation/screens/home_screen/page_view_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<IntroBloc, IntroState>(
         builder: (context, state) {
           return MaterialApp(
+            theme: ThemeData(scaffoldBackgroundColor: Colors.black),
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -61,11 +62,7 @@ class MyApp extends StatelessWidget {
                 : const Locale("ar"),
             useInheritedMediaQuery: true,
             builder: DevicePreview.appBuilder,
-            theme: appLightThem,
-            darkTheme: appDarkThem,
-            themeMode: sharedPreferences.getBool('isThemeModeDark') == true
-                ? ThemeMode.dark
-                : ThemeMode.light,
+            themeMode: ThemeMode.dark,
             debugShowCheckedModeBanner: false,
             home: const Condition(),
           );

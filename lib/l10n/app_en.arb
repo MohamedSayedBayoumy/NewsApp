@@ -1,6 +1,6 @@
  {
- "startUp1" : "Join us to be one of the first to receive world news" ,
- "startUp2" : "With this application you will be able to Know what happened around you" ,
+ "startUp1" : "Join us to be among the first to receive world news.." ,
+ "startUp2" : "Provide timely, accurate, and relevant news stories and Include a search function to enable users to quickly find status Weather" ,
  "startUp3" : "Let's Start" ,
  "startUp4" : "Already have account ? " ,
  "startUp5" : "Sign in" ,
@@ -11,7 +11,25 @@
  "onBoarding3" : "You can now follow the weather news and find out the weather at the current time in a country by searching by name other country" ,
  "onBoardingTitle3" : "Weather News" ,
  "translate" :"Translate" ,
- "welcome" : "Welcome"
+ "welcome" : "Welcome" ,
+ "email" : "email" ,
+ "password" : "Password" , 
+ "forgotpassword" :"Forgot password ? ",
+ "login" : "Login" ,
+ "signinWithGoogle" : "sign in with Google" ,
+ "signinWithFacebook" :"sign in with Facebook" ,
+ "or" :  "or" ,
+ "start" : "start" ,
+ "letsToJoinUs" : "let's To Join Us" ,
+ "username" : "username" ,
+ "phone" : "phone" ,
+ "signUp" : "signUp" ,
+ "enterYourdataToContinue" : "Enter your Data to Continue" ,
+ "location" : "location" ,
  
-
+ "weatherStatueinYourlocation" : "weather Statue in Your location" ,
+ "windSpeed" : "wind Speed" ,
+ "weatherstatus": "weather Status",
+ "searchByCountryname" : "country name",
+ "startSearchByCountryname" :"Start Search By Country Name" 
  }

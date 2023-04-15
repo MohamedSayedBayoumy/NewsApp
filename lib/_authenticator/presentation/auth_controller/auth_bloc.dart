@@ -7,14 +7,15 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:news_app_clean_architecture/presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../core/functions/snack_bar.dart';
 import '../../../core/global/globals.dart';
 import '../../../presentation_screens/presentation/screens/home_screen/page_view_screen.dart';
+import '../../../presentation_screens/presentation/screens/intro_screen/start_up_screen.dart';
 import '../../domain/auth_base_use_case/auth_use_case.dart';
 import '../../domain/auth_entites/auth_entits.dart';
+import '../auth_screens/phone_screen.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -189,9 +190,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 image: value.photoUrl.toString(),
                 name: value.displayName.toString())
             .whenComplete(() {
-          navigate(child: const PageViewScreen(), context: event.context);
+          navigate(child: const AddPhoneScreen(), context: event.context);
         });
       } else {
+        await state.signInGoogle.disconnect();
+
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(result.message!, context: event.context));
       }
@@ -259,21 +262,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> _logOut(LogOut event, Emitter<AuthState> emit) async {
     await authUseCase
         .logOut(AuthParameters(
-      token: sharedPreferences.getString("token"),
+      token: sharedPreferences.getString("token").toString(),
     ))
         .then((value) async {
-      print("Message : ${value.message}");
       if (value.status == true) {
-        await sharedPreferences.setBool('isLogin', false).then((value) async {
-          await state.signInGoogle.disconnect().then((value) {
-            navigate(child: const StartUpScreen(), context: event.context);
-          });
-        });
+        await sharedPreferences.setBool('isLogin', false);
+        await state.signInGoogle.disconnect();
       } else {
         ScaffoldMessenger.of(event.context)
             .showSnackBar(snackBar(value.message!, context: event.context));
         print(value.message);
       }
-    });
+    }).whenComplete(() =>
+            navigate(child: const StartUpScreen(), context: event.context));
   }
 }

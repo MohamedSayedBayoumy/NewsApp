@@ -32,13 +32,13 @@ class CustomTextField extends StatelessWidget {
   TextInputAction? textInputAction;
   String? errorText;
   void Function()? onPressedSuffixIcon;
-  FloatingLabelBehavior? needLabel; 
+  FloatingLabelBehavior? needLabel;
 
   CustomTextField(
       {Key? key,
       required this.controller,
       this.obscureText,
-      this.needLabel ,
+      this.needLabel,
       this.prefixIcon,
       this.textInputAction,
       this.suffixIcon,
@@ -65,6 +65,12 @@ class CustomTextField extends StatelessWidget {
       this.errorText})
       : super(key: key);
 
+  TextStyle textStyle({Color? textColor, String? fontStyle}) => TextStyle(
+      color: textColor ?? Colors.white,
+      fontFamily: sharedPreferences.getString("Localization") == "en"
+          ? fontStyle ?? "poppins"
+          : "arabic");
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -74,13 +80,13 @@ class CustomTextField extends StatelessWidget {
                 colorScheme:
                     const ColorScheme.light(primary: Colors.yellowAccent)),
             child: TextFormField(
-              style: Theme.of(context).textTheme.bodySmall,
+              style: textStyle(),
               obscureText:
                   obscureText == null || obscureText == false ? false : true,
               textInputAction: textInputAction,
               keyboardType: textInputType,
               onChanged: onChange,
-              onFieldSubmitted: onFieldSubmitted ,
+              onFieldSubmitted: onFieldSubmitted,
               onTap: onTapIcon,
               enabled: enabled,
               validator: valid,
@@ -104,13 +110,13 @@ class CustomTextField extends StatelessWidget {
                                 ? Colors.yellow
                                 : Colors.grey.shade500)),
                 filled: true,
-                fillColor: sharedPreferences.getBool('isThemeModeDark') == true
-                    ? Colors.black
-                    : Colors.white,
+                fillColor: Colors.black,
                 floatingLabelBehavior: needLabel ?? FloatingLabelBehavior.never,
                 labelText: labelText,
-                labelStyle: Theme.of(context).textTheme.bodyMedium,
+                labelStyle: textStyle(),
                 hintText: hinText,
+                hintStyle:
+                    textStyle(textColor: const Color.fromARGB(255, 96, 94, 94)),
                 prefixIcon: prefixIcon == null
                     ? null
                     : Icon(prefixIcon, color: Colors.yellow),

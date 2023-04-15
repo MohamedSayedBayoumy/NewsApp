@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_screens/weather_screen.dart';
+ 
 
 import '../../../../_articles_news/presentation/news_controller/bloc/articles_bloc.dart';
 import '../../../../_articles_news/presentation/news_controller/bloc/articles_event.dart';
 import '../../../../_authenticator/presentation/auth_screens/profile_screen.dart';
 import '../../../../_articles_news/presentation/news_screens/news_article_screen.dart';
+import '../../../../_weather_news/presentation/weather_screens/weather_screen.dart';
 import '../../../../core/services/services_locator.dart';
 
 class PageViewScreen extends StatefulWidget {

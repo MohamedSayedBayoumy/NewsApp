@@ -51,7 +51,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         flexibleSpace: Container(height: heightFlexibleSpace),
         title: CustomText(
           text: title!,
-          style: const TextStyle(color: Colors.black, fontFamily: "poppins"),
+          color: Colors.black,
+          needDefaultStyle: true,
         ));
   }
 }

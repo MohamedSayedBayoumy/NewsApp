@@ -13,7 +13,7 @@ class WeatherState extends Equatable {
 
   String? message;
 
-  String? themeMode;
+  
 
   TextEditingController addressController = TextEditingController();
   TextEditingController? searchController = TextEditingController();

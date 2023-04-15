@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_event.dart';
-import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_state.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
-import 'package:news_app_clean_architecture/core/widgets/custom_textfiled/text_filed.dart';
-
+import '../../../core/widgets/custom_button/custom_button.dart';
 import '../../../core/widgets/custom_text/text.dart';
 import '../../../core/services/services_locator.dart';
+import '../../../core/widgets/custom_textfiled/text_filed.dart';
 import '../auth_controller/auth_bloc.dart';
+import '../auth_controller/auth_event.dart';
+import '../auth_controller/auth_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
- 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
- 
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return BlocProvider(
-      
       create: (context) => sl<AuthBloc>(),
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
@@ -63,12 +60,12 @@ class LoginScreen extends StatelessWidget {
                                           flex: 5,
                                           child: Container(
                                             alignment: Alignment.center,
-                                            child: const Text(
-                                              "sign in with Google",
-                                              style: TextStyle(
-                                                  color: Colors.black87,
-                                                  fontSize: 15.0,
-                                                  fontFamily: "poppins"),
+                                            child: CustomText(
+                                              fontSize: media.width * .043,
+                                              color: Colors.black,
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .signinWithGoogle,
                                             ),
                                           )),
                                     ],
@@ -95,12 +92,11 @@ class LoginScreen extends StatelessWidget {
                                           flex: 5,
                                           child: Container(
                                             alignment: Alignment.center,
-                                            child: const Text(
-                                              "sign in with Facebook",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15.0,
-                                                  fontFamily: "poppins"),
+                                            child: CustomText(
+                                              fontSize: media.width * .043,
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .signinWithFacebook,
                                             ),
                                           )),
                                     ],
@@ -122,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: media.width * .05),
                                     child: CustomText(
-                                      text: "or",
+                                      text: AppLocalizations.of(context)!.or,
                                     ),
                                   ),
                                   Expanded(
@@ -139,12 +135,13 @@ class LoginScreen extends StatelessWidget {
                               CustomTextField(
                                 prefixIcon: Icons.email,
                                 textInputAction: TextInputAction.next,
-                                labelText: "email",
+                                labelText: AppLocalizations.of(context)!.email,
                                 hinText: "example@example.com",
                                 valid: (p0) => state.errorEmail(
                                     state.emailController,
                                     val: p0.toString(),
-                                    ErrorSpace: "email"),
+                                    ErrorSpace:
+                                        AppLocalizations.of(context)!.email),
                                 width: media.width * .9,
                                 controller: bloc.state.emailController,
                                 borderColor: Colors.grey,
@@ -154,8 +151,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                               CustomTextField(
                                 obscureText: state.showPassword,
-                                labelText: "password",
-                                hinText: "password",
+                                labelText:
+                                    AppLocalizations.of(context)!.password,
+                                hinText: AppLocalizations.of(context)!.password,
                                 prefixIcon: Icons.lock,
                                 suffixIcon: Icons.visibility_outlined,
                                 textInputAction: TextInputAction.done,
@@ -165,7 +163,8 @@ class LoginScreen extends StatelessWidget {
                                 valid: (p0) => state.errorPassword(
                                     state.passwordController,
                                     val: p0.toString(),
-                                    ErrorSpace: "password"),
+                                    ErrorSpace:
+                                        AppLocalizations.of(context)!.password),
                                 width: media.width * .9,
                                 controller: bloc.state.passwordController,
                                 borderColor: Colors.grey,
@@ -180,8 +179,9 @@ class LoginScreen extends StatelessWidget {
                                       onPressed: () {
                                         /// TODO : Update Password
                                       },
-                                      child:
-                                          CustomText(text: "Forget password ?"))
+                                      child: CustomText(
+                                          text: AppLocalizations.of(context)!
+                                              .forgotpassword))
                                 ],
                               ),
                               SizedBox(
@@ -192,7 +192,7 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   CustomButton(
                                     height: media.height * .05,
-                                    width: media.width * .5,
+                                    width: media.width * .55,
                                     onPressed: () async {
                                       bloc.add(LoginByEmailAndPasswordEvent(
                                           context: context,
@@ -201,8 +201,8 @@ class LoginScreen extends StatelessWidget {
                                           password: bloc
                                               .state.passwordController.text));
                                     },
-                                    text: "login",
-                                    // color: Colors.pink,
+                                    text: AppLocalizations.of(context)!.login,
+                                    fontSize: media.width * .05,
                                   ),
                                 ],
                               ),

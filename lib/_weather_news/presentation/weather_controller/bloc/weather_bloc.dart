@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_event.dart';
-import 'package:news_app_clean_architecture/_weather_news/presentation/weather_controller/bloc/weather_state.dart';
-import 'package:news_app_clean_architecture/core/utils/enum.dart';
+ 
 
 import '../../../../core/functions/snack_bar.dart';
+import '../../../../core/utils/enum.dart';
 import '../../../domain/weather_base_use_case/weather_base_usecase.dart';
+import 'weather_event.dart';
+import 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(this.baseWeatherUseCase) : super(WeatherState()) {
@@ -22,6 +23,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(state.copyWith(statusRequest: Request.loading));
     final result = await baseWeatherUseCase.fetchWeatherByLanAndLat();
 
+    
     result.fold((l) {
       emit(state.copyWith(
         statusRequest: Request.offline,
