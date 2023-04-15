@@ -3,17 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:news_app_clean_architecture/_articles_news/data/local_data_base_articles/local_data_base.dart';
-import 'package:news_app_clean_architecture/_articles_news/data/news_remote_data_source/remte_data_articles.dart';
-import 'package:news_app_clean_architecture/_articles_news/domain/news_base_repository/base_repository_articles.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_post/article_post.dart';
 import '../../../core/widgets/custom_user_image/user_image.dart';
-import '../../data/news_repository_data/repository_data_articles.dart';
-import '../../domain/news_base_use_case/use_case_aritcles.dart';
 import '../news_controller/bloc/articles_bloc.dart';
 import '../news_controller/bloc/articles_event.dart';
 import '../news_controller/bloc/articles_state.dart';
@@ -29,7 +23,7 @@ class NewsArticleScreen extends StatefulWidget {
 }
 
 class _NewsArticleScreenState extends State<NewsArticleScreen> {
-  ScrollController scrollController = ScrollController();
+  final scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -37,18 +31,20 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
     scrollController.addListener(loading);
   }
 
-  loading() {
-    if ((scrollController.position.maxScrollExtent * 0.8) <=
-        scrollController.offset) {
-      context.read<ArticlesBloc>().add(FetchArticleDataEvent(
-          from:
-              BlocProvider.of<ArticlesBloc>(context).state.articlesModel.length,
-          to: BlocProvider.of<ArticlesBloc>(context)
-                  .state
-                  .articlesModel
-                  .length +
-              11));
+  void loading() async {
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.offset;
+    if (currentScroll >= (maxScroll * 0.9)) {
+      context.read<ArticlesBloc>().add(FetchArticleDataEvent());
     }
+  }
+
+  @override
+  void dispose() {
+    scrollController
+      ..removeListener(loading)
+      ..dispose();
+    super.dispose();
   }
 
   @override
@@ -154,8 +150,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               case Request.error:
                 final bloc = BlocProvider.of<ArticlesBloc>(context);
                 return CustomError(
-                  onPressed: () =>
-                      bloc.add(FetchArticleDataEvent(from: 0, to: 7)),
+                  onPressed: () => bloc.add(FetchArticleDataEvent(from: 0)),
                 );
             }
           },

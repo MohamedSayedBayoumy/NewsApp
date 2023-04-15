@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:news_app_clean_architecture/_authenticator/presentation/auth_controller/auth_event.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_button/custom_button.dart';
 import 'package:news_app_clean_architecture/core/widgets/custom_text/text.dart';

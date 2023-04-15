@@ -15,9 +15,9 @@ class RepositoryDataArticles extends BaseRepositoryArticles {
 
   @override
   Future<List<CurrentModelData>> getArticlesData(
-      {required int? from, required int? to}) async {
+      {required int? from }) async {
     final result =
-        await baseRemoteArticlesData.fetchArticlesData(from: from, to: to);
+        await baseRemoteArticlesData.fetchArticlesData(from: from );
 
     return result;
   }

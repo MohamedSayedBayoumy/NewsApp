@@ -6,14 +6,12 @@ import '../../../core/global/globals.dart';
 import '../news_model_data/articles_model_data.dart';
 
 abstract class BaseRemoteArticlesData {
-  Future<List<CurrentModelData>> fetchArticlesData(
-      {required int? from, required int? to});
+  Future<List<CurrentModelData>> fetchArticlesData({required int? from});
 }
 
 class RemoteArticlesData implements BaseRemoteArticlesData {
   @override
-  Future<List<CurrentModelData>> fetchArticlesData(
-      {required int? from, required int? to}) async {
+  Future<List<CurrentModelData>> fetchArticlesData({required int? from}) async {
     try {
       final response =
           await Dio().get(ApiConstanceArticles.baseUrl, queryParameters: {
@@ -27,7 +25,7 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
 
       return List<CurrentModelData>.from(response.data["articles"]
               .map((e) => CurrentModelData.fromJson(e)))
-          .getRange(from!, to!)
+          .getRange(from!, from + 5)
           .toList();
     } on DioError {
       return [];
@@ -39,7 +37,7 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
       });
       return List<CurrentModelData>.from(response.data["articles"]
               .map((e) => CurrentModelData.fromJson(e)))
-          .getRange(from!, e.end!.toInt() - 1)
+          .getRange(from!, e.end!.toInt())
           .toList();
     }
   }

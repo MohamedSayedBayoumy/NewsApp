@@ -19,11 +19,9 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
 
   Future<FutureOr<void>> _fetchDataEvent(
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
-    final remoteData =
-        await useCaseArticles.getArticlesData(from: event.from, to: event.to);
-    final localArticlesData = await useCaseArticles.getLocalArticlesData();
-
     if (state.request == Request.loading) {
+      final remoteData = await useCaseArticles.getArticlesData();
+      final localArticlesData = await useCaseArticles.getLocalArticlesData();
       // Online State
       if (remoteData.isNotEmpty) {
         emit(
@@ -43,13 +41,14 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         emit(state.copyWith(request: Request.error));
       }
     } else {
-      if (remoteData.length < 11) {
+      final remoteData = await useCaseArticles.getArticlesData(
+          from: state.articlesModel.length);
+      if (remoteData.length < 5) {
         emit(state.copyWith(
             noMorePosts: true,
             articlesModel: List.of(state.articlesModel)..addAll(remoteData),
             request: Request.loaded));
       } else {
-        print("Fatch More Data ${event.from} -> ${event.to}");
         emit(state.copyWith(
             noMorePosts: false,
             articlesModel: List.of(state.articlesModel)..addAll(remoteData),
