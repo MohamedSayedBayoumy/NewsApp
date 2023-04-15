@@ -22,35 +22,39 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     final remoteData =
         await useCaseArticles.getArticlesData(from: event.from, to: event.to);
     final localArticlesData = await useCaseArticles.getLocalArticlesData();
+
     if (state.request == Request.loading) {
+      // Online State
+      if (remoteData.isNotEmpty) {
+        emit(
+            state.copyWith(articlesModel: remoteData, request: Request.loaded));
+      }
+
+      // OFFline State
       if (remoteData.isEmpty) {
-         if (localArticlesData.isEmpty) {
-           emit(state.copyWith(
-            localData: localArticlesData,
-            noMorePosts: false,
-            request: Request.error));
-         }
         emit(state.copyWith(
             localData: localArticlesData,
             noMorePosts: false,
             request: Request.offline));
-       
-      } else {
-        emit(state.copyWith(
-            articlesModel: remoteData,
-            noMorePosts: false,
-            request: Request.loaded));
+      }
+
+      // If network fail after login ...
+      if (localArticlesData.isEmpty) {
+        emit(state.copyWith(request: Request.error));
       }
     } else {
-      remoteData.length < 11
-          ? emit(state.copyWith(
-              articlesModel: List.of(state.articlesModel)..addAll(remoteData),
-              noMorePosts: true,
-              request: Request.loaded))
-          : emit(state.copyWith(
-              noMorePosts: false,
-              articlesModel: List.of(state.articlesModel)..addAll(remoteData),
-              request: Request.loaded));
+      if (remoteData.length < 11) {
+        emit(state.copyWith(
+            noMorePosts: true,
+            articlesModel: List.of(state.articlesModel)..addAll(remoteData),
+            request: Request.loaded));
+      } else {
+        print("Fatch More Data ${event.from} -> ${event.to}");
+        emit(state.copyWith(
+            noMorePosts: false,
+            articlesModel: List.of(state.articlesModel)..addAll(remoteData),
+            request: Request.loaded));
+      }
     }
   }
 }

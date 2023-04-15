@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:news_app_clean_architecture/_articles_news/data/local_data_base_articles/local_data_base.dart';
 import 'package:news_app_clean_architecture/_articles_news/data/news_remote_data_source/remte_data_articles.dart';
 import 'package:news_app_clean_architecture/_articles_news/domain/news_base_repository/base_repository_articles.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_post/article_post.dart';
@@ -36,7 +38,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
   }
 
   loading() {
-    if (scrollController.position.maxScrollExtent ==
+    if ((scrollController.position.maxScrollExtent * 0.8) <=
         scrollController.offset) {
       context.read<ArticlesBloc>().add(FetchArticleDataEvent(
           from:
@@ -103,6 +105,8 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           )),
                         );
                       } else {
+                        final url = state.articlesModel[index].url?.toString();
+
                         return CustomArticlePost(
                           author:
                               state.articlesModel[index].author?.toString() ??
@@ -116,8 +120,14 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           title: state.articlesModel[index].title ?? "",
                           urlToImage:
                               state.articlesModel[index].urlToImage.toString(),
-                          url: state.articlesModel[index].url ?? "",
-                          onPressedUrl: () {},
+                          url: url ?? "",
+                          onPressedUrl: () async {
+                            if (await canLaunchUrlString(url.toString())) {
+                              launchUrlString(url.toString(),
+                                  mode:
+                                      LaunchMode.externalNonBrowserApplication);
+                            }
+                          },
                         );
                       }
                     });
