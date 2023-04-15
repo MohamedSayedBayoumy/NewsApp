@@ -1,39 +1,61 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:news_app_clean_architecture/core/utils/enum.dart';
 
+import '../../../../core/utils/enum.dart';
 import '../../../domain/news_entites/entites_articles.dart';
 
 class ArticlesState extends Equatable {
   final List<Articles> articlesModel;
-  final bool? isReadOnly;
+
   final Request? request;
-  final List? localData;
+  final List localData;
+  final String titleAr;
+  final String descripationAr;
   final bool noMorePosts;
+  final bool showTranslation;
+  final bool isLoading;
+  final int index;
 
   const ArticlesState(
       {this.articlesModel = const [],
-      this.isReadOnly = false,
+      this.localData = const [],
+      this.index = 0,
+      this.titleAr = "",
+      this.descripationAr = "",
+      this.isLoading = false,
+      this.showTranslation = false,
       this.noMorePosts = false,
-      this.localData,
       this.request = Request.loading});
 
-  ArticlesState copyWith(
-      {bool? isReadOnly,
-      List? localData,
-      List<Articles>? articlesModel,
-      final ScrollController? controller,
-      int? countArical,
-      bool? noMorePosts,
-      Request? request = Request.loading}) {
+  ArticlesState copyWith({
+    List? localData,
+    List<Articles>? articlesModel,
+    Request? request = Request.loading,
+    String? titleAr,
+    String? descripationAr,
+    bool? noMorePosts,
+    bool? showTranslation,
+    bool? isLoading,
+    int? index,
+  }) {
     return ArticlesState(
+        isLoading: isLoading ?? this.isLoading,
+        index: index ?? this.index,
+        titleAr: titleAr ?? this.titleAr,
+        showTranslation: showTranslation ?? this.showTranslation,
+        descripationAr: descripationAr ?? this.descripationAr,
         noMorePosts: noMorePosts ?? this.noMorePosts,
         localData: localData ?? this.localData,
-        isReadOnly: isReadOnly ?? this.isReadOnly,
         request: request ?? this.request,
         articlesModel: articlesModel ?? this.articlesModel);
   }
 
   @override
-  List<Object> get props => [isReadOnly!, request!, articlesModel ,noMorePosts];
+  List<Object> get props => [
+        request!,
+        articlesModel,
+        noMorePosts,
+        descripationAr,
+        showTranslation,
+        isLoading
+      ];
 }

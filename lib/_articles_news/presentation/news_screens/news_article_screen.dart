@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/widgets/custom_error/error_widget.dart';
@@ -14,6 +15,7 @@ import '../news_controller/bloc/articles_state.dart';
 import '../../../core/global/globals.dart';
 import '../../../core/utils/enum.dart';
 import '../../../core/widgets/custom_text/text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewsArticleScreen extends StatefulWidget {
   const NewsArticleScreen({super.key});
@@ -24,6 +26,7 @@ class NewsArticleScreen extends StatefulWidget {
 
 class _NewsArticleScreenState extends State<NewsArticleScreen> {
   final scrollController = ScrollController();
+  List<Translation> listOfTranslation = [];
   @override
   void initState() {
     super.initState();
@@ -34,7 +37,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
   void loading() async {
     final maxScroll = scrollController.position.maxScrollExtent;
     final currentScroll = scrollController.offset;
-    if (currentScroll >= (maxScroll * 0.9)) {
+    if (currentScroll >= (maxScroll * 0.8)) {
       context.read<ArticlesBloc>().add(FetchArticleDataEvent());
     }
   }
@@ -58,15 +61,26 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
         centerTitle: false,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           CustomText(
-            text: DateFormat.MMMMEEEEd().format(DateTime.now()).toString(),
+            text: sharedPreferences.getString("Localization") == "en"
+                ? DateFormat.MMMMEEEEd('en').format(DateTime.now()).toString()
+                : DateFormat.MMMMEEEEd('ar').format(DateTime.now()).toString(),
           ),
           CustomText(
               text:
-                  "Welcome ${sharedPreferences.getString("name")!.split(" ").first} ,"),
+                  "${AppLocalizations.of(context)!.welcome} ${sharedPreferences.getString("name")!.split(" ").first} ,"),
         ]),
         actions: [
           IconButton(
-              onPressed: () async {},
+              onPressed: () async {
+                final translator = GoogleTranslator();
+
+                const input =
+                    "How to organize all of your tabs on Chrome and other browsers";
+
+                var translation =
+                    await translator.translate(input.toString(), to: 'ar');
+                print(translation);
+              },
               icon: const UserImage(
                 isAppBar: true,
               )),
@@ -107,13 +121,29 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           author:
                               state.articlesModel[index].author?.toString() ??
                                   "User",
-                          description:
-                              state.articlesModel[index].description ?? "",
                           publishedAt: state.articlesModel[index].publishedAt
                               .toString()
                               .split("T")
                               .first,
                           title: state.articlesModel[index].title ?? "",
+                          description: state.articlesModel[index].description,
+                          translateMethod: () {
+                            BlocProvider.of<ArticlesBloc>(context).add(
+                                TranslateArticleDataEvent(
+                                    indexItem: index,
+                                    title: state.articlesModel[index].title,
+                                    description: state
+                                        .articlesModel[index].description));
+                          },
+                          isLoading:
+                              state.index == index ? state.isLoading : false,
+                          showTranslation: state.index == index
+                              ? state.showTranslation
+                              : false,
+                          translateTitle:
+                              state.index == index ? state.titleAr : "",
+                          translateDescription:
+                              state.index == index ? state.descripationAr : "",
                           urlToImage:
                               state.articlesModel[index].urlToImage.toString(),
                           url: url ?? "",
@@ -130,20 +160,20 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               case Request.offline:
                 return ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: state.localData!.length,
+                    itemCount: state.localData.length,
                     itemBuilder: (context, index) {
                       return CustomArticlePost(
-                        author: state.localData![index]["author"] ?? "",
+                        author: state.localData[index]["author"] ?? "",
                         description:
-                            state.localData![index]["description"] ?? "",
-                        publishedAt: state.localData![index]["publishedAt"]
+                            state.localData[index]["description"] ?? "",
+                        publishedAt: state.localData[index]["publishedAt"]
                             .toString()
                             .split("T")
                             .first,
-                        title: state.localData![index]["title"] ?? "",
-                        urlToImage: state.localData![index]["urlToImage"] ??
+                        title: state.localData[index]["title"] ?? "",
+                        urlToImage: state.localData[index]["urlToImage"] ??
                             "".toString(),
-                        url: state.localData![index]["url"] ?? "",
+                        url: state.localData[index]["url"] ?? "",
                         onPressedUrl: () {},
                       );
                     });

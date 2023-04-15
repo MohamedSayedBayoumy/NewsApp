@@ -1,27 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../custom_text/text.dart';
 
 class CustomArticlePost extends StatelessWidget {
   final String? author;
   final String? title;
+  final String? translateTitle;
   final String? description;
+  final String? translateDescription;
   final String? url;
   final String? urlToImage;
   final String? publishedAt;
- 
+  final bool? showTranslation;
+  final bool? isLoading;
+
+
   final void Function()? onPressedUrl;
+  final void Function()? translateMethod;
 
   const CustomArticlePost(
       {this.author,
-      
+      this.isLoading , 
+      this.translateTitle,
+      this.translateDescription,
+      this.showTranslation,
       this.description,
       this.publishedAt,
       this.title,
       this.url,
       this.urlToImage,
       this.onPressedUrl,
+      this.translateMethod,
       super.key});
 
   @override
@@ -71,6 +82,7 @@ class CustomArticlePost extends StatelessWidget {
                   height: media.height * .01,
                 ),
                 CustomText(
+                    textDirection: TextDirection.ltr,
                     textAlign: TextAlign.start,
                     text: title,
                     style: Theme.of(context).textTheme.bodySmall),
@@ -78,16 +90,103 @@ class CustomArticlePost extends StatelessWidget {
                   height: media.height * .01,
                 ),
                 CustomText(
+                    textDirection: TextDirection.ltr,
                     textAlign: TextAlign.start,
                     text: description,
                     style: Theme.of(context).textTheme.bodySmall),
                 SizedBox(
                   height: media.height * .01,
                 ),
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: translateMethod,
+                      child: CustomText(
+                          textAlign: TextAlign.start,
+                          text: AppLocalizations.of(context)!.translate,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 203, 203, 203),
+                            fontSize: 16,
+                            fontFamily: "",
+                            fontWeight: FontWeight.normal,
+                          )),
+                    ),
+                    SizedBox(
+                      width: media.width * .012,
+                    ),
+                    isLoading == true
+                        ? SizedBox(
+                            height: media.height * .01,
+                            width: media.height * .01,
+                            child: CircularProgressIndicator(
+                              
+                              strokeWidth: 1,
+                              backgroundColor:
+                                  Colors.grey.shade300.withOpacity(.5),
+                              color: Colors.white,
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+                SizedBox(
+                  height: media.height * .01,
+                ),
+                AnimatedCrossFade(
+                    firstChild: Container(),
+                    secondChild: Padding(
+                      padding: EdgeInsets.only(bottom: media.height * .01),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(200)),
+                            height: media.height * .14,
+                            width: media.width * .003,
+                          ),
+                          SizedBox(
+                            width: media.width * .012,
+                          ),
+                          Expanded(
+                            flex: 9,
+                            child: SizedBox(
+                              height: media.height * .12,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomText(
+                                      textDirection: TextDirection.rtl,
+                                      textAlign: TextAlign.start,
+                                      text: translateTitle,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                  SizedBox(
+                                    height: media.height * .01,
+                                  ),
+                                  CustomText(
+                                      textDirection: TextDirection.rtl,
+                                      textAlign: TextAlign.start,
+                                      text: translateDescription,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    crossFadeState: showTranslation == true
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 800)),
                 TextButton(
                     onPressed: onPressedUrl,
                     child: Text(
                       url?.toString() ?? "",
+                      textDirection: TextDirection.ltr,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -96,9 +195,6 @@ class CustomArticlePost extends StatelessWidget {
                         decoration: TextDecoration.underline,
                       ),
                     )),
-                SizedBox(
-                  height: media.height * .01,
-                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(

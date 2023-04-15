@@ -7,12 +7,16 @@ class CustomText extends StatelessWidget {
   String? text;
   TextStyle? style;
   TextAlign? textAlign;
+  TextDirection? textDirection;
 
-  CustomText({this.style, this.text,   this.textAlign,Key? key}) : super(key: key);
+  CustomText(
+      {this.textDirection, this.style, this.text, this.textAlign, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AutoSizeText(
+      textDirection: textDirection,
       text!,
       maxFontSize: 30,
       minFontSize: 12,

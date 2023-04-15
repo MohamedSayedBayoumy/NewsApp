@@ -4,8 +4,10 @@ import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app_clean_architecture/core/utils/enum.dart';
 
+import 'package:translator/translator.dart';
+
+import '../../../../core/utils/enum.dart';
 import '../../../domain/news_base_use_case/use_case_aritcles.dart';
 import 'articles_event.dart';
 import 'articles_state.dart';
@@ -13,6 +15,9 @@ import 'articles_state.dart';
 class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
   ArticlesBloc(this.useCaseArticles) : super(const ArticlesState()) {
     on<FetchArticleDataEvent>(_fetchDataEvent, transformer: droppable());
+    on<TranslateArticleDataEvent>(
+      _franslateArticleDataEvent,
+    );
   }
 
   final UseCaseArticles useCaseArticles;
@@ -22,6 +27,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     if (state.request == Request.loading) {
       final remoteData = await useCaseArticles.getArticlesData();
       final localArticlesData = await useCaseArticles.getLocalArticlesData();
+
       // Online State
       if (remoteData.isNotEmpty) {
         emit(
@@ -43,17 +49,38 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     } else {
       final remoteData = await useCaseArticles.getArticlesData(
           from: state.articlesModel.length);
-      if (remoteData.length < 5) {
-        emit(state.copyWith(
-            noMorePosts: true,
-            articlesModel: List.of(state.articlesModel)..addAll(remoteData),
-            request: Request.loaded));
+      if (remoteData.isEmpty) {
+        print("No More Data : ${state.articlesModel.length}");
+
+        emit(state.copyWith(noMorePosts: true, request: Request.loaded));
       } else {
+        print("More Data : ${state.articlesModel.length}");
         emit(state.copyWith(
             noMorePosts: false,
             articlesModel: List.of(state.articlesModel)..addAll(remoteData),
             request: Request.loaded));
       }
     }
+  }
+
+  Future<FutureOr<void>> _franslateArticleDataEvent(
+      TranslateArticleDataEvent event, Emitter<ArticlesState> emit) async {
+    emit(state.copyWith(
+        request: state.request, isLoading: true, index: event.indexItem));
+
+    final translator = GoogleTranslator();
+
+    final translateTitle =
+        await translator.translate(event.title.toString(), to: 'ar');
+    final translateDescripation =
+        await translator.translate(event.description.toString(), to: 'ar');
+
+    emit(state.copyWith(
+        isLoading: false,
+        index: event.indexItem,
+        titleAr: translateTitle.toString(),
+        descripationAr: translateDescripation.toString(),
+        request: state.request,
+        showTranslation: true));
   }
 }

@@ -21,11 +21,11 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
 
       lastData = response.data["articles"];
       box = await Hive.openBox('CacheData');
-      box.put('CacheData', lastData.getRange(0, 3).toList());
+      await box.put('CacheData', lastData.getRange(0, 3).toList());
 
       return List<CurrentModelData>.from(response.data["articles"]
               .map((e) => CurrentModelData.fromJson(e)))
-          .getRange(from!, from + 5)
+          .getRange(from!, from + 15)
           .toList();
     } on DioError {
       return [];
