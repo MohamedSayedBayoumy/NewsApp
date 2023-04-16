@@ -31,5 +31,8 @@
  "windSpeed" : "wind Speed" ,
  "weatherstatus": "weather Status",
  "searchByCountryname" : "country name",
- "startSearchByCountryname" :"Start Search By Country Name" 
+ "startSearchByCountryname" :"Start Search By Country Name" ,
+ "checkYourConnections" : "Check Your Connection" ,
+ "myAccount" : "My Account",
+ "logout" : "Logout"
  }

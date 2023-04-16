@@ -37,7 +37,9 @@ class CustomText extends StatelessWidget {
       maxLines: 3,
       textAlign: textAlign ?? TextAlign.center,
       style: TextStyle(
-          fontSize: fontSize,
+          fontSize: fontSize ?? (sharedPreferences.getString("Localization").toString() == "en"
+                  ? fontSize
+                  : MediaQuery.of(context).size.width * .05),
           color: color ?? Colors.white,
           fontFamily: needDefaultStyle == true
               ? "poppins"

@@ -72,14 +72,10 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                final translator = GoogleTranslator();
-
-                const input =
-                    "AZ Zaytoun Al Gharbeyah Zeitoun Cairo Governorate";
-
-                var translation = await translator
-                    .translate(input.toString().toLowerCase(), to: 'ar');
-                print(translation);
+                print(
+                    "Don Dodds, Forbes Councils Member, \n Don Dodds, Forbes Councils Member\n https://www.forbes.com/sites/forbesagencycouncil/people/dondodds/"
+                        .split(" ")
+                        .first);
               },
               icon: const UserImage(
                 isAppBar: true,

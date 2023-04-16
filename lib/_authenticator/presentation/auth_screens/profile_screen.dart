@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- 
 
 import '../../../core/global/globals.dart';
 import '../../../core/services/services_locator.dart';
@@ -12,6 +11,7 @@ import '../../../presentation_screens/presentation/controller/intro_cubit.dart';
 import '../auth_controller/auth_bloc.dart';
 import '../auth_controller/auth_event.dart';
 import '../auth_controller/auth_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -27,12 +27,12 @@ class ProfileScreen extends StatelessWidget {
             children: [
               SizedBox(
                 width: media.width,
-                height: media.height * .45,
+                height: media.height * .35,
               ),
               CustomAppBar(
                   colorBackground: Colors.amber,
                   textColor: Colors.black,
-                  title: 'My Account',
+                  title: AppLocalizations.of(context)!.myAccount,
                   widgets: [
                     IconButton(
                         onPressed: () {
@@ -95,13 +95,13 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             fieldData(media,
-                title: "Name",
+                title: AppLocalizations.of(context)!.username,
                 data: sharedPreferences.getString("name").toString()),
             fieldData(media,
-                title: "email",
+                title: AppLocalizations.of(context)!.email,
                 data: sharedPreferences.getString("email").toString()),
             fieldData(media,
-                title: "phone",
+                title: AppLocalizations.of(context)!.phone,
                 data: sharedPreferences.getString("phone").toString()),
             BlocProvider(
                 create: (context) => sl<AuthBloc>(),
@@ -110,11 +110,10 @@ class ProfileScreen extends StatelessWidget {
                   final bloc = BlocProvider.of<AuthBloc>(context);
                   return CustomButton(
                     fontSize: media.width * .05,
-                    
                     onPressed: () {
                       bloc.add(LogOut(context));
                     },
-                    text: "Logout",
+                    text: AppLocalizations.of(context)!.logout,
                   );
                 }))
           ],
@@ -126,12 +125,12 @@ class ProfileScreen extends StatelessWidget {
   Padding fieldData(Size media, {required String title, required String data}) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: media.width * .01, vertical: media.height * .005),
+          horizontal: media.width * .01, vertical: media.height * .007),
       child: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: media.width * .02, vertical: media.height * .01),
+            horizontal: media.width * .02, vertical: media.height * .02),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.white)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

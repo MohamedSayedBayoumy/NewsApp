@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- 
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../../_authenticator/presentation/auth_screens/login_screen.dart';
@@ -112,9 +112,9 @@ class StartUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
+                          fontSize: media.width * .035,
                           text: AppLocalizations.of(context)!.startUp4,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -126,6 +126,7 @@ class StartUpScreen extends StatelessWidget {
                             );
                           },
                           child: CustomText(
+                            fontSize: media.width * .035,
                             text: AppLocalizations.of(context)!.startUp5,
                           ),
                         ),

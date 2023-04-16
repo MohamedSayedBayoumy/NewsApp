@@ -30,5 +30,8 @@
  "windSpeed" : "سرعة الرياح" ,
  "weatherstatus": "حالة الطقس",
  "searchByCountryname" : "أسم المدينة",
- "startSearchByCountryname" :"أبدا البحث عن طريق اسم المدينة" 
+ "startSearchByCountryname" :"أبدا البحث عن طريق اسم المدينة" ,
+ "checkYourConnections" : "حدث خطأ في الاتصال" ,
+ "myAccount" : "حسابى" ,
+ "logout" : "تسجيل الخروج"
  }

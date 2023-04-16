@@ -109,7 +109,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
               },
             ),
           ),
-
           Padding(
             padding: EdgeInsets.only(top: media.height * .13),
             child: Column(
@@ -148,14 +147,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             Expanded(
                               flex: 2,
                               child: CustomText(
-                                fontSize: media.width * .04,
+                                fontSize: media.width * .035,
                                 needDefaultStyle: true,
                                 color: Colors.black,
                                 text: sharedPreferences
-                                            .getString("localization") ==
-                                        "ar"
-                                    ? sharedPreferences.getString("addressAr")
-                                    : sharedPreferences.getString("addressEn"),
+                                    .getString("address")
+                                    .toString(),
                               ),
                             ),
                           ],
@@ -171,6 +168,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         buildWhen: (previous, current) =>
                             previous.statusRequest != current.statusRequest,
                         builder: (context, state) {
+                          final bloc = BlocProvider.of<WeatherBloc>(context);
                           switch (state.statusRequest) {
                             case Request.noAction:
                               return Container();
@@ -193,7 +191,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   width: media.width * .9,
                                   height: media.height,
                                   decoration: BoxDecoration(
-                                    // color: ,
                                     gradient: LinearGradient(colors: [
                                       Colors.black12,
                                       Colors.amber.withOpacity(.5)
@@ -242,12 +239,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                 ),
                                               ),
                                               CustomText(
-                                                  text: weatherData
-                                                      .statusWeather
-                                                      .toString(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall)
+                                                text: weatherData.statusWeather
+                                                    .toString(),
+                                              )
                                             ],
                                           )),
                                           Expanded(
@@ -267,11 +261,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                   height: media.height * .03,
                                                 ),
                                                 CustomText(
-                                                    text:
-                                                        "${AppLocalizations.of(context)!.weatherstatus}: ${weatherData.description}",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall)
+                                                  text:
+                                                      "${AppLocalizations.of(context)!.weatherstatus}: ${weatherData.description}",
+                                                )
                                               ],
                                             ),
                                           ),
@@ -282,33 +274,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 ),
                               );
 
-                            case Request.error:
-                              final bloc =
-                                  BlocProvider.of<WeatherBloc>(context);
-                              return Positioned(
-                                bottom: media.height * .06,
-                                child: Padding(
+                            case Request.offline:
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: media.width * .05,
+                                ),
+                                child: Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: media.width * .05,
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: media.height * .03),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(.5),
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    width: media.width,
-                                    child: CustomError(
-                                      onPressed: () {
-                                        bloc.add(FetchWeatherDataEvent(
-                                            context: context));
-                                      },
-                                    ),
+                                      vertical: media.height * .01),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(.5),
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(25),
+                                          topRight: Radius.circular(25))),
+                                  width: media.width,
+                                  child: CustomError(
+                                    onPressed: () {
+                                      bloc.add(FetchWeatherDataEvent(
+                                          context: context));
+                                    },
                                   ),
                                 ),
                               );
-                            case Request.offline:
+                            case Request.error:
                               return Container();
                           }
                         }),
@@ -317,12 +305,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ],
             ),
           ),
-          // Positioned(
-          //   top: media.height * .13,
-          //   // right: media.width * .03,
-          //   left: media.width * .3,
-          //   child:
-          // ),
         ],
       ),
     );

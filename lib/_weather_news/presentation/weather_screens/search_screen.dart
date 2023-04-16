@@ -11,7 +11,6 @@ import '../weather_controller/bloc/weather_event.dart';
 import '../weather_controller/bloc/weather_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class WeatherSearchScreen extends StatelessWidget {
   const WeatherSearchScreen({super.key});
 
@@ -30,6 +29,9 @@ class WeatherSearchScreen extends StatelessWidget {
               ),
               toolbarHeight: media.height * .08,
               title: CustomTextField(
+                  enabledColor: Colors.amber,
+                  borderColor: Colors.amber,
+                  enabledCurveBorder: 50.0,
                   textInputAction: TextInputAction.search,
                   onFieldSubmitted: (value) {
                     bloc.add(FetchWeatherDataByCountryNameEvent(
@@ -38,16 +40,15 @@ class WeatherSearchScreen extends StatelessWidget {
                     return null;
                   },
                   controller: state.searchController,
-                  hinText: "Search by country name"),
-              backgroundColor: Colors.yellowAccent,
+                  hinText: AppLocalizations.of(context)!.searchByCountryname),
+              backgroundColor: Colors.amber,
             ),
             body: Builder(
               builder: (context) {
                 switch (state.statusRequest) {
                   case Request.loading:
                     return const Center(
-                      child:
-                          CircularProgressIndicator(color: Colors.yellowAccent),
+                      child: CircularProgressIndicator(color: Colors.amber),
                     );
                   case Request.noAction:
                     return Center(
@@ -58,18 +59,17 @@ class WeatherSearchScreen extends StatelessWidget {
                           Image.asset(
                             "assets/images/search.png",
                             height: media.width * .20,
-                            color: Colors.white,
+                            color: Colors.amber.shade200.withOpacity(.5),
                           ),
                           SizedBox(
                             height: media.height * .03,
                           ),
                           CustomText(
-                              text: AppLocalizations.of(context)!
-                                              .searchByCountryname,
-                              style: const TextStyle(
-                                  fontFamily: "poppins",
-                                  fontSize: 10.0,
-                                  color: Color.fromARGB(255, 148, 141, 80))),
+                            text: AppLocalizations.of(context)!
+                                .startSearchByCountryname,
+                            fontSize: media.width * .04,
+                            color: Colors.amber.shade200.withOpacity(.5),
+                          ),
                         ],
                       ),
                     );
@@ -88,9 +88,7 @@ class WeatherSearchScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(
-                              text:  AppLocalizations.of(context)!
-                                              .weatherstatus,
-                              style: Theme.of(context).textTheme.displayMedium,
+                              text: AppLocalizations.of(context)!.weatherstatus,
                             ),
                             Row(
                               children: [
@@ -102,11 +100,9 @@ class WeatherSearchScreen extends StatelessWidget {
                                     Image.network(ApiConstanceWeather.urlIcon(
                                         weatherData.icon)),
                                     CustomText(
-                                        text: weatherData.statusWeather
-                                            .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall)
+                                      text:
+                                          weatherData.statusWeather.toString(),
+                                    )
                                   ],
                                 )),
                                 Expanded(

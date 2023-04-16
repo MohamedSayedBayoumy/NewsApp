@@ -67,11 +67,16 @@ class CustomArticlePost extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: author,
                           fontSize: media.width * .03,
+                          text: author!.length > 30
+                              ? author!.split(',').first
+                              : author!.isEmpty
+                                  ? "User"
+                                  : author,
                           needDefaultStyle: true,
                         ),
                         CustomText(
+                          fontSize: media.width * .03,
                           text: publishedAt,
                           needDefaultStyle: true,
                         ),
@@ -89,16 +94,21 @@ class CustomArticlePost extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     textAlign: TextAlign.start,
                     text: title,
+                    fontSize: media.width * .035,
                   ),
                 ),
                 SizedBox(
                   height: media.height * .01,
                 ),
-                CustomText(
-                  needDefaultStyle: true,
-                  textDirection: TextDirection.ltr,
-                  text: description,
-                  textAlign: TextAlign.start,
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    needDefaultStyle: true,
+                    textDirection: TextDirection.ltr,
+                    text: description,
+                    fontSize: media.width * .03,
+                    textAlign: TextAlign.start,
+                  ),
                 ),
                 SizedBox(
                   height: media.height * .01,
@@ -157,19 +167,22 @@ class CustomArticlePost extends StatelessWidget {
                         ? CrossFadeState.showSecond
                         : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 800)),
-                TextButton(
-                    onPressed: onPressedUrl,
-                    child: Text(
-                      url?.toString() ?? "",
-                      textDirection: TextDirection.ltr,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: media.width * .04,
-                        color: Colors.blueAccent,
-                        decoration: TextDecoration.underline,
-                      ),
-                    )),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                      onPressed: onPressedUrl,
+                      child: Text(
+                        url?.toString() ?? "",
+                        textDirection: TextDirection.ltr,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: media.width * .04,
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline,
+                        ),
+                      )),
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(

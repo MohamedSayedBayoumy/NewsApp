@@ -180,6 +180,7 @@ class LoginScreen extends StatelessWidget {
                                         /// TODO : Update Password
                                       },
                                       child: CustomText(
+                                          fontSize: media.width * .035,
                                           text: AppLocalizations.of(context)!
                                               .forgotpassword))
                                 ],

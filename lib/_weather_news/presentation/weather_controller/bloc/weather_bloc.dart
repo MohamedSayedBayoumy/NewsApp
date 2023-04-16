@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- 
 
 import '../../../../core/functions/snack_bar.dart';
 import '../../../../core/utils/enum.dart';
@@ -23,7 +22,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(state.copyWith(statusRequest: Request.loading));
     final result = await baseWeatherUseCase.fetchWeatherByLanAndLat();
 
-    
     result.fold((l) {
       emit(state.copyWith(
         statusRequest: Request.offline,
@@ -42,15 +40,17 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(state.copyWith(statusRequest: Request.loading));
 
     try {
+      print("object");
       final result = await baseWeatherUseCase.fetchWeatherByCountryName(
           country: event.country);
 
       result.fold((l) {
         emit(state.copyWith(
           message: l.errorMessage,
-          statusRequest: Request.error,
+          statusRequest: Request.offline,
         ));
       }, (r) {
+        print(" r object");
         emit(state.copyWith(
           statusRequest: Request.loaded,
           weatherModel: r,

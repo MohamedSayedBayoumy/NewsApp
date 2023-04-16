@@ -26,7 +26,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
     if (state.request == Request.loading) {
       final remoteData = await useCaseArticles.getArticlesData();
-      final localArticlesData = await useCaseArticles.getLocalArticlesData();
+      // final localArticlesData = await useCaseArticles.getLocalArticlesData();
 
       // Online State
       if (remoteData.isNotEmpty) {
@@ -37,15 +37,15 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       // OFFline State
       if (remoteData.isEmpty) {
         emit(state.copyWith(
-            localData: localArticlesData,
+            // localData: localArticlesData,
             noMorePosts: false,
             request: Request.offline));
       }
 
       // If network fail after login ...
-      if (localArticlesData.isEmpty) {
-        emit(state.copyWith(request: Request.error));
-      }
+      // if (localArticlesData.isEmpty) {
+      //   emit(state.copyWith(request: Request.error));
+      // }
     } else {
       final remoteData = await useCaseArticles.getArticlesData(
           from: state.articlesModel.length);
@@ -66,7 +66,13 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
   Future<FutureOr<void>> _franslateArticleDataEvent(
       TranslateArticleDataEvent event, Emitter<ArticlesState> emit) async {
     emit(state.copyWith(
-        request: state.request, isLoading: true, index: event.indexItem));
+      request: state.request,
+      index: event.indexItem,
+      titleAr: "",
+      descripationAr: "",
+      isLoading: true,
+      showTranslation: false,
+    ));
 
     final translator = GoogleTranslator();
 
@@ -76,11 +82,12 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         await translator.translate(event.description.toString(), to: 'ar');
 
     emit(state.copyWith(
-        isLoading: false,
-        index: event.indexItem,
-        titleAr: translateTitle.toString(),
-        descripationAr: translateDescripation.toString(),
-        request: state.request,
-        showTranslation: true));
+      request: state.request,
+      index: event.indexItem,
+      isLoading: false,
+      showTranslation: true,
+      titleAr: translateTitle.toString(),
+      descripationAr: translateDescripation.toString(),
+    ));
   }
 }

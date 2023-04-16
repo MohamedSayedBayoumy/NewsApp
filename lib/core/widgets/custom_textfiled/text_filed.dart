@@ -33,11 +33,13 @@ class CustomTextField extends StatelessWidget {
   String? errorText;
   void Function()? onPressedSuffixIcon;
   FloatingLabelBehavior? needLabel;
+  Color? enabledColor;
 
   CustomTextField(
       {Key? key,
       required this.controller,
       this.obscureText,
+      this.enabledColor,
       this.needLabel,
       this.prefixIcon,
       this.textInputAction,
@@ -77,8 +79,8 @@ class CustomTextField extends StatelessWidget {
         width: width,
         child: Theme(
             data: Theme.of(context).copyWith(
-                colorScheme:
-                    const ColorScheme.light(primary: Colors.yellowAccent)),
+                colorScheme: ColorScheme.light(
+                    primary: enabledColor ?? Colors.yellowAccent)),
             child: TextFormField(
               style: textStyle(),
               obscureText:
