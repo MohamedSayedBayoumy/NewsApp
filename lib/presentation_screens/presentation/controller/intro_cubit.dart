@@ -1,11 +1,15 @@
-// ignore_for_file: non_constant_identifier_names, unrelated_type_equality_checks
+// ignore_for_file: non_constant_identifier_names, unrelated_type_equality_checks, avoid_print
 
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:news_app_clean_architecture/core/global/globals.dart';
+
 import 'intro_state.dart';
 
 class IntroBloc extends Cubit<IntroState> {
@@ -22,7 +26,7 @@ class IntroBloc extends Cubit<IntroState> {
     emit(ChangeLocalization());
   }
 
-  Future<Position> checkPermission() async {
+  Future<Position> checkPermission({required dynamic context}) async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -36,22 +40,47 @@ class IntroBloc extends Cubit<IntroState> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else {
+          exit(0);
+        }
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      if (sharedPreferences.getBool("permissionIsDeniedForever") == null) {
+        sharedPreferences
+            .setBool("permissionIsDeniedForever", true)
+            .then((value) {
+          if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          } else {
+            exit(0);
+          }
+        });
+      } else if (sharedPreferences.getBool("permissionIsDeniedForever") ==
+          true) {
+        print("Show Dilago");
+      } else {
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else {
+          exit(0);
+        }
+      }
+
+      return Future.error('Location permissions are denied');
     }
 
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<void> getLatAndLong() async {
-    Position position = await checkPermission();
+  Future<void> getLatAndLong({required dynamic context}) async {
+    Position position = await checkPermission(context: context);
 
-    position =  Position(
+    position = Position(
         longitude: position.longitude,
         latitude: position.latitude,
         timestamp: DateTime.now(),
@@ -68,5 +97,5 @@ class IntroBloc extends Cubit<IntroState> {
         '${place.locality} - ${place.subAdministrativeArea}, ${place.administrativeArea}');
     await sharedPreferences.setDouble("longitude", position.longitude);
     await sharedPreferences.setDouble("latitude", position.latitude);
-  } 
+  }
 }

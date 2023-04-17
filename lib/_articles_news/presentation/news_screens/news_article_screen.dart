@@ -61,11 +61,13 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
         centerTitle: false,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           CustomText(
+            fontSize: media.width * .04,
             text: sharedPreferences.getString("Localization") == "en"
                 ? DateFormat.MMMMEEEEd('en').format(DateTime.now()).toString()
                 : DateFormat.MMMMEEEEd('ar').format(DateTime.now()).toString(),
           ),
           CustomText(
+              fontSize: media.width * .04,
               text:
                   "${AppLocalizations.of(context)!.welcome} ${sharedPreferences.getString("name")!.split(" ").first} ,"),
         ]),
@@ -74,7 +76,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               onPressed: () async {
                 print(
                     "Don Dodds, Forbes Councils Member, \n Don Dodds, Forbes Councils Member\n https://www.forbes.com/sites/forbesagencycouncil/people/dondodds/"
-                        .split(" ")
+                        .split(",")
                         .first);
               },
               icon: const UserImage(

@@ -43,7 +43,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   bloc_concurrency: ^0.2.1
   get_it: ^7.2.0
-  
+
   carousel_slider: ^4.2.1
   animate_do: ^3.0.2
   cached_network_image: ^3.0.0
@@ -65,13 +65,13 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   translator: ^0.1.7
-  url_launcher:  
+  url_launcher:
   hive:
   hive_flutter:
 
 dev_dependencies:
-  hive_generator: 
-  build_runner: 
+  hive_generator:
+  build_runner:
   flutter_test:
     sdk: flutter
 
@@ -127,7 +127,6 @@ flutter:
     - family: arabic
       fonts:
         - asset: assets/Fonts/Harmattan-Regular.ttf
-
 
     # For details regarding fonts from package dependencies,
     # see https://flutter.dev/custom-fonts/#from-packages

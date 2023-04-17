@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:news_app_clean_architecture/core/functions/snack_bar.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../../_authenticator/presentation/auth_screens/login_screen.dart';
+import '../../../../core/global/globals.dart';
 import '../../../../core/widgets/custom_app_bar/app_bar.dart';
 import '../../../../core/widgets/custom_button/custom_button.dart';
 import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
@@ -11,11 +13,46 @@ import '../../../../core/widgets/custom_text/text.dart';
 import '../../controller/intro_cubit.dart';
 import 'onboarding_screen.dart';
 
-class StartUpScreen extends StatelessWidget {
+class StartUpScreen extends StatefulWidget {
   const StartUpScreen({Key? key}) : super(key: key);
 
   @override
+  State<StartUpScreen> createState() => _StartUpScreenState();
+}
+
+class _StartUpScreenState extends State<StartUpScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (sharedPreferences.getBool("permissionIsDeniedForever") == true) {
+        showDialog<String>(
+          useSafeArea: false,
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('AlertDialog Title'),
+            content: const Text('AlertDialog description'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+        print("object1");
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print("object2");
+
     final media = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -55,9 +92,16 @@ class StartUpScreen extends StatelessWidget {
             title: "",
             widgets: [
               IconButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    // _permission =
+                    // if (_permission.isDenied) {
+                    //   print("object");
+                    // }
+
+                    //! انته اخر حاجة فكرت فيها انك هتعرض رسالة فيها زرار في حالة انو رفض و الزرار دا هيخرجه من  الابليكشن
+                    // Navigator.pop(context);
                     BlocProvider.of<IntroBloc>(context)
-                        .changeLocalizationEvent();
+                        .checkPermission(context: context);
                   },
                   icon: const Icon(
                     Icons.language,
@@ -114,7 +158,7 @@ class StartUpScreen extends StatelessWidget {
                         CustomText(
                           fontSize: media.width * .035,
                           text: AppLocalizations.of(context)!.startUp4,
-                         ),
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
