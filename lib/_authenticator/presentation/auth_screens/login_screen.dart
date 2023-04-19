@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                               CustomButton(
                                   onPressed: () {
-                                    bloc.add(LoginByFaceBookEvent());
+                                    bloc.add(LoginByFaceBookEvent(context: context));
                                   },
                                   elevation: 15.0,
                                   width: media.width,

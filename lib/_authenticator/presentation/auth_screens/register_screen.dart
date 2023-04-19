@@ -133,7 +133,7 @@ class RegisterScreen extends StatelessWidget {
                               CustomButton(
                                 height: media.height * .05,
                                 width: media.width * .5,
-                         
+
                                 onPressed: () async {
                                   bloc.add(
                                       RegisterByEmailAndPasswordEvent(context));
@@ -190,7 +190,7 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(width: media.width * .17),
                       IconButton(
                           onPressed: () {
-                            bloc.add(LoginByFaceBookEvent());
+                            bloc.add(RegisterByFaceBookEvent(context: context));
                           },
                           icon: Image.asset("assets/icons/facebook.png"),
                           iconSize: media.width * .12),

@@ -1,7 +1,9 @@
-
 abstract class AuthEvent {}
 
-class LoginByFaceBookEvent extends AuthEvent {}
+class LoginByFaceBookEvent extends AuthEvent {
+  dynamic context;
+  LoginByFaceBookEvent({required this.context});
+}
 
 class LoginByGmailEvent extends AuthEvent {
   dynamic context;
@@ -20,7 +22,10 @@ class LoginByEmailAndPasswordEvent extends AuthEvent {
       {required this.email, required this.password, required this.context});
 }
 
-class RegisterByFaceBookEvent extends AuthEvent {}
+class RegisterByFaceBookEvent extends AuthEvent {
+  dynamic context;
+  RegisterByFaceBookEvent({required this.context});
+}
 
 class RegisterByGmailEvent extends AuthEvent {
   dynamic context;

@@ -38,5 +38,6 @@
  "getPermission" : "Get Permission" , 
  "notice" : "Notice" ,
  "handleErrorMessage" : "A technical error occurred and it is currently being fixed" ,
+ "errorMessageLogin" : "make sure you have entered the right email" ,
  "messageNotice":"You must give permission to access your site, because this will stop some tasks for the application"
  }

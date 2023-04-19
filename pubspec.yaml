@@ -69,7 +69,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/animation_image/on_boarding/onBoarding1.json
+    - assets/animation_image/on_boarding/
     - assets/map.json
 
   fonts:

@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
@@ -15,6 +16,7 @@ import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
 import '../../../../core/widgets/custom_text/text.dart';
 import 'package:app_settings/app_settings.dart';
 
+import '../../controller/intro_cubit.dart';
 import 'onboarding_screen.dart';
 
 class StartUpScreen extends StatefulWidget {
@@ -81,8 +83,8 @@ class _StartUpScreenState extends State<StartUpScreen> {
               widgets: [
                 IconButton(
                     onPressed: () {
-                      // BlocProvider.of<IntroBloc>(context)
-                      //     .checkPermission(context: context);
+                      BlocProvider.of<IntroBloc>(context)
+                          .changeLocalizationEvent();
                     },
                     icon: const Icon(
                       Icons.language,
