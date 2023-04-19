@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: DefaultTextStyle(
                     style: TextStyle(
                       color: Colors.amber,
-                      fontSize: media.width * .03,
+                      fontSize: media.width * .024,
                       fontFamily: 'poppins',
                     ),
                     child: AnimatedTextKit(

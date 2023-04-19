@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -101,9 +102,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               case Request.noAction:
                 return Container();
               case Request.loading:
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.amberAccent),
-                );
+                return loadingArticles(media: media);
               case Request.loaded:
                 return ListView.builder(
                     controller: scrollController,
@@ -113,14 +112,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                         : state.articlesModel.length + 1,
                     itemBuilder: (context, index) {
                       if (index >= state.articlesModel.length) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: media.height * .03),
-                          child: const Center(
-                              child: CircularProgressIndicator(
-                            color: Colors.yellow,
-                          )),
-                        );
+                        return loadingArticles(media: media);
                       } else {
                         final url = state.articlesModel[index].url?.toString();
                         return CustomArticlePost(
@@ -196,3 +188,117 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
     ]);
   }
 }
+
+loadingArticles({final Size? media}) => Shimmer.fromColors(
+    baseColor: Colors.white24,
+    highlightColor: Colors.grey,
+    child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: media!.width * .03,
+          ),
+          child: Container(
+              width: media.width,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300.withOpacity(.5),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(media.width * .03),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: media.width * .09,
+                          height: media.width * .09,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade300.withOpacity(.5),
+                              shape: BoxShape.circle),
+                        ),
+                        SizedBox(
+                          width: media.width * .01,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: media.width,
+                                height: media.height * .03,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade300.withOpacity(.5),
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              SizedBox(
+                                height: media.height * .01,
+                              ),
+                              Container(
+                                width: media.width * .25,
+                                height: media.height * .026,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade300.withOpacity(.5),
+                                    borderRadius: BorderRadius.circular(5)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: media.height * .01,
+                    ),
+                    Container(
+                      width: media.width,
+                      height: media.height * .03,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    SizedBox(
+                      height: media.height * .01,
+                    ),
+                    Container(
+                      width: media.width,
+                      height: media.height * .08,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    SizedBox(
+                      height: media.height * .01,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: media.width * .25,
+                          height: media.height * .026,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade300.withOpacity(.5),
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                        SizedBox(
+                          width: media.width * .012,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: media.height * .01,
+                    ),
+                    Container(
+                      width: media.width,
+                      height: media.height * .2,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300.withOpacity(.5),
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      ],
+    ));
