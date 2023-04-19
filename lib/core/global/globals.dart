@@ -2,7 +2,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final SharedPreferences sharedPreferences;
-late List lastData;
+// late List lastData;
 // ignore: prefer_typing_uninitialized_variables
 late var box;
 

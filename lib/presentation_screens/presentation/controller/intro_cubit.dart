@@ -39,12 +39,7 @@ class IntroBloc extends Cubit<IntroState> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        if (Platform.isAndroid) {
-          SystemNavigator.pop();
-        } else {
-          exit(0);
-        }
-        return Future.error('Location permissions are denied');
+        exit(0);
       }
     }
 
@@ -70,7 +65,10 @@ class IntroBloc extends Cubit<IntroState> {
         permission == LocationPermission.always) {
       await sharedPreferences.setBool("permissionIsDeniedForever", false);
     }
-
+    if (permission == LocationPermission.unableToDetermine) {
+      await sharedPreferences.setBool("permissionIsDeniedForever", true);
+      exit(0);
+    }
     return await Geolocator.getCurrentPosition();
   }
 

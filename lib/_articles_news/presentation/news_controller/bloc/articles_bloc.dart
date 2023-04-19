@@ -28,26 +28,23 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
     if (state.request == Request.loading) {
       final remoteData = await useCaseArticles.getArticlesData();
-      // final localArticlesData = await useCaseArticles.getLocalArticlesData();
+      final localArticlesData = await useCaseArticles.getLocalArticlesData();
 
       // Online State
       if (remoteData.isNotEmpty) {
         emit(
             state.copyWith(articlesModel: remoteData, request: Request.loaded));
-      }
-
-      // OFFline State
-      if (remoteData.isEmpty) {
+      } else {
         emit(state.copyWith(
-            // localData: localArticlesData,
+            localData: localArticlesData,
             noMorePosts: false,
             request: Request.offline));
       }
 
       // If network fail after login ...
-      // if (localArticlesData.isEmpty) {
-      //   emit(state.copyWith(request: Request.error));
-      // }
+      if (localArticlesData.isEmpty) {
+        emit(state.copyWith(request: Request.error));
+      }
     } else {
       final remoteData = await useCaseArticles.getArticlesData(
           from: state.articlesModel.length);

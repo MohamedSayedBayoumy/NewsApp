@@ -157,25 +157,26 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                       }
                     });
               case Request.offline:
-                return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: state.localData.length,
-                    itemBuilder: (context, index) {
-                      return CustomArticlePost(
-                        author: state.localData[index]["author"] ?? "",
-                        description:
-                            state.localData[index]["description"] ?? "",
-                        publishedAt: state.localData[index]["publishedAt"]
-                            .toString()
-                            .split("T")
-                            .first,
-                        title: state.localData[index]["title"] ?? "",
-                        urlToImage: state.localData[index]["urlToImage"] ??
-                            "".toString(),
-                        url: state.localData[index]["url"] ?? "",
-                        onPressedUrl: () {},
-                      );
-                    });
+                return SizedBox(
+                  child: ListView.builder(
+                      itemCount: state.localData.length,
+                      itemBuilder: (context, index) {
+                        return CustomArticlePost(
+                          author: state.localData[index]["author"] ?? "",
+                          description:
+                              state.localData[index]["description"] ?? "",
+                          publishedAt: state.localData[index]["publishedAt"]
+                              .toString()
+                              .split("T")
+                              .first,
+                          title: state.localData[index]["title"] ?? "",
+                          urlToImage: state.localData[index]["urlToImage"] ??
+                              "".toString(),
+                          url: state.localData[index]["url"] ?? "",
+                          onPressedUrl: () {},
+                        );
+                      }),
+                );
               case Request.error:
                 final bloc = BlocProvider.of<ArticlesBloc>(context);
                 return CustomError(

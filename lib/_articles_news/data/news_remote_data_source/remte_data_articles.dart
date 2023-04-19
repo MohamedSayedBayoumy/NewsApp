@@ -19,10 +19,9 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
         "apiKey": ApiConstanceArticles.apiKey,
       });
 
-      
-      // print(lastData.length);
-      // box = await Hive.openBox('CacheData');
-      // await box.put('CacheData', lastData.getRange(0, 3).toList());
+      box = await Hive.openBox('CacheData');
+      await box.put('CacheData',
+          response.data["articles"].getRange(0, 3).toList() as List<dynamic>);
 
       return List<CurrentModelData>.from(response.data["articles"]
               .map((e) => CurrentModelData.fromJson(e)))
