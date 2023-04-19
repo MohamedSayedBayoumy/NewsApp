@@ -25,7 +25,7 @@ class RemoteArticlesData implements BaseRemoteArticlesData {
 
       return List<CurrentModelData>.from(response.data["articles"]
               .map((e) => CurrentModelData.fromJson(e)))
-          .getRange(from!, from + 15)
+          .getRange(from!, from + 8)
           .toList();
     } on DioError {
       // Fetach Data From Local Storage ( Box Hive ) ;
