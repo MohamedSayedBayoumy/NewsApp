@@ -63,24 +63,27 @@ class CustomArticlePost extends StatelessWidget {
                     SizedBox(
                       width: media.width * .01,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          fontSize: media.width * .03,
-                          text: author!.length > 30
-                              ? author!.split(',').first
-                              : author!.isEmpty
-                                  ? "User"
-                                  : author,
-                          needDefaultStyle: true,
-                        ),
-                        CustomText(
-                          fontSize: media.width * .03,
-                          text: publishedAt,
-                          needDefaultStyle: true,
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            fontSize: media.width * .03,
+                            text: author!.length > 30
+                                ? author!.split(',').first
+                                : author!.isEmpty
+                                    ? "User"
+                                    : author,
+                            needDefaultStyle: true,
+                          ),
+                          CustomText(
+                            fontSize: media.width * .03,
+                            text: publishedAt,
+                            needDefaultStyle: true,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -149,16 +152,14 @@ class CustomArticlePost extends StatelessWidget {
                     secondChild: Padding(
                       padding: EdgeInsets.only(bottom: media.height * .01),
                       child: Container(
+                        alignment: Alignment.centerRight,
                         padding: EdgeInsets.symmetric(
                             horizontal: media.width * .011),
                         decoration: const BoxDecoration(
                             border:
                                 Border(right: BorderSide(color: Colors.black))),
                         child: CustomText(
-                          textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
-                          needDefaultStyle: true,
-                          fontSize: media.width * .07,
                           text: "$translateTitle \n $translateDescription",
                         ),
                       ),

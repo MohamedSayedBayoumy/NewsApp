@@ -23,7 +23,6 @@ class CustomText extends StatelessWidget {
       this.textAlign,
       this.color,
       this.fontSize,
-      this.fontStyle,
       Key? key})
       : super(key: key);
 
@@ -32,19 +31,20 @@ class CustomText extends StatelessWidget {
     return AutoSizeText(
       textDirection: textDirection,
       text!,
-      maxFontSize: 100,
+      maxFontSize: 30,
       minFontSize: 12,
       maxLines: 3,
       textAlign: textAlign ?? TextAlign.center,
       style: TextStyle(
-          fontSize: fontSize ?? (sharedPreferences.getString("Localization").toString() == "en"
+          fontSize: fontSize ??
+              (sharedPreferences.getString("Localization").toString() == "en"
                   ? fontSize
                   : MediaQuery.of(context).size.width * .05),
           color: color ?? Colors.white,
           fontFamily: needDefaultStyle == true
               ? "poppins"
               : sharedPreferences.getString("Localization") == "en"
-                  ? fontStyle ?? "poppins"
+                  ? "poppins"
                   : "arabic"),
     );
   }

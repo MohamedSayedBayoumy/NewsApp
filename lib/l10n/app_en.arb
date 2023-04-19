@@ -26,7 +26,6 @@
  "signUp" : "signUp" ,
  "enterYourdataToContinue" : "Enter your Data to Continue" ,
  "location" : "location" ,
- 
  "weatherStatueinYourlocation" : "weather Statue in Your location" ,
  "windSpeed" : "wind Speed" ,
  "weatherstatus": "weather Status",
@@ -34,5 +33,10 @@
  "startSearchByCountryname" :"Start Search By Country Name" ,
  "checkYourConnections" : "Check Your Connection" ,
  "myAccount" : "My Account",
- "logout" : "Logout"
+ "logout" : "Logout",
+ "setting" :"Setting",
+ "getPermission" : "Get Permission" , 
+ "notice" : "Notice" ,
+ "handleErrorMessage" : "A technical error occurred and it is currently being fixed" ,
+ "messageNotice":"You must give permission to access your site, because this will stop some tasks for the application"
  }

@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -26,7 +25,7 @@ class IntroBloc extends Cubit<IntroState> {
     emit(ChangeLocalization());
   }
 
-  Future<Position> checkPermission({required dynamic context}) async {
+  Future<Position> checkPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -54,31 +53,27 @@ class IntroBloc extends Cubit<IntroState> {
         sharedPreferences
             .setBool("permissionIsDeniedForever", true)
             .then((value) {
-          if (Platform.isAndroid) {
-            SystemNavigator.pop();
-          } else {
-            exit(0);
-          }
+          exit(0);
         });
       } else if (sharedPreferences.getBool("permissionIsDeniedForever") ==
           true) {
         print("Show Dilago");
-      } else {
-        if (Platform.isAndroid) {
-          SystemNavigator.pop();
-        } else {
-          exit(0);
-        }
       }
 
       return Future.error('Location permissions are denied');
     }
 
+    if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
+          
+      await sharedPreferences.setBool("permissionIsDeniedForever", false);
+    }
+
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<void> getLatAndLong({required dynamic context}) async {
-    Position position = await checkPermission(context: context);
+  Future<void> getLatAndLong() async {
+    Position position = await checkPermission();
 
     position = Position(
         longitude: position.longitude,

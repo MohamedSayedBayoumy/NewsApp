@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   elevation: 20.0,
                                   width: media.width,
-                                  height: media.height * .07,
+                                  height: media.height * .08,
                                   backgroundColor: Colors.white,
                                   child: Row(
                                     children: [
@@ -79,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   elevation: 15.0,
                                   width: media.width,
-                                  height: media.height * .07,
+                                  height: media.height * .08,
                                   backgroundColor:
                                       const Color.fromRGBO(30, 75, 150, 1),
                                   child: Row(

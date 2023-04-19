@@ -33,5 +33,9 @@
  "startSearchByCountryname" :"أبدا البحث عن طريق اسم المدينة" ,
  "checkYourConnections" : "حدث خطأ في الاتصال" ,
  "myAccount" : "حسابى" ,
- "logout" : "تسجيل الخروج"
- }
+ "logout" : "تسجيل الخروج" ,
+ "setting" :"الأعدادات" ,
+ "notice" : "ملاحظة" ,
+ "messageNotice":"يجب عليك اعطاء الصلاحية لامكانية الوصل الي موقعك لان هذا سيؤدي الي وقف بعض المهام للتطبيق" ,
+ "getPermission" : "الحصول على الأذن"  , 
+"handleErrorMessage" : "حدث خطأ فني ويتم إصلاحه حاليًا" }

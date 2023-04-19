@@ -113,8 +113,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           )),
                         );
                       } else {
-                        final url = state.articlesModel[index].url?.toString();
-
+                        final url = state.articlesModel[index].url?.toString(); 
                         return CustomArticlePost(
                           author:
                               state.articlesModel[index].author?.toString() ??
@@ -128,6 +127,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           translateMethod: () {
                             BlocProvider.of<ArticlesBloc>(context).add(
                                 TranslateArticleDataEvent(
+                                  context: context,
                                     indexItem: index,
                                     title: state.articlesModel[index].title,
                                     description: state

@@ -20,6 +20,8 @@ class CustomButton extends StatelessWidget {
   double? fontSize;
 
   Color? backgroundColor;
+  Color? textColor;
+
 
   CustomButton({
     Key? key,
@@ -29,6 +31,7 @@ class CustomButton extends StatelessWidget {
     this.backgroundColor,
     this.elevation,
     this.text,
+    this.textColor,
     this.padding,
     this.height,
     this.width,
@@ -51,7 +54,7 @@ class CustomButton extends StatelessWidget {
           child: child ??
               CustomText(
                 text: text!,
-                color: Colors.black,
+                color: textColor ?? Colors.black,
                 
                 fontSize:fontSize??  media.width * .065,
               ),

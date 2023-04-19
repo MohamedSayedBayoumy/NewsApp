@@ -91,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: media.width * .03),
+        padding: EdgeInsets.symmetric(horizontal: media.width * .01),
         child: Column(
           children: [
             fieldData(media,
@@ -145,6 +145,8 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               flex: 5,
               child: CustomText(
+                needDefaultStyle: true,
+                fontSize: media.width * .04,
                 text: data,
               ),
             ),
