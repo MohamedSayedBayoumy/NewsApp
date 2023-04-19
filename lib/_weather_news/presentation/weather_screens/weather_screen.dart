@@ -247,7 +247,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                           Expanded(
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
@@ -261,6 +261,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                   height: media.height * .03,
                                                 ),
                                                 CustomText(
+                                                  fontSize: media.width * .034,
+                                                  textAlign: TextAlign.start,
                                                   text:
                                                       "${AppLocalizations.of(context)!.weatherstatus}: ${weatherData.description}",
                                                 )

@@ -81,6 +81,10 @@ class WeatherSearchScreen extends StatelessWidget {
                         width: media.width * .9,
                         height: 200,
                         decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colors.black12,
+                            Colors.amber.withOpacity(.7)
+                          ]),
                           color: Colors.white30.withOpacity(.5),
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -107,13 +111,13 @@ class WeatherSearchScreen extends StatelessWidget {
                                 )),
                                 Expanded(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
                                           text:
-                                              "WindSpeed: ${weatherState!.speedWind}",
+                                              "${AppLocalizations.of(context)!.windSpeed}: ${weatherState!.speedWind}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall),
@@ -121,11 +125,11 @@ class WeatherSearchScreen extends StatelessWidget {
                                         height: media.height * .03,
                                       ),
                                       CustomText(
-                                          text:
-                                              "Weather Stauts: ${weatherData.description}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall)
+                                        fontSize: media.width * .034,
+                                        textAlign: TextAlign.start,
+                                        text:
+                                            "${AppLocalizations.of(context)!.weatherstatus}: ${weatherData.description}",
+                                      )
                                     ],
                                   ),
                                 ),
