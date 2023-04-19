@@ -58,6 +58,9 @@ class IntroBloc extends Cubit<IntroState> {
       } else if (sharedPreferences.getBool("permissionIsDeniedForever") ==
           true) {
         print("Show Dilago");
+      } else if (sharedPreferences.getBool("permissionIsDeniedForever") ==
+          false) {
+        sharedPreferences.setBool("permissionIsDeniedForever", true);
       }
 
       return Future.error('Location permissions are denied');
@@ -65,7 +68,6 @@ class IntroBloc extends Cubit<IntroState> {
 
     if (permission == LocationPermission.whileInUse ||
         permission == LocationPermission.always) {
-          
       await sharedPreferences.setBool("permissionIsDeniedForever", false);
     }
 

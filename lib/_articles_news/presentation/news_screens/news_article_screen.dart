@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../core/functions/alert_diloge.dart';
 import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_post/article_post.dart';
 import '../../../core/widgets/custom_user_image/user_image.dart';
@@ -32,6 +33,14 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
     super.initState();
 
     scrollController.addListener(loading);
+
+    if (sharedPreferences.getBool("permissionIsDeniedForever") == true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        alertDialogMessage(context);
+      });
+    } else {
+      print("Changed Permissions");
+    }
   }
 
   void loading() async {
@@ -113,7 +122,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           )),
                         );
                       } else {
-                        final url = state.articlesModel[index].url?.toString(); 
+                        final url = state.articlesModel[index].url?.toString();
                         return CustomArticlePost(
                           author:
                               state.articlesModel[index].author?.toString() ??
@@ -127,7 +136,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
                           translateMethod: () {
                             BlocProvider.of<ArticlesBloc>(context).add(
                                 TranslateArticleDataEvent(
-                                  context: context,
+                                    context: context,
                                     indexItem: index,
                                     title: state.articlesModel[index].title,
                                     description: state

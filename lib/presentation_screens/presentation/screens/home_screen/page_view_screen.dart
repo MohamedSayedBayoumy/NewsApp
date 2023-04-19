@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- 
 
 import '../../../../_articles_news/presentation/news_controller/bloc/articles_bloc.dart';
 import '../../../../_articles_news/presentation/news_controller/bloc/articles_event.dart';
@@ -21,8 +20,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   bool isTurn = true;
 
-  Color x = Colors.yellowAccent;
-
   PageController controllerHomeScreen = PageController();
 
   @override
@@ -34,8 +31,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
         controller: controllerHomeScreen,
         children: [
           BlocProvider(
-              create: (context) => sl<ArticlesBloc>()
-                ..add(FetchArticleDataEvent()),
+              create: (context) =>
+                  sl<ArticlesBloc>()..add(FetchArticleDataEvent()),
               child: const NewsArticleScreen()),
           const WeatherScreen(),
           const ProfileScreen()
