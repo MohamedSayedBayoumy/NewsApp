@@ -2,7 +2,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final SharedPreferences sharedPreferences;
-// late List lastData;
 // ignore: prefer_typing_uninitialized_variables
 late var box;
 
@@ -12,7 +11,6 @@ Future init() async {
 
   if (sharedPreferences.getString('Localization') == null) {
     await sharedPreferences.setString("Localization", "en");
- 
   } else {}
 
   if (sharedPreferences.getBool('isThemeModeDark') == null) {
@@ -23,5 +21,7 @@ Future init() async {
     sharedPreferences.setBool("isLogin", false);
   } else {}
 
- 
+  if (sharedPreferences.getBool('permissionIsDeniedForever') == null) {
+    sharedPreferences.setBool("permissionIsDeniedForever", true);
+  } else {}
 }

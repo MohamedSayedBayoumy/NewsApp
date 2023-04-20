@@ -88,8 +88,9 @@ class IntroBloc extends Cubit<IntroState> {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
+    print(place);
     await sharedPreferences.setString("address",
-        '${place.locality} - ${place.subAdministrativeArea}, ${place.administrativeArea}');
+        '${place.street}-${place.locality}, ${place.administrativeArea} , ${place.country}');
     await sharedPreferences.setDouble("longitude", position.longitude);
     await sharedPreferences.setDouble("latitude", position.latitude);
   }
