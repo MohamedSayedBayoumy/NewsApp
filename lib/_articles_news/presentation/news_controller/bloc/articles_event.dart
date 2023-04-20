@@ -16,5 +16,4 @@ class TranslateArticleDataEvent extends ArticlesEvent {
   TranslateArticleDataEvent(
       {this.title, this.description, this.indexItem, required this.context});
 }
-
-class RefreshArticles extends ArticlesEvent {}
+ 

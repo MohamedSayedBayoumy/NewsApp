@@ -20,9 +20,6 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     on<TranslateArticleDataEvent>(
       _franslateArticleDataEvent,
     );
-    on<RefreshArticles>(
-      _refreshArticles,
-    );
   }
 
   final UseCaseArticles useCaseArticles;
@@ -114,12 +111,5 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         descripationAr: "",
       ));
     }
-  }
-
-  FutureOr<void> _refreshArticles(
-      RefreshArticles event, Emitter<ArticlesState> emit) {
-    emit(state.copyWith(
-      request: Request.loading,
-    ));
   }
 }
