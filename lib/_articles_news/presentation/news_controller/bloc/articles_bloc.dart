@@ -20,12 +20,19 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     on<TranslateArticleDataEvent>(
       _franslateArticleDataEvent,
     );
+    on<RefreshArticles>(
+      _refreshArticles,
+    );
   }
 
   final UseCaseArticles useCaseArticles;
 
   Future<FutureOr<void>> _fetchDataEvent(
       FetchArticleDataEvent event, Emitter<ArticlesState> emit) async {
+    event.refrash == true
+        ? emit(state.copyWith(request: Request.loading))
+        : null;
+
     if (state.request == Request.loading) {
       final remoteData = await useCaseArticles.getArticlesData();
       final localArticlesData = await useCaseArticles.getLocalArticlesData();
@@ -107,5 +114,12 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         descripationAr: "",
       ));
     }
+  }
+
+  FutureOr<void> _refreshArticles(
+      RefreshArticles event, Emitter<ArticlesState> emit) {
+    emit(state.copyWith(
+      request: Request.loading,
+    ));
   }
 }

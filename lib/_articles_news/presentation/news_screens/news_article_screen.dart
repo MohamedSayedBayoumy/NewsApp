@@ -63,6 +63,7 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
+    final bloc = BlocProvider.of<ArticlesBloc>(context);
 
     return ListView(children: [
       AppBar(
@@ -94,98 +95,107 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
               )),
         ],
       ),
-      SizedBox(
-        height: media.height * .8,
-        child: BlocBuilder<ArticlesBloc, ArticlesState>(
-          builder: (context, state) {
-            switch (state.request!) {
-              case Request.noAction:
-                return Container();
-              case Request.loading:
-                return loadingArticles(media: media);
-              case Request.loaded:
-                return ListView.builder(
-                    controller: scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: state.noMorePosts
-                        ? state.articlesModel.length
-                        : state.articlesModel.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index >= state.articlesModel.length) {
-                        return loadingArticles(media: media);
-                      } else {
-                        final url = state.articlesModel[index].url?.toString();
-                        return CustomArticlePost(
-                          author:
-                              state.articlesModel[index].author?.toString() ??
-                                  "User",
-                          publishedAt: state.articlesModel[index].publishedAt
-                              .toString()
-                              .split("T")
-                              .first,
-                          title: state.articlesModel[index].title ?? "",
-                          description: state.articlesModel[index].description,
-                          translateMethod: () {
-                            BlocProvider.of<ArticlesBloc>(context).add(
-                                TranslateArticleDataEvent(
-                                    context: context,
-                                    indexItem: index,
-                                    title: state.articlesModel[index].title,
-                                    description: state
-                                        .articlesModel[index].description));
-                          },
-                          isLoading:
-                              state.index == index ? state.isLoading : false,
-                          showTranslation: state.index == index
-                              ? state.showTranslation
-                              : false,
-                          translateTitle:
-                              state.index == index ? state.titleAr : "",
-                          translateDescription:
-                              state.index == index ? state.descripationAr : "",
-                          urlToImage:
-                              state.articlesModel[index].urlToImage.toString(),
-                          url: url ?? "",
-                          onPressedUrl: () async {
-                            if (await canLaunchUrlString(url.toString())) {
-                              launchUrlString(url.toString(),
-                                  mode:
-                                      LaunchMode.externalNonBrowserApplication);
-                            }
-                          },
-                        );
-                      }
-                    });
-              case Request.offline:
-                return SizedBox(
-                  child: ListView.builder(
-                      itemCount: state.localData.length,
+      RefreshIndicator(
+        backgroundColor: Colors.white,
+        color: Colors.green,
+        onRefresh: () async {
+          return bloc.add(FetchArticleDataEvent(refrash: true));
+        },
+        child: SizedBox(
+          height: media.height * .8,
+          child: BlocBuilder<ArticlesBloc, ArticlesState>(
+            builder: (context, state) {
+              switch (state.request!) {
+                case Request.noAction:
+                  return Container();
+                case Request.loading:
+                  return loadingArticles(media: media);
+                case Request.loaded:
+                  return ListView.builder(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: state.noMorePosts
+                          ? state.articlesModel.length
+                          : state.articlesModel.length + 1,
                       itemBuilder: (context, index) {
-                        return CustomArticlePost(
-                          author: state.localData[index]["author"] ?? "",
-                          description:
-                              state.localData[index]["description"] ?? "",
-                          publishedAt: state.localData[index]["publishedAt"]
-                              .toString()
-                              .split("T")
-                              .first,
-                          title: state.localData[index]["title"] ?? "",
-                          urlToImage: state.localData[index]["urlToImage"] ??
-                              "".toString(),
-                          url: state.localData[index]["url"] ?? "",
-                          onPressedUrl: () {},
-                        );
-                      }),
-                );
-              case Request.error:
-                final bloc = BlocProvider.of<ArticlesBloc>(context);
-                return CustomError(
-                  onPressed: () => bloc.add(FetchArticleDataEvent(from: 0)),
-                );
-            }
-          },
+                        if (index >= state.articlesModel.length) {
+                          return loadingArticles(media: media);
+                        } else {
+                          final url =
+                              state.articlesModel[index].url?.toString();
+                          return CustomArticlePost(
+                            author:
+                                state.articlesModel[index].author?.toString() ??
+                                    "User",
+                            publishedAt: state.articlesModel[index].publishedAt
+                                .toString()
+                                .split("T")
+                                .first,
+                            title: state.articlesModel[index].title ?? "",
+                            description: state.articlesModel[index].description,
+                            translateMethod: () {
+                              BlocProvider.of<ArticlesBloc>(context).add(
+                                  TranslateArticleDataEvent(
+                                      context: context,
+                                      indexItem: index,
+                                      title: state.articlesModel[index].title,
+                                      description: state
+                                          .articlesModel[index].description));
+                            },
+                            isLoading:
+                                state.index == index ? state.isLoading : false,
+                            showTranslation: state.index == index
+                                ? state.showTranslation
+                                : false,
+                            translateTitle:
+                                state.index == index ? state.titleAr : "",
+                            translateDescription: state.index == index
+                                ? state.descripationAr
+                                : "",
+                            urlToImage: state.articlesModel[index].urlToImage
+                                .toString(),
+                            url: url ?? "",
+                            onPressedUrl: () async {
+                              if (await canLaunchUrlString(url.toString())) {
+                                launchUrlString(url.toString(),
+                                    mode: LaunchMode
+                                        .externalNonBrowserApplication);
+                              }
+                            },
+                          );
+                        }
+                      });
+                case Request.offline:
+                  return SizedBox(
+                    child: ListView.builder(
+                        itemCount: state.localData.length,
+                        itemBuilder: (context, index) {
+                          return CustomArticlePost(
+                            author: state.localData[index]["author"] ?? "",
+                            description:
+                                state.localData[index]["description"] ?? "",
+                            publishedAt: state.localData[index]["publishedAt"]
+                                .toString()
+                                .split("T")
+                                .first,
+                            title: state.localData[index]["title"] ?? "",
+                            urlToImage: state.localData[index]["urlToImage"] ??
+                                "".toString(),
+                            url: state.localData[index]["url"] ?? "",
+                            onPressedUrl: () {},
+                          );
+                        }),
+                  );
+                case Request.error:
+                  final bloc = BlocProvider.of<ArticlesBloc>(context);
+                  return CustomError(
+                    onPressed: () => bloc.add(FetchArticleDataEvent(from: 0)),
+                  );
+              }
+            },
+          ),
         ),
-      ),
+      )
     ]);
   }
 }

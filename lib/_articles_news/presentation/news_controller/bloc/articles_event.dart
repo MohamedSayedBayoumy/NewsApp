@@ -2,8 +2,9 @@ abstract class ArticlesEvent {}
 
 class FetchArticleDataEvent extends ArticlesEvent {
   int? from;
+  bool? refrash = false;
 
-  FetchArticleDataEvent({this.from});
+  FetchArticleDataEvent({this.from, this.refrash});
 }
 
 class TranslateArticleDataEvent extends ArticlesEvent {
@@ -12,5 +13,8 @@ class TranslateArticleDataEvent extends ArticlesEvent {
   final int? indexItem;
   final dynamic context;
 
-  TranslateArticleDataEvent({this.title, this.description, this.indexItem , required this.context});
+  TranslateArticleDataEvent(
+      {this.title, this.description, this.indexItem, required this.context});
 }
+
+class RefreshArticles extends ArticlesEvent {}
