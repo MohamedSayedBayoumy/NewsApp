@@ -50,9 +50,11 @@ class ProfileScreen extends StatelessWidget {
                   top: media.height * .13,
                   left: media.width * .3,
                   right: media.width * .3,
-                  child: const UserImage(
-                    isAppBar: false,
+                  child: UserImage(
+                    backGroundColor: Colors.white,
+                    backGroundRadius: media.height * .07,
                   )),
+
               // Positioned(
               //     top: media.height * .21,
               //     left: media.width >= 810

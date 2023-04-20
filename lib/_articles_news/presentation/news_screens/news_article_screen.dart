@@ -84,14 +84,10 @@ class _NewsArticleScreenState extends State<NewsArticleScreen> {
         ]),
         actions: [
           IconButton(
-              onPressed: () async {
-                print(
-                    "Don Dodds, Forbes Councils Member, \n Don Dodds, Forbes Councils Member\n https://www.forbes.com/sites/forbesagencycouncil/people/dondodds/"
-                        .split(",")
-                        .first);
-              },
-              icon: const UserImage(
-                isAppBar: true,
+              onPressed: () async {},
+              icon: UserImage(
+                backGroundColor: Colors.amber,
+                backGroundRadius: media.height * .015,
               )),
         ],
       ),
