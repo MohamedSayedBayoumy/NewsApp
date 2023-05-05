@@ -110,7 +110,9 @@ class ProfileScreen extends StatelessWidget {
                 child:
                     BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
                   final bloc = BlocProvider.of<AuthBloc>(context);
-                  return CustomButton(
+                  return customButton(
+                                  context: context , 
+
                     fontSize: media.width * .05,
                     onPressed: () {
                       bloc.add(LogOut(context));

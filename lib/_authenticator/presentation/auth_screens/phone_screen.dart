@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
- 
 
 import '../../../core/services/services_locator.dart';
 import '../../../core/widgets/custom_button/custom_button.dart';
@@ -51,12 +50,12 @@ class AddPhoneScreen extends StatelessWidget {
                           styleBorder: const OutlineInputBorder(),
                           labelText: "Phone Number",
                           hinText: "+20",
-                         
                           controller: bloc.state.phoneController),
                       SizedBox(
                         height: media.height * .03,
                       ),
-                      CustomButton(
+                      customButton(
+                        context: context,
                         width: media.width,
                         backgroundColor: bloc.state.phoneController.text == ""
                             ? Colors.transparent

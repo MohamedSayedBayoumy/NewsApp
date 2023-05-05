@@ -14,7 +14,8 @@ class CustomError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomText(text: AppLocalizations.of(context)!.checkYourConnections),
-          CustomButton(
+          customButton(
+            context: context,
             onPressed: onPressed,
             text: "Refresh",
           )

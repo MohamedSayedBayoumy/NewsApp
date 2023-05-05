@@ -130,7 +130,9 @@ class RegisterScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomButton(
+                              customButton(
+                                context: context,
+
                                 height: media.height * .05,
                                 width: media.width * .5,
 

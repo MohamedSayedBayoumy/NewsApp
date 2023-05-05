@@ -67,7 +67,8 @@ alertDialogMessage(BuildContext context, {Widget? loading}) async =>
             actions: loading == null
                 ? <Widget>[
                     Center(
-                      child: CustomButton(
+                      child:customButton(
+                        context: context,
                         backgroundColor: const Color.fromARGB(255, 13, 233, 21),
                         child: Text(
                           textAlign: TextAlign.center,

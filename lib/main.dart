@@ -11,26 +11,26 @@ import 'presentation_screens/presentation/controller/intro_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   // await Firebase.initializeApp();
-//   ServicesLocator.service();
-//   await init();
-
-//   runApp(const MyApp());
-// }
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   ServicesLocator.service();
   await init();
-  runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => const MyApp(),
-    ),
-  );
+
+  runApp(const MyApp());
 }
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   ServicesLocator.service();
+//   await init();
+//   runApp(
+//     DevicePreview(
+//       enabled: true,
+//       builder: (context) => const MyApp(),
+//     ),
+//   );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,16 +10,12 @@ import '../../../../core/functions/alert_diloge.dart';
 import '../../../../core/global/globals.dart';
 import '../../../../core/widgets/custom_app_bar/app_bar.dart';
 import '../../../../core/widgets/custom_button/custom_button.dart';
-import '../../../../core/widgets/custom_do_animtion/custom_fade_animation.dart';
 import '../../../../core/widgets/custom_text/text.dart';
-import 'package:app_settings/app_settings.dart';
-
 import '../../controller/intro_cubit.dart';
 import 'onboarding_screen.dart';
 
 class StartUpScreen extends StatefulWidget {
-  final bool? permission;
-  const StartUpScreen({this.permission, Key? key}) : super(key: key);
+  const StartUpScreen({Key? key}) : super(key: key);
 
   @override
   State<StartUpScreen> createState() => _StartUpScreenState();
@@ -121,15 +115,10 @@ class _StartUpScreenState extends State<StartUpScreen> {
                     SizedBox(
                       height: media.height * .05,
                     ),
-                    CustomButton(
+                    customButton(
+                        context: context,
                         onPressed: () async {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                                child: fadeDownTOUp(
-                                    child: const OnBoardingScreen()),
-                                type: PageTransitionType.rightToLeftWithFade),
-                          );
+                          Navigator.of(context).push(createRoute());
                         },
                         text: AppLocalizations.of(context)!.startUp3,
                         width: media.width,
@@ -168,6 +157,29 @@ class _StartUpScreenState extends State<StartUpScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Route createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const OnBoardingScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(
+          0.0,
+          1.0,
+        );
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }
