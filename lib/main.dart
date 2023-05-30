@@ -1,9 +1,10 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:news_app_clean_architecture/spalsh_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/global/globals.dart';
 import 'core/services/services_locator.dart';
@@ -11,11 +12,11 @@ import 'presentation_screens/presentation/controller/intro_cubit.dart';
 import 'presentation_screens/presentation/controller/intro_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   ServicesLocator.service();
+  sharedPreferences = await SharedPreferences.getInstance();
   await init();
 
   runApp(const MyApp());
@@ -70,5 +71,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
