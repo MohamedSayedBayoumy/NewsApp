@@ -21,15 +21,15 @@ dependencies:
   equatable: ^2.0.5
   dartz: ^0.10.1
   dio: ^5.0.0
-  flutter_bloc: ^8.1.2
-  bloc_concurrency: ^0.2.1
+  flutter_bloc: 
+  bloc_concurrency: 
   get_it: ^7.2.0
 
   animate_do: ^3.0.2
   cached_network_image: ^3.0.0
   shimmer: ^2.0.0
   sqflite: ^2.0.3+1
-  shared_preferences: ^2.0.15
+  shared_preferences:  
   image_picker: ^0.8.6+1
   lottie: ^1.4.2
   page_transition: ^2.0.9

@@ -96,9 +96,11 @@ class CustomTextField extends StatelessWidget {
               maxLines: maxLength,
               minLines: minLength,
               maxLength: length,
+              
               maxLengthEnforcement:
                   MaxLengthEnforcement.truncateAfterCompositionEnds,
               decoration: InputDecoration(
+                
                 errorText: errorText,
                 suffixIcon: suffixIcon == null
                     ? null

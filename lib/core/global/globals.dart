@@ -7,6 +7,7 @@ late var box;
 
 Future init() async {
   await Hive.initFlutter();
+  late final SharedPreferences sharedPreferences;
   sharedPreferences = await SharedPreferences.getInstance();
 
   if (sharedPreferences.getString('Localization') == null) {
