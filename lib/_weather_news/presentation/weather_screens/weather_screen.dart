@@ -147,13 +147,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             Expanded(
                               flex: 2,
                               child: CustomText(
-                                fontSize: media.width * .035,
-                                needDefaultStyle: true,
-                                color: Colors.black,
-                                text: sharedPreferences
-                                    .getString("address")
-                                    .toString(),
-                              ),
+                                  fontSize: media.width * .035,
+                                  needDefaultStyle: true,
+                                  color: Colors.black,
+                                  text: sharedPreferences
+                                      .getString("address")
+                                      .toString()),
                             ),
                           ],
                         )),
@@ -174,15 +173,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               return Container();
                             case Request.loading:
                               return const Center(
-                                child: CircularProgressIndicator(
-                                    color: Colors.yellowAccent),
-                              );
+                                  child: CircularProgressIndicator(
+                                      color: Colors.yellowAccent));
 
                             case Request.loaded:
                               final weatherData =
                                   state.weatherModel!.weather![0];
                               final weatherState = state.weatherModel;
-
                               return Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: media.width * .04,

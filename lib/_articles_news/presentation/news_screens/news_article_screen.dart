@@ -8,7 +8,6 @@ import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/functions/alert_diloge.dart';
-import '../../../core/widgets/custom_button/custom_button.dart';
 import '../../../core/widgets/custom_error/error_widget.dart';
 import '../../../core/widgets/custom_post/article_post.dart';
 import '../../../core/widgets/custom_user_image/user_image.dart';
