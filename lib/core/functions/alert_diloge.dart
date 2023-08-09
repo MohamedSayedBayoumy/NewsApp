@@ -47,8 +47,7 @@ alertDialogMessage(BuildContext context, {Widget? loading}) async =>
                         height: MediaQuery.of(context).size.height * .08,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * .02,
-                      ),
+                          height: MediaQuery.of(context).size.height * .02),
                       Text(
                         textAlign: TextAlign.center,
                         AppLocalizations.of(context)!.messageNotice,
@@ -67,7 +66,7 @@ alertDialogMessage(BuildContext context, {Widget? loading}) async =>
             actions: loading == null
                 ? <Widget>[
                     Center(
-                      child:customButton(
+                      child: customButton(
                         context: context,
                         backgroundColor: const Color.fromARGB(255, 13, 233, 21),
                         child: Text(
@@ -107,9 +106,7 @@ loading(BuildContext context, {required bool changeLoading}) =>
               excludeBottomFocus: false,
               firstChild: const Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  color: Colors.amber,
-                ),
+                    backgroundColor: Colors.white, color: Colors.amber),
               ),
               secondChild: Lottie.asset(
                   "assets/animation_image/on_boarding/Gpay Tick.json"),
